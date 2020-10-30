@@ -17,13 +17,13 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>Hexo</title>
-  <meta name="description" content="title:反序列化漏洞 data：2020.10.15 tags：学习笔记 PHP反序列化漏洞 漏洞成因：是因为程序对输入数据处理不当导致的。 wakeup绕过漏洞产生原因：如果存在wakeup方法，调用unseralize()方法需要先调用_wakeup方法，但是当序列化字符串中表示对象属性个数的值不等于真实的属性个数时会跳过__wakeup的执行。 题目：在根目录创建一个index.php、">
+  <title>PHP反序列化漏洞 | Hexo</title>
+  <meta name="description" content="PHP反序列化漏洞 漏洞成因：是因为程序对输入数据处理不当导致的。 wakeup绕过漏洞产生原因：如果存在wakeup方法，调用unseralize()方法需要先调用_wakeup方法，但是当序列化字符串中表示对象属性个数的值不等于真实的属性个数时会跳过__wakeup的执行。 题目：在根目录创建一个index.php、f15g_1s_here.php 1234567891011121314151">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/2020/10/30/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/index.html">
+<meta property="og:title" content="PHP反序列化漏洞">
+<meta property="og:url" content="http://example.com/2020/10/24/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="title:反序列化漏洞 data：2020.10.15 tags：学习笔记 PHP反序列化漏洞 漏洞成因：是因为程序对输入数据处理不当导致的。 wakeup绕过漏洞产生原因：如果存在wakeup方法，调用unseralize()方法需要先调用_wakeup方法，但是当序列化字符串中表示对象属性个数的值不等于真实的属性个数时会跳过__wakeup的执行。 题目：在根目录创建一个index.php、">
+<meta property="og:description" content="PHP反序列化漏洞 漏洞成因：是因为程序对输入数据处理不当导致的。 wakeup绕过漏洞产生原因：如果存在wakeup方法，调用unseralize()方法需要先调用_wakeup方法，但是当序列化字符串中表示对象属性个数的值不等于真实的属性个数时会跳过__wakeup的执行。 题目：在根目录创建一个index.php、f15g_1s_here.php 1234567891011121314151">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201006232354478.png">
 <meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201007000525661.png">
@@ -38,13 +38,14 @@
 <meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201013233248387.png">
 <meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201029165432224.png">
 <meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201029234037041.png">
-<meta property="article:published_time" content="2020-10-30T10:57:32.195Z">
-<meta property="article:modified_time" content="2020-10-30T10:53:42.408Z">
+<meta property="article:published_time" content="2020-10-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-10-30T11:01:59.919Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="学习笔记">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://cr_7.gitee.io/git-hub-image/image-20201006232354478.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://example.com/2020/10/30/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/index.html">
+  <link rel="canonical" href="http://example.com/2020/10/24/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -235,7 +236,7 @@
   <div class="widget">
     <h3 class="widget-title">Tags</h3>
     <div class="widget-body">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE/" rel="tag">PHP小项目</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a><span class="tag-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -245,7 +246,7 @@
   <div class="widget">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget-body tagcloud">
-      <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 13px;">学习笔记</a>
+      <a href="/tags/PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE/" style="font-size: 13px;">PHP小项目</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 14px;">学习笔记</a>
     </div>
   </div>
 
@@ -254,7 +255,7 @@
   <div class="widget">
     <h3 class="widget-title">Archive</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -266,21 +267,6 @@
     <div class="widget-body">
       <ul class="recent-post-list list-unstyled no-thumbnail">
         
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                
-              </p>
-              <p class="item-title">
-                <a href="/2020/10/30/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" class="title">(no title)</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2020-10-30T10:57:32.195Z" itemprop="datePublished">2020-10-30</time>
-              </p>
-            </div>
-          </li>
-          
           <li>
             
             <div class="item-inner">
@@ -303,40 +289,55 @@
                 
               </p>
               <p class="item-title">
+                <a href="/2020/10/24/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" class="title">PHP反序列化漏洞</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-10-23T16:00:00.000Z" itemprop="datePublished">2020-10-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/10/07/%E5%BC%80%E5%8F%91PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE-%E6%9F%A5%E8%AF%A2%E5%BD%95%E5%8F%96%E7%BB%93%E6%9E%9C%EF%BC%881%EF%BC%89/" class="title">开发PHP小项目-查询录取结果（1）：前端设计</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-10-06T16:00:00.000Z" itemprop="datePublished">2020-10-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/10/07/%E5%BC%80%E5%8F%91PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE-%E6%9F%A5%E8%AF%A2%E5%BD%95%E5%8F%96%E7%BB%93%E6%9E%9C%EF%BC%882%EF%BC%89%EF%BC%9A%E5%90%8E%E7%AB%AF%E8%AE%BE%E8%AE%A1/" class="title">开发PHP小项目-查询录取结果（2）：后端设计</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-10-06T16:00:00.000Z" itemprop="datePublished">2020-10-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
                 <a href="/2020/09/15/SSRF/" class="title">SSRF</a>
               </p>
               <p class="item-date">
                 <time datetime="2020-09-14T16:00:00.000Z" itemprop="datePublished">2020-09-15</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                
-              </p>
-              <p class="item-title">
-                <a href="/2020/09/12/hello-world/" class="title">Hello World</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2020-09-12T02:07:35.821Z" itemprop="datePublished">2020-09-12</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                
-              </p>
-              <p class="item-title">
-                <a href="/2020/09/12/%E6%97%A0%E5%8F%82%E6%95%B0RCE/" class="title">无参数RCE</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2020-09-11T16:00:00.000Z" itemprop="datePublished">2020-09-12</time>
               </p>
             </div>
           </li>
@@ -352,34 +353,53 @@
 
   
   
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.</span> <span class="toc-text">PHP反序列化漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#wakeup%E7%BB%95%E8%BF%87"><span class="toc-number">1.1.</span> <span class="toc-text">wakeup绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%81%E6%9C%89%E5%B1%9E%E6%80%A7%E7%BB%95%E8%BF%87"><span class="toc-number">1.2.</span> <span class="toc-text">私有属性绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E9%80%83%E9%80%B8"><span class="toc-number">1.3.</span> <span class="toc-text">字符逃逸</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Phar%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.</span> <span class="toc-text">Phar反序列化漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Phar"><span class="toc-number">2.1.</span> <span class="toc-text">Phar</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Phar%E6%BC%8F%E6%B4%9E%E7%9A%84%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6"><span class="toc-number">2.2.</span> <span class="toc-text">Phar漏洞的利用条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-number">2.3.</span> <span class="toc-text">文件结构</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-Stub%E6%96%87%E4%BB%B6"><span class="toc-number">2.3.1.</span> <span class="toc-text">1.Stub文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-manifest%E6%96%87%E4%BB%B6"><span class="toc-number">2.3.2.</span> <span class="toc-text">2.manifest文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-contents%E6%96%87%E4%BB%B6"><span class="toc-number">2.3.3.</span> <span class="toc-text">3.contents文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-signature%E6%96%87%E4%BB%B6"><span class="toc-number">2.3.4.</span> <span class="toc-text">4.signature文件</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAPhar%E6%96%87%E4%BB%B6"><span class="toc-number">2.4.</span> <span class="toc-text">创建Phar文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Phar%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%8E%9F%E7%90%86"><span class="toc-number">2.5.</span> <span class="toc-text">Phar反序列化原理</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
 <main class="main" role="main">
   <div class="content">
   <article id="post-PHP反序列化漏洞" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
+        
+  
+    <h1 class="article-title" itemprop="name">
+      PHP反序列化漏洞
+    </h1>
+  
+
+      
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2020/10/30/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" class="article-date">
-	  <time datetime="2020-10-30T10:57:32.195Z" itemprop="datePublished">2020-10-30</time>
+	<a href="/2020/10/24/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" class="article-date">
+	  <time datetime="2020-10-23T16:00:00.000Z" itemprop="datePublished">2020-10-24</time>
 	</a>
 </span>
         
         
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a>
+  </span>
+
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/10/30/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/#comments" class="article-comment-link">Comments</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/10/24/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/#comments" class="article-comment-link">Comments</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p>title:反序列化漏洞</p>
-<p>data：2020.10.15</p>
-<p>tags：学习笔记</p>
-<h3 id="PHP反序列化漏洞"><a href="#PHP反序列化漏洞" class="headerlink" title="PHP反序列化漏洞"></a>PHP反序列化漏洞</h3><hr>
+        <h3 id="PHP反序列化漏洞"><a href="#PHP反序列化漏洞" class="headerlink" title="PHP反序列化漏洞"></a>PHP反序列化漏洞</h3><hr>
 <p>漏洞成因：是因为程序对输入数据处理不当导致的。</p>
 <h4 id="wakeup绕过"><a href="#wakeup绕过" class="headerlink" title="wakeup绕过"></a>wakeup绕过</h4><p>漏洞产生原因：如果存在wakeup方法，调用unseralize()方法需要先调用_wakeup方法，但是当序列化字符串中表示对象属性个数的值不等于真实的属性个数时会跳过__wakeup的执行。</p>
 <p>题目：在根目录创建一个index.php、f15g_1s_here.php</p>
@@ -538,7 +558,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://example.com/2020/10/30/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" title="" target="_blank" rel="external">http://example.com/2020/10/30/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/</a>
+      <a href="http://example.com/2020/10/24/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" title="PHP反序列化漏洞" target="_blank" rel="external">http://example.com/2020/10/24/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -584,11 +604,24 @@
   
   <ul class="pager pull-left">
     
-    
-    <li class="next">
-      <a href="/2020/10/24/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" title="文件上传漏洞"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    <li class="prev">
+      <a href="/2020/10/24/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" title="文件上传漏洞"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
     </li>
     
+    
+    <li class="next">
+      <a href="/2020/10/07/%E5%BC%80%E5%8F%91PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE-%E6%9F%A5%E8%AF%A2%E5%BD%95%E5%8F%96%E7%BB%93%E6%9E%9C%EF%BC%881%EF%BC%89/" title="开发PHP小项目-查询录取结果（1）：前端设计"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">
+        <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
     
   </ul>
   
