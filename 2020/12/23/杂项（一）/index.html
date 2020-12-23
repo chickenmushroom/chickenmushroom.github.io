@@ -17,23 +17,40 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>MD5绕过（Hash比较缺陷） | Hexo</title>
-  <meta name="description" content="MD5绕过（Hash比较缺陷）MD5绕过简单介绍：简单来说就是不一样的数据经过MD5计算后可能会出现相同的MD5码。  例子：天融信面试题 源码： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849&lt;?phpfunction gen_secured_random()">
+  <title>杂项（一） | Hexo</title>
+  <meta name="description" content="杂项（一）bw-图片隐写-爱因斯坦压缩包，解压，得到一张爱因斯坦的图片misc2.jpg binwalk 1binwalk -e misc2.jpg  得到一个压缩包，压缩包里面有个flag.txt。解压要密码 查看misc2.jpg的属性，发现备注有疑似密码的字符串。  尝试一下，密码正确。拿到flag  bw-图片隐写-64解压得到64格.gif，显示无法打开  010打开，增加文件头GIF8">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MD5绕过（Hash比较缺陷）">
-<meta property="og:url" content="http://example.com/2020/11/05/MD5%E7%BB%95%E8%BF%87%EF%BC%88Hash%E6%AF%94%E8%BE%83%E7%BC%BA%E9%99%B7%EF%BC%89/index.html">
+<meta property="og:title" content="杂项（一）">
+<meta property="og:url" content="http://example.com/2020/12/23/%E6%9D%82%E9%A1%B9%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="MD5绕过（Hash比较缺陷）MD5绕过简单介绍：简单来说就是不一样的数据经过MD5计算后可能会出现相同的MD5码。  例子：天融信面试题 源码： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849&lt;?phpfunction gen_secured_random()">
+<meta property="og:description" content="杂项（一）bw-图片隐写-爱因斯坦压缩包，解压，得到一张爱因斯坦的图片misc2.jpg binwalk 1binwalk -e misc2.jpg  得到一个压缩包，压缩包里面有个flag.txt。解压要密码 查看misc2.jpg的属性，发现备注有疑似密码的字符串。  尝试一下，密码正确。拿到flag  bw-图片隐写-64解压得到64格.gif，显示无法打开  010打开，增加文件头GIF8">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201105221050313.png">
-<meta property="article:published_time" content="2020-11-04T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-11-05T14:21:08.206Z">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126160703857.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126160754298.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126161006847.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126230752807.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126231352429.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126231743869.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126233205062.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126234458342.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126234523868.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126234747448.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201129183021918.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201123180505328.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201129193839299.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201129193900459.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201129222626350.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201129222856349.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201129223047311.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201129223118823.png">
+<meta property="article:published_time" content="2020-12-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-23T13:34:31.835Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="学习笔记">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://cr_7.gitee.io/git-hub-image/image-20201105221050313.png">
+<meta name="twitter:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126160703857.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://example.com/2020/11/05/MD5%E7%BB%95%E8%BF%87%EF%BC%88Hash%E6%AF%94%E8%BE%83%E7%BC%BA%E9%99%B7%EF%BC%89/index.html">
+  <link rel="canonical" href="http://example.com/2020/12/23/%E6%9D%82%E9%A1%B9%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -345,21 +362,21 @@
   <div class="slimContent">
     <nav id="toc" class="article-toc">
       <h3 class="toc-title">Catalogue</h3>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#MD5%E7%BB%95%E8%BF%87%EF%BC%88Hash%E6%AF%94%E8%BE%83%E7%BC%BA%E9%99%B7%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">MD5绕过（Hash比较缺陷）</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%82%E9%A1%B9%EF%BC%88%E4%B8%80%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">杂项（一）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#bw-%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99-%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6"><span class="toc-number">1.1.</span> <span class="toc-text">bw-图片隐写-爱因斯坦</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bw-%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99-64"><span class="toc-number">1.2.</span> <span class="toc-text">bw-图片隐写-64</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bw-%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99-0707"><span class="toc-number">1.3.</span> <span class="toc-text">bw-图片隐写-0707</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bw-%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99-fruit"><span class="toc-number">1.4.</span> <span class="toc-text">bw-图片隐写-fruit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bw-%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99-five"><span class="toc-number">1.5.</span> <span class="toc-text">bw-图片隐写-five</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bw-%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99-LSB"><span class="toc-number">1.6.</span> <span class="toc-text">bw-图片隐写-LSB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bw-%E5%8A%A0%E8%A7%A3%E5%AF%86-%E5%9B%BE%E7%89%87%E4%B8%AD%E7%9A%84%E5%AF%86%E7%A0%81"><span class="toc-number">1.7.</span> <span class="toc-text">bw-加解密-图片中的密码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bw-%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99-%E4%BA%8C%E7%BB%B4%E7%A0%81"><span class="toc-number">1.8.</span> <span class="toc-text">bw-图片隐写-二维码</span></a></li></ol></li></ol>
     </nav>
   </div>
 </aside>
 
 <main class="main" role="main">
   <div class="content">
-  <article id="post-MD5绕过（Hash比较缺陷）" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-杂项（一）" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      MD5绕过（Hash比较缺陷）
+      杂项（一）
     </h1>
   
 
@@ -367,8 +384,8 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2020/11/05/MD5%E7%BB%95%E8%BF%87%EF%BC%88Hash%E6%AF%94%E8%BE%83%E7%BC%BA%E9%99%B7%EF%BC%89/" class="article-date">
-	  <time datetime="2020-11-04T16:00:00.000Z" itemprop="datePublished">2020-11-05</time>
+	<a href="/2020/12/23/%E6%9D%82%E9%A1%B9%EF%BC%88%E4%B8%80%EF%BC%89/" class="article-date">
+	  <time datetime="2020-12-22T16:00:00.000Z" itemprop="datePublished">2020-12-23</time>
 	</a>
 </span>
         
@@ -381,40 +398,99 @@
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/11/05/MD5%E7%BB%95%E8%BF%87%EF%BC%88Hash%E6%AF%94%E8%BE%83%E7%BC%BA%E9%99%B7%EF%BC%89/#comments" class="article-comment-link">Comments</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/12/23/%E6%9D%82%E9%A1%B9%EF%BC%88%E4%B8%80%EF%BC%89/#comments" class="article-comment-link">Comments</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h3 id="MD5绕过（Hash比较缺陷）"><a href="#MD5绕过（Hash比较缺陷）" class="headerlink" title="MD5绕过（Hash比较缺陷）"></a>MD5绕过（Hash比较缺陷）</h3><p><strong>MD5绕过简单介绍：简单来说就是不一样的数据经过MD5计算后可能会出现相同的MD5码。</strong></p>
-<hr>
-<p>例子：天融信面试题</p>
-<p>源码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gen_secured_random</span>(<span class="params"></span>) </span>&#123; <span class="comment">// cause random is the way</span></span><br><span class="line">    $a = rand(<span class="number">1337</span>,<span class="number">2600</span>)*<span class="number">42</span>;</span><br><span class="line">    $b = rand(<span class="number">1879</span>,<span class="number">1955</span>)*<span class="number">42</span>;</span><br><span class="line"></span><br><span class="line">    $a &lt; $b ? $a ^= $b ^= $a ^= $b : $a = $b;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> $a+$b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">secured_hash_function</span>(<span class="params">$plain</span>) </span>&#123; <span class="comment">// cause md5 is the best hash ever</span></span><br><span class="line">    $secured_plain = sanitize_user_input($plain);</span><br><span class="line">    <span class="keyword">return</span> md5($secured_plain);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sanitize_user_input</span>(<span class="params">$input</span>) </span>&#123; <span class="comment">// cause someone told me to never trust user input</span></span><br><span class="line">    $re = <span class="string">&#x27;/[^a-zA-Z0-9]/&#x27;</span>;</span><br><span class="line">    $secured_input = preg_replace($re, <span class="string">&quot;&quot;</span>, $input);</span><br><span class="line">    <span class="keyword">return</span> $secured_input;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">&#x27;source&#x27;</span>])) &#123;</span><br><span class="line">    show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">require_once</span> <span class="string">&quot;secret.php&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_POST[<span class="string">&#x27;s&#x27;</span>]) &amp;&amp; <span class="keyword">isset</span>($_POST[<span class="string">&#x27;h&#x27;</span>])) &#123;</span><br><span class="line">    $s = sanitize_user_input($_POST[<span class="string">&#x27;s&#x27;</span>]);</span><br><span class="line">    $h = secured_hash_function($_POST[<span class="string">&#x27;h&#x27;</span>]);</span><br><span class="line">    $r = gen_secured_random();</span><br><span class="line">    <span class="keyword">if</span>($s != <span class="literal">false</span> &amp;&amp; $h != <span class="literal">false</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span>($s.$r == $h) &#123;</span><br><span class="line">            <span class="keyword">print</span> <span class="string">&quot;Well done! Here is your flag: &quot;</span>.$flag;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">print</span> <span class="string">&quot;Fail...&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">print</span> <span class="string">&quot;&lt;p&gt;Hum ...&lt;/p&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;p&gt;&lt;em&gt;&lt;a href=<span class="string">&quot;index.php?source&quot;</span>&gt;source code&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+        <h3 id="杂项（一）"><a href="#杂项（一）" class="headerlink" title="杂项（一）"></a>杂项（一）</h3><h4 id="bw-图片隐写-爱因斯坦"><a href="#bw-图片隐写-爱因斯坦" class="headerlink" title="bw-图片隐写-爱因斯坦"></a>bw-图片隐写-爱因斯坦</h4><p>压缩包，解压，得到一张爱因斯坦的图片misc2.jpg</p>
+<p>binwalk</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">binwalk -e misc2.jpg</span><br></pre></td></tr></table></figure>
 
-<ul>
-<li><strong>通过代码审计，这题只要做到构造$s.$r==$h就可以拿到flag。有几个注意点：</strong></li>
-</ul>
-<p>①$s通过sanitize_user_input方法，限制只能输入数字和字母。</p>
-<p>②$h在经过sanitize_user_input方法过滤的前提下，再进行一次md5加密。</p>
-<p>③$r是通过gen_secured_random方法产生一组随机数（int型）。</p>
-<p>④$s.$r==$h是弱比较。</p>
-<ul>
-<li><strong>在php中，由于双等号在判断值上有漏洞，分为以下三种：</strong></li>
-</ul>
-<p>​    1.如果一个字符串为 “合法数字+e+合法数字”类型，将会解释为科学计数法的浮点数（0e开头，后面数字怎么变都是等于0，原理就是0的多少次方都是0。0X开头就是十六进制）<br>​    2.如果一个字符串为 “合法数字+ 不可解释为合法数字的字符串”类型，将会被转换为该合法数字的值，后面的字符串将会被丢弃<br>​    3.如果一个字符串为“不可解释为合法数字的字符串+任意”类型，则被转换为0，如…==0是成立的</p>
-<p>也就是下列三种情况输出都为True：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1e10&#x3D;&#x3D;1</span><br><span class="line">1&#39;1111&#x3D;&#x3D;1</span><br><span class="line">&#39;a&#39;&#x3D;&#x3D;0</span><br></pre></td></tr></table></figure>
+<p>得到一个压缩包，压缩包里面有个flag.txt。解压要密码</p>
+<p>查看misc2.jpg的属性，发现备注有疑似密码的字符串。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126160703857.png" alt="image-20201126160703857"></p>
+<p>尝试一下，密码正确。拿到flag</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126160754298.png" alt="image-20201126160754298"></p>
+<h4 id="bw-图片隐写-64"><a href="#bw-图片隐写-64" class="headerlink" title="bw-图片隐写-64"></a>bw-图片隐写-64</h4><p>解压得到64格.gif，显示无法打开</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126161006847.png" alt="image-20201126161006847"></p>
+<p>010打开，增加文件头GIF89。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126230752807.png" alt="image-20201126230752807"></p>
+<p>gif可以打开，用gifsplitter分帧，得到十九张图。每张图的小黄人都会在不同的格子。根据下面这张表对应的数字，得到一串数字。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126231352429.png" alt="image-20201126231352429"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">16 53 17 6 30 54 5 34 24 54 61 36 25 22 25 31 25 55 52</span><br></pre></td></tr></table></figure>
 
-<p>$s=0e….时，$s.$r等于0。$h=’240610708’,通过md5加密后，变成”0e462097431906509019562988736854”。==号两边都是0.成功绕过。</p>
-<p>payload</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$s = sanitize_user_input(<span class="string">&#x27;0e&#x27;</span>);</span><br><span class="line">$h = secured_hash_function(<span class="string">&#x27;240610708&#x27;</span>); </span><br><span class="line">$r = gen_secured_random(); </span><br><span class="line">var_dump($s.$r==$h );</span><br></pre></td></tr></table></figure>
+<p>base64表：</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126231743869.png" alt="image-20201126231743869"></p>
+<p>对应base64表，得到字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">16 53 17 6 30 54 5 34 24 54 61 36 25 22 25 31 25 55 52</span><br><span class="line">Q1RGe2FiY19kZfZ30</span><br></pre></td></tr></table></figure>
 
-<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201105221050313.png" alt="image-20201105221050313"></p>
-<p><strong>以下值在md5加密后以0E开头：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">QNKCDZO</span><br><span class="line">240610708</span><br><span class="line">s878926199a</span><br><span class="line">s155964671a</span><br><span class="line">s214587387a</span><br><span class="line">s214587387a</span><br></pre></td></tr></table></figure>
+<p>base64解密得</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTF&#123;abc_def_g&#125;</span><br></pre></td></tr></table></figure>
 
+
+
+<h4 id="bw-图片隐写-0707"><a href="#bw-图片隐写-0707" class="headerlink" title="bw-图片隐写-0707"></a>bw-图片隐写-0707</h4><p>解压得到一张图片，010打开。发现是iPhone5拍的</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126233205062.png" alt="image-20201126233205062"></p>
+<p>百度查iPhone5拍得照片尺寸为3264*2448</p>
+<p>修改图片宽高。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126234458342.png" alt="image-20201126234458342"></p>
+<p>得到flag</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126234523868.png" alt="image-20201126234523868"></p>
+<h4 id="bw-图片隐写-fruit"><a href="#bw-图片隐写-fruit" class="headerlink" title="bw-图片隐写-fruit"></a>bw-图片隐写-fruit</h4><p>解压得到一张水果图。放到StegSolve，一直按右得到一张二维码</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126234747448.png" alt="image-20201126234747448"></p>
+<p>扫码得到一串数字</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">45 46 45 46 32 45 32 46 46 45 46 32 46 45 46 46 32 46 46 46 32 45 46 46 46 32 46 46 45 45 46 45 32 45 46 46 46 32 46 46 46 32 46 45 46 46 32</span><br></pre></td></tr></table></figure>
+
+<p>对照ASCll码表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-.-. - ..-. .-.. ... -... ..--.- -... ... .-..</span><br></pre></td></tr></table></figure>
+
+<p>解密摩斯密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctflsb bsl</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="bw-图片隐写-five"><a href="#bw-图片隐写-five" class="headerlink" title="bw-图片隐写-five"></a>bw-图片隐写-five</h4><p>解压，得到一张图片，010打开。拉到后面发现</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201129183021918.png" alt="image-20201129183021918"></p>
+<p>改图片后缀为.zip，打开发现要密码。图片名字1111110000000000，换成16进制：FC00。确实是压缩包密码。</p>
+<p>得到一张图片hacker.jpeg。</p>
+<p>010打开hacker.jpeg，拉到最后发现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;LS0uLi4gIC4tICAuLi4uLiAgLS0uLi4gIC4tICAuLi4uLiAgLi0gIC0tLi4uICAuLi4uLSAgLi4uLS0gIC0tLS4uICAtLS0tLiAgLi4uLi0gIC4tICAtLS0tLSAgLiAg&quot; &gt;1.txt</span><br></pre></td></tr></table></figure>
+
+<p>base64解码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--... .- ..... --... .- ..... .- --... ....- ...-- ---.. ----. ....- .- ----- . </span><br></pre></td></tr></table></figure>
+
+<p>摩斯密码解码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">7A57A5A743894A0E</span><br></pre></td></tr></table></figure>
+
+<p>md5十六位</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">admin</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="bw-图片隐写-LSB"><a href="#bw-图片隐写-LSB" class="headerlink" title="bw-图片隐写-LSB"></a>bw-图片隐写-LSB</h4><p>LSB图片隐写。</p>
+<p>用Stegsolve打开，Data Extract 分析，选中RGB的0.保存png文件。得到一个二维码。扫描得flag</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201123180505328.png" alt="image-20201123180505328"></p>
+<h4 id="bw-加解密-图片中的密码"><a href="#bw-加解密-图片中的密码" class="headerlink" title="bw-加解密-图片中的密码"></a>bw-加解密-图片中的密码</h4><p>解压得到图片，010打开。拉到后面，发现一个rar和一个txt，盲猜换后缀.zip，压缩包里有个txt</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201129193839299.png" alt="image-20201129193839299"></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201129193900459.png" alt="image-20201129193900459"></p>
+<p>两次base64解密，得到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">20141014</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="bw-图片隐写-二维码"><a href="#bw-图片隐写-二维码" class="headerlink" title="bw-图片隐写-二维码"></a>bw-图片隐写-二维码</h4><p>解压得到一个二维码，扫码一看，只有</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">secret is here</span><br></pre></td></tr></table></figure>
+
+<p>010打开，拉到文件尾部。发现突破点</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201129222626350.png" alt="image-20201129222626350"></p>
+<p>压缩包+txt文件。改后缀，打开，4number解压密码。拉到ARCHPR暴力破解，发现出错</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201129222856349.png" alt="image-20201129222856349"></p>
+<p>手动提取zip文件，将PK…..后面的一部分保留，其他都删掉</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201129223047311.png" alt="image-20201129223047311"></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201129223118823.png" alt="image-20201129223118823"></p>
+<p>成功破解，拿到flag</p>
 
       
     </div>
@@ -424,7 +500,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://example.com/2020/11/05/MD5%E7%BB%95%E8%BF%87%EF%BC%88Hash%E6%AF%94%E8%BE%83%E7%BC%BA%E9%99%B7%EF%BC%89/" title="MD5绕过（Hash比较缺陷）" target="_blank" rel="external">http://example.com/2020/11/05/MD5%E7%BB%95%E8%BF%87%EF%BC%88Hash%E6%AF%94%E8%BE%83%E7%BC%BA%E9%99%B7%EF%BC%89/</a>
+      <a href="http://example.com/2020/12/23/%E6%9D%82%E9%A1%B9%EF%BC%88%E4%B8%80%EF%BC%89/" title="杂项（一）" target="_blank" rel="external">http://example.com/2020/12/23/%E6%9D%82%E9%A1%B9%EF%BC%88%E4%B8%80%EF%BC%89/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -470,13 +546,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2020/11/25/%E6%B5%B7%E5%95%B8%E6%9D%AFWP/" title="海啸杯WriteUp"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/2020/10/24/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" title="文件上传漏洞"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2020/12/23/easysql_cat/" title="easysql_cat"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
