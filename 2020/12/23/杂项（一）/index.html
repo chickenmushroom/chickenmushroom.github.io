@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>杂项（一） | chickenmushroom&#39;s blog</title>
+  <meta name="description" content="杂项（一）bw-图片隐写-爱因斯坦压缩包，解压，得到一张爱因斯坦的图片misc2.jpg binwalk 1binwalk -e misc2.jpg  得到一个压缩包，压缩包里面有个flag.txt。解压要密码 查看misc2.jpg的属性，发现备注有疑似密码的字符串。  尝试一下，密码正确。拿到flag  bw-图片隐写-64解压得到64格.gif，显示无法打开  010打开，增加文件头GIF8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="杂项（一）">
+<meta property="og:url" content="http://example.com/2020/12/23/%E6%9D%82%E9%A1%B9%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="杂项（一）bw-图片隐写-爱因斯坦压缩包，解压，得到一张爱因斯坦的图片misc2.jpg binwalk 1binwalk -e misc2.jpg  得到一个压缩包，压缩包里面有个flag.txt。解压要密码 查看misc2.jpg的属性，发现备注有疑似密码的字符串。  尝试一下，密码正确。拿到flag  bw-图片隐写-64解压得到64格.gif，显示无法打开  010打开，增加文件头GIF8">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126160703857.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126160754298.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126161006847.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126230752807.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126231352429.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126231743869.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126233205062.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126234458342.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126234523868.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126234747448.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201129183021918.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201123180505328.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201129193839299.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201129193900459.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201129222626350.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201129222856349.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201129223047311.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201129223118823.png">
+<meta property="article:published_time" content="2020-12-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-23T13:34:31.835Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cr_7.gitee.io/git-hub-image/image-20201126160703857.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2020/12/23/%E6%9D%82%E9%A1%B9%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/cofess" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">chickenmushroom</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Guangzhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Books</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="/null" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE/" rel="tag">PHP小项目</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WriteUp/" rel="tag">WriteUp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a><span class="tag-list-count">10</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE/" style="font-size: 13px;">PHP小项目</a> <a href="/tags/WriteUp/" style="font-size: 13px;">WriteUp</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 14px;">学习笔记</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/13/hello-world/" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-13T12:47:23.669Z" itemprop="datePublished">2021-11-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/01/31/%E6%88%91TMD%E7%83%A6%E6%AD%BB%E4%BA%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="title">我TMD烦死了学习笔记</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-01-30T16:00:00.000Z" itemprop="datePublished">2021-01-31</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/12/23/easyphp%E4%B9%8Bcreate_function/" class="title">easyphp之create_function</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-12-22T16:00:00.000Z" itemprop="datePublished">2020-12-23</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/12/23/easysql_cat/" class="title">easysql_cat</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-12-22T16:00:00.000Z" itemprop="datePublished">2020-12-23</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2020/12/23/%E6%9D%82%E9%A1%B9%EF%BC%88%E4%B8%80%EF%BC%89/" class="title">杂项（一）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2020-12-22T16:00:00.000Z" itemprop="datePublished">2020-12-23</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%82%E9%A1%B9%EF%BC%88%E4%B8%80%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">杂项（一）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#bw-%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99-%E7%88%B1%E5%9B%A0%E6%96%AF%E5%9D%A6"><span class="toc-number">1.1.</span> <span class="toc-text">bw-图片隐写-爱因斯坦</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bw-%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99-64"><span class="toc-number">1.2.</span> <span class="toc-text">bw-图片隐写-64</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bw-%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99-0707"><span class="toc-number">1.3.</span> <span class="toc-text">bw-图片隐写-0707</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bw-%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99-fruit"><span class="toc-number">1.4.</span> <span class="toc-text">bw-图片隐写-fruit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bw-%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99-five"><span class="toc-number">1.5.</span> <span class="toc-text">bw-图片隐写-five</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bw-%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99-LSB"><span class="toc-number">1.6.</span> <span class="toc-text">bw-图片隐写-LSB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bw-%E5%8A%A0%E8%A7%A3%E5%AF%86-%E5%9B%BE%E7%89%87%E4%B8%AD%E7%9A%84%E5%AF%86%E7%A0%81"><span class="toc-number">1.7.</span> <span class="toc-text">bw-加解密-图片中的密码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bw-%E5%9B%BE%E7%89%87%E9%9A%90%E5%86%99-%E4%BA%8C%E7%BB%B4%E7%A0%81"><span class="toc-number">1.8.</span> <span class="toc-text">bw-图片隐写-二维码</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-杂项（一）" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      杂项（一）
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/12/23/%E6%9D%82%E9%A1%B9%EF%BC%88%E4%B8%80%EF%BC%89/" class="article-date">
+	  <time datetime="2020-12-22T16:00:00.000Z" itemprop="datePublished">2020-12-23</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/12/23/%E6%9D%82%E9%A1%B9%EF%BC%88%E4%B8%80%EF%BC%89/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h3 id="杂项（一）"><a href="#杂项（一）" class="headerlink" title="杂项（一）"></a>杂项（一）</h3><h4 id="bw-图片隐写-爱因斯坦"><a href="#bw-图片隐写-爱因斯坦" class="headerlink" title="bw-图片隐写-爱因斯坦"></a>bw-图片隐写-爱因斯坦</h4><p>压缩包，解压，得到一张爱因斯坦的图片misc2.jpg</p>
+<p>binwalk</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">binwalk -e misc2.jpg</span><br></pre></td></tr></table></figure>
+
+<p>得到一个压缩包，压缩包里面有个flag.txt。解压要密码</p>
+<p>查看misc2.jpg的属性，发现备注有疑似密码的字符串。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126160703857.png" alt="image-20201126160703857"></p>
+<p>尝试一下，密码正确。拿到flag</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126160754298.png" alt="image-20201126160754298"></p>
+<h4 id="bw-图片隐写-64"><a href="#bw-图片隐写-64" class="headerlink" title="bw-图片隐写-64"></a>bw-图片隐写-64</h4><p>解压得到64格.gif，显示无法打开</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126161006847.png" alt="image-20201126161006847"></p>
+<p>010打开，增加文件头GIF89。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126230752807.png" alt="image-20201126230752807"></p>
+<p>gif可以打开，用gifsplitter分帧，得到十九张图。每张图的小黄人都会在不同的格子。根据下面这张表对应的数字，得到一串数字。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126231352429.png" alt="image-20201126231352429"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">16 53 17 6 30 54 5 34 24 54 61 36 25 22 25 31 25 55 52</span><br></pre></td></tr></table></figure>
+
+<p>base64表：</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126231743869.png" alt="image-20201126231743869"></p>
+<p>对应base64表，得到字符串</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">16 53 17 6 30 54 5 34 24 54 61 36 25 22 25 31 25 55 52</span><br><span class="line">Q1RGe2FiY19kZfZ30</span><br></pre></td></tr></table></figure>
+
+<p>base64解密得</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTF&#123;abc_def_g&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="bw-图片隐写-0707"><a href="#bw-图片隐写-0707" class="headerlink" title="bw-图片隐写-0707"></a>bw-图片隐写-0707</h4><p>解压得到一张图片，010打开。发现是iPhone5拍的</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126233205062.png" alt="image-20201126233205062"></p>
+<p>百度查iPhone5拍得照片尺寸为3264*2448</p>
+<p>修改图片宽高。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126234458342.png" alt="image-20201126234458342"></p>
+<p>得到flag</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126234523868.png" alt="image-20201126234523868"></p>
+<h4 id="bw-图片隐写-fruit"><a href="#bw-图片隐写-fruit" class="headerlink" title="bw-图片隐写-fruit"></a>bw-图片隐写-fruit</h4><p>解压得到一张水果图。放到StegSolve，一直按右得到一张二维码</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201126234747448.png" alt="image-20201126234747448"></p>
+<p>扫码得到一串数字</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">45 46 45 46 32 45 32 46 46 45 46 32 46 45 46 46 32 46 46 46 32 45 46 46 46 32 46 46 45 45 46 45 32 45 46 46 46 32 46 46 46 32 46 45 46 46 32</span><br></pre></td></tr></table></figure>
+
+<p>对照ASCll码表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-.-. - ..-. .-.. ... -... ..--.- -... ... .-..</span><br></pre></td></tr></table></figure>
+
+<p>解密摩斯密码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctflsb bsl</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="bw-图片隐写-five"><a href="#bw-图片隐写-five" class="headerlink" title="bw-图片隐写-five"></a>bw-图片隐写-five</h4><p>解压，得到一张图片，010打开。拉到后面发现</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201129183021918.png" alt="image-20201129183021918"></p>
+<p>改图片后缀为.zip，打开发现要密码。图片名字1111110000000000，换成16进制：FC00。确实是压缩包密码。</p>
+<p>得到一张图片hacker.jpeg。</p>
+<p>010打开hacker.jpeg，拉到最后发现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;LS0uLi4gIC4tICAuLi4uLiAgLS0uLi4gIC4tICAuLi4uLiAgLi0gIC0tLi4uICAuLi4uLSAgLi4uLS0gIC0tLS4uICAtLS0tLiAgLi4uLi0gIC4tICAtLS0tLSAgLiAg&quot; &gt;1.txt</span><br></pre></td></tr></table></figure>
+
+<p>base64解码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--... .- ..... --... .- ..... .- --... ....- ...-- ---.. ----. ....- .- ----- . </span><br></pre></td></tr></table></figure>
+
+<p>摩斯密码解码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">7A57A5A743894A0E</span><br></pre></td></tr></table></figure>
+
+<p>md5十六位</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">admin</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="bw-图片隐写-LSB"><a href="#bw-图片隐写-LSB" class="headerlink" title="bw-图片隐写-LSB"></a>bw-图片隐写-LSB</h4><p>LSB图片隐写。</p>
+<p>用Stegsolve打开，Data Extract 分析，选中RGB的0.保存png文件。得到一个二维码。扫描得flag</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201123180505328.png" alt="image-20201123180505328"></p>
+<h4 id="bw-加解密-图片中的密码"><a href="#bw-加解密-图片中的密码" class="headerlink" title="bw-加解密-图片中的密码"></a>bw-加解密-图片中的密码</h4><p>解压得到图片，010打开。拉到后面，发现一个rar和一个txt，盲猜换后缀.zip，压缩包里有个txt</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201129193839299.png" alt="image-20201129193839299"></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201129193900459.png" alt="image-20201129193900459"></p>
+<p>两次base64解密，得到</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">20141014</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="bw-图片隐写-二维码"><a href="#bw-图片隐写-二维码" class="headerlink" title="bw-图片隐写-二维码"></a>bw-图片隐写-二维码</h4><p>解压得到一个二维码，扫码一看，只有</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">secret is here</span><br></pre></td></tr></table></figure>
+
+<p>010打开，拉到文件尾部。发现突破点</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201129222626350.png" alt="image-20201129222626350"></p>
+<p>压缩包+txt文件。改后缀，打开，4number解压密码。拉到ARCHPR暴力破解，发现出错</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201129222856349.png" alt="image-20201129222856349"></p>
+<p>手动提取zip文件，将PK…..后面的一部分保留，其他都删掉</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201129223047311.png" alt="image-20201129223047311"></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201129223118823.png" alt="image-20201129223118823"></p>
+<p>成功破解，拿到flag</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2020/12/23/%E6%9D%82%E9%A1%B9%EF%BC%88%E4%B8%80%EF%BC%89/" title="杂项（一）" target="_blank" rel="external">http://example.com/2020/12/23/%E6%9D%82%E9%A1%B9%EF%BC%88%E4%B8%80%EF%BC%89/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/cofess" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/cofess" target="_blank"><span class="text-dark">chickenmushroom</span><small class="ml-1x">Web</small></a></h3>
+        <div>平平无奇的小红帽。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/12/23/easysql_cat/" title="easysql_cat"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2020/11/25/ciscn2021%E5%8D%8A%E5%86%B3%E8%B5%9B%E5%8D%8E%E5%8D%97%E8%B5%9B%E5%8C%BA/" title="ciscn2021半决赛-华南赛区"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">
+        <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="/null" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
