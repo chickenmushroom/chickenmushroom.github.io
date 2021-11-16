@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>攻防世界新手web和misc | chickenmushroom&#39;s blog</title>
+  <meta name="description" content="攻防世界新手web和miscMISCext3hint：今天是菜狗的生日，他收到了一个linux系统光盘 下载得到一个linux系统文件。拉进kali分析用file分析一下  没什么特别的东西。接着用strings搜索一下看看有没有料。  发现有一个flag.txt。那就挂载磁盘  打开得到flag.txt  1ZmxhZ3tzYWpiY2lienNrampjbmJoc2J2Y2pianN6Y3N6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="攻防世界新手web和misc">
+<meta property="og:url" content="http://example.com/2021/11/15/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E6%96%B0%E6%89%8Bweb%E5%92%8Cmisc/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="攻防世界新手web和miscMISCext3hint：今天是菜狗的生日，他收到了一个linux系统光盘 下载得到一个linux系统文件。拉进kali分析用file分析一下  没什么特别的东西。接着用strings搜索一下看看有没有料。  发现有一个flag.txt。那就挂载磁盘  打开得到flag.txt  1ZmxhZ3tzYWpiY2lienNrampjbmJoc2J2Y2pianN6Y3N6">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210911171232422.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210911171418864.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210911171536044.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210911171554266.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210912231818149.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210913223147081.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210913223259106.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210913223307761.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/flag.jpg.bmp">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210913223726053.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210913224130137.png">
+<meta property="og:image" content="c:/Users/FJJ/Downloads/4b0799f9a4d649f09a882b6b1130bb70.gif.ifl/IMG00049.bmp">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210913230043512.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210913230728147.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210913231322362.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210914162213857.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210914162313920.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210914223025460.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917222610285.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917222800699.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917222850129.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917223104860.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917223118752.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917223256463.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/%E6%94%BB%E7%95%A5.jpg">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917223506963.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917223856557.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917224141876.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917224151964.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917224235929.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917224253321.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917224359123.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917224610705.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917224628573.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917224757355.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917225056966.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917225126176.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917230143766.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917230208456.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917230244982.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917230351957.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917230916302.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917230930919.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917230950418.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917230958568.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917231006727.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917231122038.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917231232325.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917231255088.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917231424150.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917231729713.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210917233701647.png">
+<meta property="article:published_time" content="2021-11-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-16T00:24:25.168Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="WriteUp">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cr_7.gitee.io/git-hub-image/image-20210911171232422.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2021/11/15/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E6%96%B0%E6%89%8Bweb%E5%92%8Cmisc/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/cofess" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">chickenmushroom</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Guangzhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Books</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="/null" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE/" rel="tag">PHP小项目</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WriteUp/" rel="tag">WriteUp</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a><span class="tag-list-count">15</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE/" style="font-size: 13px;">PHP小项目</a> <a href="/tags/WriteUp/" style="font-size: 13.5px;">WriteUp</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 14px;">学习笔记</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/ciscn2021%E5%8D%8A%E5%86%B3%E8%B5%9B%E5%8D%8E%E5%8D%97%E8%B5%9B%E5%8C%BA/" class="title">ciscn2021半决赛-华南赛区</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/ciscn2021%E5%8D%8E%E5%8D%97%E8%B5%9B%E5%8C%BA%E9%A2%84%E8%B5%9B/" class="title">ciscn2021华南赛区预赛</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/SQL%E6%B3%A8%E5%85%A5/" class="title">SQL注入总结</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/docker%E5%85%A5%E9%97%A8%E5%88%B0%E9%83%A8%E7%BD%B2/" class="title">docker入门到部署</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E6%96%B0%E6%89%8Bweb%E5%92%8Cmisc/" class="title">攻防世界新手web和misc</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E6%96%B0%E6%89%8Bweb%E5%92%8Cmisc"><span class="toc-number">1.</span> <span class="toc-text">攻防世界新手web和misc</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MISC"><span class="toc-number">1.1.</span> <span class="toc-text">MISC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ext3"><span class="toc-number">1.1.1.</span> <span class="toc-text">ext3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SimpleRAR"><span class="toc-number">1.1.2.</span> <span class="toc-text">SimpleRAR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#this-is-flag"><span class="toc-number">1.1.3.</span> <span class="toc-text">this_is_flag</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pdf"><span class="toc-number">1.1.4.</span> <span class="toc-text">pdf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E6%9D%A5%E5%8D%81%E4%B8%89%E6%8E%8C"><span class="toc-number">1.1.5.</span> <span class="toc-text">如来十三掌</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#give-you-flag"><span class="toc-number">1.1.6.</span> <span class="toc-text">give_you_flag</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stegano"><span class="toc-number">1.1.7.</span> <span class="toc-text">stegano</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9D%9A%E6%8C%8160s"><span class="toc-number">1.1.8.</span> <span class="toc-text">坚持60s</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gif"><span class="toc-number">1.1.9.</span> <span class="toc-text">gif</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%80%E6%A1%8C%E5%AD%90"><span class="toc-number">1.1.10.</span> <span class="toc-text">掀桌子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#base64stego"><span class="toc-number">1.1.11.</span> <span class="toc-text">base64stego</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%9F%E5%A4%AB%E5%86%8D%E9%AB%98%E4%B9%9F%E6%80%95%E8%8F%9C%E5%88%80"><span class="toc-number">1.1.12.</span> <span class="toc-text">功夫再高也怕菜刀</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WEB"><span class="toc-number">1.2.</span> <span class="toc-text">WEB</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#view-source"><span class="toc-number">1.2.1.</span> <span class="toc-text">view_source</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#robots"><span class="toc-number">1.2.2.</span> <span class="toc-text">robots</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#backup"><span class="toc-number">1.2.3.</span> <span class="toc-text">backup</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cookie"><span class="toc-number">1.2.4.</span> <span class="toc-text">cookie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#disabled-button"><span class="toc-number">1.2.5.</span> <span class="toc-text">disabled_button</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#weak-auth"><span class="toc-number">1.2.6.</span> <span class="toc-text">weak_auth</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#simple-php"><span class="toc-number">1.2.7.</span> <span class="toc-text">simple_php</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get-post"><span class="toc-number">1.2.8.</span> <span class="toc-text">get_post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xff-referer"><span class="toc-number">1.2.9.</span> <span class="toc-text">xff_referer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#webshell"><span class="toc-number">1.2.10.</span> <span class="toc-text">webshell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#command-execution"><span class="toc-number">1.2.11.</span> <span class="toc-text">command_execution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#simple-js"><span class="toc-number">1.2.12.</span> <span class="toc-text">simple_js</span></a></li></ol></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-攻防世界新手web和misc" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      攻防世界新手web和misc
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/11/15/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E6%96%B0%E6%89%8Bweb%E5%92%8Cmisc/" class="article-date">
+	  <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/WriteUp/" rel="tag">WriteUp</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/11/15/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E6%96%B0%E6%89%8Bweb%E5%92%8Cmisc/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="攻防世界新手web和misc"><a href="#攻防世界新手web和misc" class="headerlink" title="攻防世界新手web和misc"></a>攻防世界新手web和misc</h1><h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><h3 id="ext3"><a href="#ext3" class="headerlink" title="ext3"></a>ext3</h3><p>hint：今天是菜狗的生日，他收到了一个linux系统光盘</p>
+<p>下载得到一个linux系统文件。拉进kali分析用file分析一下</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210911171232422.png" alt="image-20210911171232422"></p>
+<p>没什么特别的东西。接着用strings搜索一下看看有没有料。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210911171418864.png" alt="image-20210911171418864"></p>
+<p>发现有一个flag.txt。那就挂载磁盘</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210911171536044.png" alt="image-20210911171536044"></p>
+<p>打开得到flag.txt</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210911171554266.png" alt="image-20210911171554266"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZmxhZ3tzYWpiY2lienNrampjbmJoc2J2Y2pianN6Y3N6Ymt6an0=</span><br></pre></td></tr></table></figure>
+
+<p>base64编译：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;sajbcibzskjjcnbhsbvcjbjszcszbkzj&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="SimpleRAR"><a href="#SimpleRAR" class="headerlink" title="SimpleRAR"></a>SimpleRAR</h3><p>下载得到一个rar压缩文件。打开里面只有一个flag.txt，里面就只有一句话“flag is not here”。用010打开压缩包，分析。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210912231818149.png" alt="image-20210912231818149"></p>
+<p>发现，按正常来说，这个压缩包不只有一个flag.txt，还应该有一张png图片。问题就出现在选中的这个7A（图中已修改）。我们要的是文件块而不是子块，于是更改7A为74，成功解压，发现是一张空白的图片，继续用010打开。发现是gif，用gifsplitter分离。得到两张图片</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210913223147081.png" alt="image-20210913223147081"></p>
+<p>分别放到Stegsolve分析，</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210913223259106.png" alt="image-20210913223259106"></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210913223307761.png" alt="image-20210913223307761"></p>
+<p>将两张二维码合并，并且补齐定位码就可以了。</p>
+<p>PS：垃圾的我不会用ps，所以就用了Win自带的画图3D。截图两张然后用插入将两张合并在一起。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/flag.jpg.bmp" alt="flag.jpg"></p>
+<h3 id="this-is-flag"><a href="#this-is-flag" class="headerlink" title="this_is_flag"></a>this_is_flag</h3><p><img src="http://cr_7.gitee.io/git-hub-image/image-20210913223726053.png" alt="image-20210913223726053"></p>
+<p>flag{th1s_!s_a_d4m0_4la9}</p>
+<h3 id="pdf"><a href="#pdf" class="headerlink" title="pdf"></a>pdf</h3><p>打开PDF，右击，删除照片，就有flag</p>
+<h3 id="如来十三掌"><a href="#如来十三掌" class="headerlink" title="如来十三掌"></a>如来十三掌</h3><p>word文档里面有一些看不懂的“佛家”字体。联想到 佛曰加密</p>
+<p><a target="_blank" rel="noopener" href="https://www.keyfc.net/bbs/tools/tudoucode.aspx">去加解密网站解密</a></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210913224130137.png" alt="image-20210913224130137"></p>
+<p>记住要在前面加佛曰：</p>
+<p>得到</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MzkuM3gvMUAwnzuvn3cgozMlMTuvqzAenJchMUAeqzWenzEmLJW9</span><br></pre></td></tr></table></figure>
+
+<p>很像base64，解密不出任何东西。卡死了。。题目提到了十三掌。十三。。。。Rot13加解密</p>
+<p>解密得到</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZmxhZ3tiZHNjamhia3ptbmZyZGhidmNraWpuZHNrdmJramRzYWJ9</span><br></pre></td></tr></table></figure>
+
+<p>base64解密：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;bdscjhbkzmnfrdhbvckijndskvbkjdsab&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="give-you-flag"><a href="#give-you-flag" class="headerlink" title="give_you_flag"></a>give_you_flag</h3><p>得到一个gif，发现闪过二维码。gifsplitter分离。</p>
+<p><img src="C:\Users\FJJ\Downloads\4b0799f9a4d649f09a882b6b1130bb70.gif.ifl\IMG00049.bmp" alt="IMG00049"></p>
+<p>网上找定位符，补全即可。<a target="_blank" rel="noopener" href="https://www.pianshen.com/article/16241635478/">可以参考这个补全二维码</a></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210913230043512.png" alt="image-20210913230043512"></p>
+<p>flag{e7d478cf6b915f50ab1277f78502a2c5}</p>
+<h3 id="stegano"><a href="#stegano" class="headerlink" title="stegano"></a>stegano</h3><p>hint：菜狗收到了图后很开心，玩起了pdf  提交格式为flag{xxx}，解密字符需小写</p>
+<p>全选之后，发现有异样</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210913230728147.png" alt="image-20210913230728147"></p>
+<p>用浏览器打开看看什么情况。浏览器打开之后，全选，复制。放到sublime或者txt看看多出来的东西是什么。结果是这一串</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BABA BBB BA BBA ABA AB B AAB ABAA AB B AA BBB BA AAA BBAABB AABA ABAA AB BBA BBBAAA ABBBB BA AAAB ABBBB AAAAA ABBBB BAAA ABAA AAABB BB AAABB AAAAA AAAAA AAAAB BBA AAABB</span><br></pre></td></tr></table></figure>
+
+<p>凭经验来讲，应该是摩斯密码，把A当成”.”,B当成”-“</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-.-. --- -. --. .-. .- - ..- .-.. .- - .. --- -. ... --..-- ..-. .-.. .- --. ---... .---- -. ...- .---- ..... .---- -... .-.. ...-- -- ...-- ..... ..... ....- --. ...--</span><br></pre></td></tr></table></figure>
+
+<p>解密得到flag</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210913231322362.png" alt="image-20210913231322362"></p>
+<p>flag{1nv151bl3m3554g3}</p>
+<h3 id="坚持60s"><a href="#坚持60s" class="headerlink" title="坚持60s"></a>坚持60s</h3><p>下载附件，jar文件。打开。。。。坚持60s。用010打开发现PK包。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210914162213857.png" alt="image-20210914162213857"></p>
+<p>改后缀名zip。解压打开。在文件PlaneGameFrame.class里发现flag</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210914162313920.png" alt="image-20210914162313920"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;RGFqaURhbGlfSmlud2FuQ2hpamk=&#125;</span><br></pre></td></tr></table></figure>
+
+<p>base64解码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;DajiDali_JinwanChiji&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="gif"><a href="#gif" class="headerlink" title="gif"></a>gif</h3><p>hint：菜狗截获了一张菜鸡发给菜猫的动态图，却发现另有玄机</p>
+<p>得到一个压缩包。解压缩，一共104张图片，不是白色就是黑色。二进制吧。。白色代表0，黑色代表1</p>
+<p>人工统计也行，通过脚本也行。下面贴上脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span> = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">white = <span class="built_in">open</span>(<span class="string">&quot;./gif/0.jpg&quot;</span>,<span class="string">&quot;rb&quot;</span>).read()</span><br><span class="line">black = <span class="built_in">open</span>(<span class="string">&quot;./gif/1.jpg&quot;</span>,<span class="string">&quot;rb&quot;</span>).read()</span><br><span class="line"><span class="comment">#上面两句用于为下面的图片识别做个实例，定义什么图片是白色，什么是黑色</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">104</span>):</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;./gif/%d.jpg&quot;</span>%i,<span class="string">&quot;rb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">if</span> f.read() == white:</span><br><span class="line">            <span class="built_in">str</span> += <span class="string">&quot;0&quot;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">str</span> += <span class="string">&quot;1&quot;</span></span><br><span class="line"><span class="comment">#上面循环语句用于识别gif路径下的104张图片的颜色，并给白色附值为0，黑色赋值为1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#print (flag)</span></span><br><span class="line"><span class="comment">#用于测试打印识别后的二进制</span></span><br><span class="line"></span><br><span class="line">flag = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(<span class="built_in">str</span>)//<span class="number">8</span>):</span><br><span class="line">    flag += <span class="built_in">chr</span>(<span class="built_in">int</span>(<span class="built_in">str</span>[i*<span class="number">8</span>:(i+<span class="number">1</span>)*<span class="number">8</span>],<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(flag)</span><br><span class="line"><span class="comment">#将二进制转化为字符串</span></span><br></pre></td></tr></table></figure>
+
+<p>代码最后运用了python的切片技术，不会的可以参考这篇文章<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/15715d6f4dad">https://www.jianshu.com/p/15715d6f4dad</a></p>
+<h3 id="掀桌子"><a href="#掀桌子" class="headerlink" title="掀桌子"></a>掀桌子</h3><p>题目：菜狗截获了一份报文如下c8e9aca0c6f2e5f3e8c4efe7a1a0d4e8e5a0e6ece1e7a0e9f3baa0e8eafae3f9e4eafae2eae4e3eaebfaebe3f5e7e9f3e4e3e8eaf9eaf3e2e4e6f2，生气地掀翻了桌子(╯°□°）╯︵ ┻━┻</p>
+<p>字符串由0-9，a-f组成。应该是改过的16进制。将字符串改成正规16进制</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">string = <span class="string">&quot;c8e9aca0c6f2e5f3e8c4efe7a1a0d4e8e5a0e6ece1e7a0e9f3baa0e8eafae3f9e4eafae2eae4e3eaebfaebe3f5e7e9f3e4e3e8eaf9eaf3e2e4e6f2&quot;</span></span><br><span class="line">s= <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="built_in">len</span>(string), <span class="number">2</span>):</span><br><span class="line">    s += <span class="string">&quot;0x&quot;</span> + string[i] + string[i+<span class="number">1</span>]</span><br><span class="line"><span class="built_in">print</span>(s)</span><br></pre></td></tr></table></figure>
+
+<p>得到</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0xc80xe90xac0xa00xc60xf20xe50xf30xe80xc40xef0xe70xa10xa00xd40xe80xe50xa00xe60xec0xe10xe70xa00xe90xf30xba0xa00xe80xea0xfa0xe30xf90xe40xea0xfa0xe20xea0xe40xe30xea0xeb0xfa0xeb0xe30xf50xe70xe90xf30xe40xe30xe80xea0xf90xea0xf30xe20xe40xe60xf2</span><br></pre></td></tr></table></figure>
+
+<p>发现都是大于128的。将他们减去128再转换成asc码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">string = <span class="string">&quot;c8e9aca0c6f2e5f3e8c4efe7a1a0d4e8e5a0e6ece1e7a0e9f3baa0e8eafae3f9e4eafae2eae4e3eaebfaebe3f5e7e9f3e4e3e8eaf9eaf3e2e4e6f2&quot;</span></span><br><span class="line">s = <span class="string">&#x27;&#x27;</span></span><br><span class="line">flag=<span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="built_in">len</span>(string), <span class="number">2</span>):</span><br><span class="line">    s = <span class="string">&quot;0x&quot;</span> + string[i] + string[i+<span class="number">1</span>]</span><br><span class="line">    flag += <span class="built_in">chr</span>(<span class="built_in">int</span>(s, <span class="number">16</span>) - <span class="number">128</span>)</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
+
+<p>得到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hi, FreshDog! The flag is: hjzcydjzbjdcjkzkcugisdchjyjsbdfr</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="base64stego"><a href="#base64stego" class="headerlink" title="base64stego"></a>base64stego</h3><p>hint：菜狗经过几天的学习，终于发现了如来十三掌最后一步的精髓</p>
+<p>下载压缩包，解压得到一个stego.txt。里面全是看似base64字符。</p>
+<p>解密得到</p>
+<p>“Steganography is the art and science of writing hidden messages in such a way that no one”</p>
+<p>意思就是隐写。查了一下原来有base64隐写。</p>
+<p>基于python3的脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">path = <span class="built_in">input</span>(<span class="string">&quot;请输入加密文件路径\n&quot;</span>)</span><br><span class="line">file = <span class="built_in">open</span>(path)</span><br><span class="line">a = <span class="string">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/&quot;</span></span><br><span class="line">aaa = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    text = file.readline()  <span class="comment"># 只读取一行内容</span></span><br><span class="line">    <span class="comment"># 判断是否读取到内容</span></span><br><span class="line">    text = text.replace(<span class="string">&quot;\n&quot;</span>, <span class="string">&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> text:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">if</span> text.count(<span class="string">&#x27;=&#x27;</span>) == <span class="number">1</span>:</span><br><span class="line">        aaa = aaa + \</span><br><span class="line">            <span class="built_in">str</span>(<span class="string">&#x27;&#123;:02b&#125;&#x27;</span>.<span class="built_in">format</span>((a.find(text[<span class="built_in">len</span>(text)-<span class="number">2</span>])) % <span class="number">4</span>))</span><br><span class="line">    <span class="keyword">if</span> text.count(<span class="string">&#x27;=&#x27;</span>) == <span class="number">2</span>:</span><br><span class="line">        aaa = aaa + \</span><br><span class="line">            <span class="built_in">str</span>(<span class="string">&#x27;&#123;:04b&#125;&#x27;</span>.<span class="built_in">format</span>((a.find(text[<span class="built_in">len</span>(text)-<span class="number">3</span>])) % <span class="number">16</span>))</span><br><span class="line">file.close()</span><br><span class="line">t = <span class="string">&quot;&quot;</span></span><br><span class="line">ttt = <span class="built_in">len</span>(aaa)</span><br><span class="line">ttt = ttt//<span class="number">8</span>*<span class="number">8</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,ttt,<span class="number">8</span>):</span><br><span class="line">    t = t + <span class="built_in">chr</span>(<span class="built_in">int</span>( aaa[i:i+<span class="number">8</span>],<span class="number">2</span>))</span><br><span class="line"><span class="built_in">print</span>(t)</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210914223025460.png" alt="image-20210914223025460"></p>
+<p>得到flag：flag{Base_sixty_four_point_five}</p>
+<h3 id="功夫再高也怕菜刀"><a href="#功夫再高也怕菜刀" class="headerlink" title="功夫再高也怕菜刀"></a>功夫再高也怕菜刀</h3><p>hint：菜狗决定用菜刀和菜鸡决一死战</p>
+<p>开局一个流量文件。</p>
+<p>放到kali里面分析了一下，用foremost分离文件。得到一个压缩文件，里面有flag.txt，但是有密码。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917222610285.png" alt="image-20210917222610285"></p>
+<p>怎么办呢？？？分析流量文件吧。定位一下这个flag.txt在哪</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917222800699.png" alt="image-20210917222800699"></p>
+<p>追踪一下TCP流。得到一大串东西</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917222850129.png" alt="image-20210917222850129"></p>
+<p>不要前面的base64，选中后面的一大串</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917223104860.png" alt="image-20210917223104860"></p>
+<p>一直到。。。。<img src="http://cr_7.gitee.io/git-hub-image/image-20210917223118752.png" alt="image-20210917223118752"></p>
+<p>导入010</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917223256463.png" alt="image-20210917223256463"></p>
+<p>发现是一张图片？<img src="http://cr_7.gitee.io/git-hub-image/%E6%94%BB%E7%95%A5.jpg" alt="攻略"></p>
+<p>打开图片，是密码。打开解压密码拿flag</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917223506963.png" alt="image-20210917223506963"></p>
+<p>flag{3OpWdJ-JP6FzK-koCMAK-VkfWBq-75Un2z}</p>
+<h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h3 id="view-source"><a href="#view-source" class="headerlink" title="view_source"></a>view_source</h3><p>hint：X老师让小宁同学查看一个网页的源代码，但小宁同学发现鼠标右键好像不管用了。</p>
+<p>F12，<img src="http://cr_7.gitee.io/git-hub-image/image-20210917223856557.png" alt="image-20210917223856557"></p>
+<h3 id="robots"><a href="#robots" class="headerlink" title="robots"></a>robots</h3><p>hint：X老师上课讲了Robots协议，小宁同学却上课打了瞌睡，赶紧来教教小宁Robots协议是什么吧。</p>
+<p>根据提示，robots协议。</p>
+<p><a target="_blank" rel="noopener" href="http://111.200.241.244:54060/robots.txt">http://111.200.241.244:54060/robots.txt</a></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917224141876.png" alt="image-20210917224141876"></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917224151964.png" alt="image-20210917224151964"></p>
+<p>cyberpeace{9db5e52553d7d956186b82dc3ed734ef}</p>
+<h3 id="backup"><a href="#backup" class="headerlink" title="backup"></a>backup</h3><p>hint：X老师忘记删除备份文件，他派小宁同学去把备份文件找出来,一起来帮小宁同学吧！</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917224235929.png" alt="image-20210917224235929"></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917224253321.png" alt="image-20210917224253321"></p>
+<p>得到文件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;备份文件&lt;/title&gt;</span><br><span class="line">    &lt;link href=<span class="string">&quot;http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css&quot;</span> rel=<span class="string">&quot;stylesheet&quot;</span> /&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        body&#123;</span><br><span class="line">            margin-left:auto;</span><br><span class="line">            margin-right:auto;</span><br><span class="line">            margin-TOP:<span class="number">200</span>PX;</span><br><span class="line">            width:<span class="number">20</span>em;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h3&gt;你知道index.php的备份文件名吗？&lt;/h3&gt;</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$flag</span>=<span class="string">&quot;Cyberpeace&#123;855A1C4B3401294CB6604CCC98BDE334&#125;&quot;</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>hint：X老师告诉小宁他在cookie里放了些东西，小宁疑惑地想：‘这是夹心饼干的意思吗？</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917224359123.png" alt="image-20210917224359123"></p>
+<p>很明显就是要我们读cookie。抓包，拿cookie</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917224610705.png" alt="image-20210917224610705"></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917224628573.png" alt="image-20210917224628573"></p>
+<p>叫我们找响应包。F12</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917224757355.png" alt="image-20210917224757355"></p>
+<h3 id="disabled-button"><a href="#disabled-button" class="headerlink" title="disabled_button"></a>disabled_button</h3><p>hint：X老师今天上课讲了前端知识，然后给了大家一个不能按的按钮，小宁惊奇地发现这个按钮按不下去，到底怎么才能按下去呢？</p>
+<p>根据hint，不能按下去。应该就是编写前端的时候，将按钮的属性设置成不能按下去。</p>
+<p>按F12看看<img src="http://cr_7.gitee.io/git-hub-image/image-20210917225056966.png" alt="image-20210917225056966"></p>
+<p>把这个disable=“”去掉</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917225126176.png" alt="image-20210917225126176"></p>
+<p>就可以按按钮了。得到flag</p>
+<p>cyberpeace{a9b4375ddf6e32b058af096ee165c559}</p>
+<h3 id="weak-auth"><a href="#weak-auth" class="headerlink" title="weak_auth"></a>weak_auth</h3><p>hint：小宁写了一个登陆验证页面，随手就设了一个密码。</p>
+<p>额。。。弱密码</p>
+<p>admin 123456登录。拿flag</p>
+<p>cyberpeace{d69afc0f1280190706831223a104daf5}</p>
+<h3 id="simple-php"><a href="#simple-php" class="headerlink" title="simple_php"></a>simple_php</h3><p>hint：小宁听说php是最好的语言,于是她简单学习之后写了几行php代码。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">﻿<span class="meta">&lt;?php</span></span><br><span class="line">show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">include</span>(<span class="string">&quot;config.php&quot;</span>);</span><br><span class="line"><span class="variable">$a</span>=@<span class="variable">$_GET</span>[<span class="string">&#x27;a&#x27;</span>];</span><br><span class="line"><span class="variable">$b</span>=@<span class="variable">$_GET</span>[<span class="string">&#x27;b&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$a</span>==<span class="number">0</span> <span class="keyword">and</span> <span class="variable">$a</span>)&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$flag1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(is_numeric(<span class="variable">$b</span>))&#123;</span><br><span class="line">    <span class="keyword">exit</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$b</span>&gt;<span class="number">1234</span>)&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$flag2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>简单的代码审计。</p>
+<p>条件一：a=0且为真 =====&gt;输出flag1</p>
+<p>条件二：b为字符串</p>
+<p>条件三：b&gt;1234 ======&gt;输出flag2</p>
+<p>利用php弱类型比较。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://111.200.241.244:65199/?a=%220%22</span><br></pre></td></tr></table></figure>
+
+<p>得到一半flag</p>
+<p>Cyberpeace{647E37C7627CC3E401</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://111.200.241.244:65199/?a=%220%22&amp;b=12345a</span><br></pre></td></tr></table></figure>
+
+<p>得到完整flag</p>
+<p><code> </code>Cyberpeace{647E37C7627CC3E4019EC69324F66C7C}</p>
+<h3 id="get-post"><a href="#get-post" class="headerlink" title="get_post"></a>get_post</h3><p>hint：X老师告诉小宁同学HTTP通常使用两种请求方法，你知道是哪两种吗？</p>
+<p>http两种请求方法，get和post</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917230143766.png" alt="image-20210917230143766"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://111.200.241.244:61319/?a=1</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917230208456.png" alt="image-20210917230208456"></p>
+<p>post要不抓包要不用hackbar</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917230244982.png" alt="image-20210917230244982"></p>
+<p>cyberpeace{f7a79b0997d3ef07b6738ac6216a9723}</p>
+<h3 id="xff-referer"><a href="#xff-referer" class="headerlink" title="xff_referer"></a>xff_referer</h3><p>hint：X老师告诉小宁其实xff和referer是可以伪造的。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917230351957.png" alt="image-20210917230351957"></p>
+<p>XFF，是X-Forwarded-for的缩写，XFF注入是SQL注入的一种，该注入原理是通过修改X-Forwarded-for头对带入系统的dns进行sql注入，从而得到网站的数据库内容。</p>
+<p>运用条件：</p>
+<p>1.Web业务运行正常</p>
+<p>2.HTTP Header中存在X-Forwarded-for参数的调用</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917230916302.png" alt="image-20210917230916302"></p>
+<p>又有要求</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917230930919.png" alt="image-20210917230930919"></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917230950418.png" alt="image-20210917230950418"></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917230958568.png" alt="image-20210917230958568"></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917231006727.png" alt="image-20210917231006727"></p>
+<p>以上操作全在hackbar完成</p>
+<h3 id="webshell"><a href="#webshell" class="headerlink" title="webshell"></a>webshell</h3><p>hint：小宁百度了php一句话,觉着很有意思,并且把它放在index.php里。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917231122038.png" alt="image-20210917231122038"></p>
+<p>直接蚁剑连接</p>
+<p>打开蚁剑，右键添加数据</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917231232325.png" alt="image-20210917231232325"></p>
+<p>添加。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917231255088.png" alt="image-20210917231255088"></p>
+<p>cyberpeace{4d613129df2a8ae85a812456f8aac72c}</p>
+<h3 id="command-execution"><a href="#command-execution" class="headerlink" title="command_execution"></a>command_execution</h3><p>hint：小宁写了个ping功能,但没有写waf,X老师告诉她这是非常危险的，你知道为什么吗。</p>
+<p>命令注入漏洞。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.01|ls</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917231424150.png" alt="image-20210917231424150"></p>
+<p>发现会执行ls这条命令并且回显，所以可以先查找flag有关的文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 &amp;&amp; find / -name &quot;flag*&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917231729713.png" alt="image-20210917231729713"></p>
+<p>直接读文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 &amp;&amp; cat /home/flag.txt</span><br></pre></td></tr></table></figure>
+
+<p>cyberpeace{52ce94350b58602299ec20da3755f8c7}</p>
+<h3 id="simple-js"><a href="#simple-js" class="headerlink" title="simple_js"></a>simple_js</h3><p>hint：小宁发现了一个网页，但却一直输不对密码。(Flag格式为 Cyberpeace{xxxxxxxxx} )</p>
+<p>直接看源码</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>JS<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">dechiffre</span>(<span class="params">pass_enc</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> pass = <span class="string">&quot;70,65,85,88,32,80,65,83,83,87,79,82,68,32,72,65,72,65&quot;</span>;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> tab  = pass_enc.split(<span class="string">&#x27;,&#x27;</span>);</span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> tab2 = pass.split(<span class="string">&#x27;,&#x27;</span>);<span class="keyword">var</span> i,j,k,l=<span class="number">0</span>,m,n,o,p = <span class="string">&quot;&quot;</span>;i = <span class="number">0</span>;j = tab.length;</span></span><br><span class="line"><span class="javascript">                        k = j + (l) + (n=<span class="number">0</span>);</span></span><br><span class="line"><span class="javascript">                        n = tab2.length;</span></span><br><span class="line"><span class="javascript">                        <span class="keyword">for</span>(i = (o=<span class="number">0</span>); i &lt; (k = j = n); i++ )&#123;o = tab[i-l];p += <span class="built_in">String</span>.fromCharCode((o = tab2[i]));</span></span><br><span class="line"><span class="javascript">                                <span class="keyword">if</span>(i == <span class="number">5</span>)<span class="keyword">break</span>;&#125;</span></span><br><span class="line"><span class="javascript">                        <span class="keyword">for</span>(i = (o=<span class="number">0</span>); i &lt; (k = j = n); i++ )&#123;</span></span><br><span class="line"><span class="javascript">                        o = tab[i-l];</span></span><br><span class="line"><span class="javascript">                                <span class="keyword">if</span>(i &gt; <span class="number">5</span> &amp;&amp; i &lt; k-<span class="number">1</span>)</span></span><br><span class="line"><span class="javascript">                                        p += <span class="built_in">String</span>.fromCharCode((o = tab2[i]));</span></span><br><span class="line"><span class="javascript">                        &#125;</span></span><br><span class="line"><span class="javascript">        p += <span class="built_in">String</span>.fromCharCode(tab2[<span class="number">17</span>]);</span></span><br><span class="line"><span class="javascript">        pass = p;<span class="keyword">return</span> pass;</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">String</span>[<span class="string">&quot;fromCharCode&quot;</span>](dechiffre(<span class="string">&quot;\x35\x35\x2c\x35\x36\x2c\x35\x34\x2c\x37\x39\x2c\x31\x31\x35\x2c\x36\x39\x2c\x31\x31\x34\x2c\x31\x31\x36\x2c\x31\x30\x37\x2c\x34\x39\x2c\x35\x30&quot;</span>));</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    h = <span class="built_in">window</span>.prompt(<span class="string">&#x27;Enter password&#x27;</span>);</span></span><br><span class="line"><span class="javascript">    alert( dechiffre(h) );</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>代码审计后，发现dechiffre函数里的变量是没被调用的。。也就是说无论怎样，pass都只会是”70,65,85,88,32,80,65,83,83,87,79,82,68,32,72,65,72,65”然后经过一系列的转换，p最后都会为“FAUX PASSWORD HAHA”</p>
+<p>dechiffre函数执行完成后，继续执行其它的代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">h = window.prompt(&#x27;Enter password&#x27;);</span><br><span class="line">    alert( dechiffre(h) );</span><br><span class="line">h=你输入弹框内的内容</span><br></pre></td></tr></table></figure>
+
+<p>之后alert弹出dechiffre(h)的值，由前面所有的代码可知，代码里p的值与tab无关，因为最终都会被tab2的值替代，所以我们无论输入什么，也就是pass_enc=h，无论输入的这个h等于什么，不管tab能否被分割成字符串数组，是否存在，都只会利用到tab2。通俗点讲，有关tab的参数与值都可以视为没有，因此，pass_enc参数是什么也就没有意义了</p>
+<p><strong>最后，结论就是，无论我们在弹框中输入什么值，都只会返回FAUX PASSWORD HAHA</strong></p>
+<p><strong>说明这道题的flag不可能是靠输入正确密码来获取，因为根本就没有正确密码。</strong></p>
+<p>然后再看一眼源代码，明显感觉下面这串十六进制表示的ASCII码很可疑</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;\x35\x35\x2c\x35\x36\x2c\x35\x34\x2c\x37\x39\x2c\x31\x31\x35\x2c\x36\x39\x2c\x31\x31\x34\x2c\x31\x31\x36\x2c\x31\x30\x37\x2c\x34\x39\x2c\x35\x30&quot;</span><br></pre></td></tr></table></figure>
+
+<p>首先看这串十六进制的ASCII码到底是什么，然后将这串数字序列传入到String.fromCharCode中，就可以看到FLAG了。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210917233701647.png" alt="image-20210917233701647"></p>
+<p>ps：本题需要一些js基础</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2021/11/15/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E6%96%B0%E6%89%8Bweb%E5%92%8Cmisc/" title="攻防世界新手web和misc" target="_blank" rel="external">http://example.com/2021/11/15/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E6%96%B0%E6%89%8Bweb%E5%92%8Cmisc/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/cofess" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/cofess" target="_blank"><span class="text-dark">chickenmushroom</span><small class="ml-1x">Web</small></a></h3>
+        <div>平平无奇的小红帽。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/11/15/docker%E5%85%A5%E9%97%A8%E5%88%B0%E9%83%A8%E7%BD%B2/" title="docker入门到部署"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/11/15/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/" title="命令执行漏洞"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">
+        <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="/null" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

