@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>信息搜集 | chickenmushroom&#39;s blog</title>
+  <meta name="description" content="信息搜集1.域名信息搜集 1、域名查询：得到联系人、姓名、邮箱、手机号等 2、域名反查：得到更多的域名（得到旁站等有可能安全级别低一点的） 3、ICP备案查询：通过查询备案信息，得到更多的信息等 4、企业信息查询：查询企业信息  1.1 主域名信息搜集1.1.1 whois搜集 https:&#x2F;&#x2F;whois.chinaz.com&#x2F;http:&#x2F;&#x2F;whoissoft.com&#x2F;en&#x2F;https:&#x2F;&#x2F;web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="信息搜集">
+<meta property="og:url" content="http://example.com/2021/12/06/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="信息搜集1.域名信息搜集 1、域名查询：得到联系人、姓名、邮箱、手机号等 2、域名反查：得到更多的域名（得到旁站等有可能安全级别低一点的） 3、ICP备案查询：通过查询备案信息，得到更多的信息等 4、企业信息查询：查询企业信息  1.1 主域名信息搜集1.1.1 whois搜集 https:&#x2F;&#x2F;whois.chinaz.com&#x2F;http:&#x2F;&#x2F;whoissoft.com&#x2F;en&#x2F;https:&#x2F;&#x2F;web">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211114174639578.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/commonPort.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211116093210978.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211116155051784.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211116155257299.png">
+<meta property="og:image" content="http://cr_7.gitee.io/git-hub-image/image-20211116173942146.png">
+<meta property="article:published_time" content="2021-12-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-12-06T06:30:28.061Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cr_7.gitee.io/git-hub-image/image-20211114174639578.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2021/12/06/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/cofess" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">chickenmushroom</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Guangzhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Books</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="/null" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE/" rel="tag">PHP小项目</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WriteUp/" rel="tag">WriteUp</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a><span class="tag-list-count">19</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/PHP%E5%B0%8F%E9%A1%B9%E7%9B%AE/" style="font-size: 13px;">PHP小项目</a> <a href="/tags/WriteUp/" style="font-size: 13.5px;">WriteUp</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 14px;">学习笔记</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/12/06/%E9%80%9A%E8%BF%87%E4%B8%83%E9%81%93%E9%A2%98%E5%AD%A6%E4%B9%A0PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="title">通过七道题学习PHP反序列化</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-12-05T16:00:00.000Z" itemprop="datePublished">2021-12-06</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/12/06/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" class="title">信息搜集</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-12-05T16:00:00.000Z" itemprop="datePublished">2021-12-06</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/ciscn2021%E5%8D%8A%E5%86%B3%E8%B5%9B%E5%8D%8E%E5%8D%97%E8%B5%9B%E5%8C%BA/" class="title">ciscn2021半决赛-华南赛区</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/ciscn2021%E5%8D%8E%E5%8D%97%E8%B5%9B%E5%8C%BA%E9%A2%84%E8%B5%9B/" class="title">ciscn2021华南赛区预赛</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/15/SQL%E6%B3%A8%E5%85%A5/" class="title">SQL注入总结</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-14T16:00:00.000Z" itemprop="datePublished">2021-11-15</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="toc-number">1.</span> <span class="toc-text">信息搜集</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%9F%9F%E5%90%8D%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="toc-number">1.1.</span> <span class="toc-text">1.域名信息搜集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%BB%E5%9F%9F%E5%90%8D%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 主域名信息搜集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1-whois%E6%90%9C%E9%9B%86"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">1.1.1 whois搜集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2-%E5%9F%9F%E5%90%8D%E5%8F%8D%E6%9F%A5"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">1.1.2 域名反查</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-3-ICP%E5%A4%87%E6%A1%88%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">1.1.3 ICP备案查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-4-%E4%BC%81%E4%B8%9A%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.1.1.4.</span> <span class="toc-text">1.1.4 企业信息查询</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2%E5%AD%90%E5%9F%9F%E5%90%8D%E6%90%9C%E9%9B%86"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2子域名搜集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-%E5%AD%90%E5%9F%9F%E5%90%8D%E6%90%9C%E9%9B%86%E5%B7%A5%E5%85%B7"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">1.2.1 子域名搜集工具</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-DNS%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 DNS信息搜集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-IP%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="toc-number">1.1.4.</span> <span class="toc-text">1.4 IP信息搜集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-1-%E9%80%9A%E8%BF%87%E5%9F%9F%E5%90%8D%E6%89%BEIP"><span class="toc-number">1.1.4.1.</span> <span class="toc-text">1.4.1 通过域名找IP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-2-IP%E5%BD%92%E5%B1%9E%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.1.4.2.</span> <span class="toc-text">1.4.2 IP归属查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-3-%E8%8E%B7%E5%8F%96%E7%9C%9F%E5%AE%9EIP"><span class="toc-number">1.1.4.3.</span> <span class="toc-text">1.4.3 获取真实IP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-4-C%E6%AE%B5%E6%89%AB%E6%8F%8F"><span class="toc-number">1.1.4.4.</span> <span class="toc-text">1.4.4 C段扫描</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E7%AB%AF%E5%8F%A3%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="toc-number">1.1.5.</span> <span class="toc-text">1.5 端口信息搜集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-%E5%BA%94%E7%94%A8%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="toc-number">1.1.6.</span> <span class="toc-text">1.6 应用信息搜集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6-1-CMS%E6%8C%87%E7%BA%B9%E8%AF%86%E5%88%AB"><span class="toc-number">1.1.6.1.</span> <span class="toc-text">1.6.1 CMS指纹识别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6-2-CDN%E6%8C%87%E7%BA%B9%E8%AF%86%E5%88%AB"><span class="toc-number">1.1.6.2.</span> <span class="toc-text">1.6.2 CDN指纹识别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6-3-WAF%E6%8C%87%E7%BA%B9%E8%AF%86%E5%88%AB"><span class="toc-number">1.1.6.3.</span> <span class="toc-text">1.6.3 WAF指纹识别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6-4-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%90%9C%E7%B4%A2%E4%BF%A1%E6%81%AF"><span class="toc-number">1.1.6.4.</span> <span class="toc-text">1.6.4 搜索引擎搜索信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-7-%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%90%9C%E7%B4%A2%E4%BF%A1%E6%81%AF"><span class="toc-number">1.1.6.5.</span> <span class="toc-text">1.7 网络空间搜索引擎搜索信息</span></a></li></ol></li></ol></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-信息搜集" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      信息搜集
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/12/06/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" class="article-date">
+	  <time datetime="2021-12-05T16:00:00.000Z" itemprop="datePublished">2021-12-06</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/12/06/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h1><h2 id="1-域名信息搜集"><a href="#1-域名信息搜集" class="headerlink" title="1.域名信息搜集"></a>1.域名信息搜集</h2><blockquote>
+<p>1、域名查询：得到联系人、姓名、邮箱、手机号等</p>
+<p>2、域名反查：得到更多的域名（得到旁站等有可能安全级别低一点的）</p>
+<p>3、ICP备案查询：通过查询备案信息，得到更多的信息等</p>
+<p>4、企业信息查询：查询企业信息</p>
+</blockquote>
+<h3 id="1-1-主域名信息搜集"><a href="#1-1-主域名信息搜集" class="headerlink" title="1.1 主域名信息搜集"></a>1.1 主域名信息搜集</h3><h4 id="1-1-1-whois搜集"><a href="#1-1-1-whois搜集" class="headerlink" title="1.1.1 whois搜集"></a>1.1.1 whois搜集</h4><blockquote>
+<p><a target="_blank" rel="noopener" href="https://whois.chinaz.com/">https://whois.chinaz.com/</a><br><a target="_blank" rel="noopener" href="http://whoissoft.com/en/">http://whoissoft.com/en/</a><br><a target="_blank" rel="noopener" href="https://webwhois.cnnic.cn/WelcomeServlet">https://webwhois.cnnic.cn/WelcomeServlet</a><br>使用kali自带的whois命令</p>
+</blockquote>
+<h4 id="1-1-2-域名反查"><a href="#1-1-2-域名反查" class="headerlink" title="1.1.2 域名反查"></a>1.1.2 域名反查</h4><ul>
+<li>域名反查询</li>
+</ul>
+<h4 id="1-1-3-ICP备案查询"><a href="#1-1-3-ICP备案查询" class="headerlink" title="1.1.3 ICP备案查询"></a>1.1.3 ICP备案查询</h4><p>若是网站搭建在国内，则会按照法律法规对网站进行备案</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/#/Integrated/index">https://beian.miit.gov.cn/#/Integrated/index</a><br><a target="_blank" rel="noopener" href="https://icp.chinaz.com/reverse">https://icp.chinaz.com/reverse</a><br><a target="_blank" rel="noopener" href="https://beian88.com/">https://beian88.com/</a></p>
+</blockquote>
+<h4 id="1-1-4-企业信息查询"><a href="#1-1-4-企业信息查询" class="headerlink" title="1.1.4 企业信息查询"></a>1.1.4 企业信息查询</h4><ul>
+<li>企业信息查询</li>
+</ul>
+<h3 id="1-2子域名搜集"><a href="#1-2子域名搜集" class="headerlink" title="1.2子域名搜集"></a>1.2子域名搜集</h3><p>子域名搜集就两种方法，一种字典猜解，一种暴力枚举。</p>
+<h4 id="1-2-1-子域名搜集工具"><a href="#1-2-1-子域名搜集工具" class="headerlink" title="1.2.1 子域名搜集工具"></a>1.2.1 子域名搜集工具</h4><ul>
+<li>Layer子域名挖掘机</li>
+</ul>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211114174639578.png" alt="image-20211114174639578"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://phpinfo.me/domain/">https://phpinfo.me/domain/</a><br><a target="_blank" rel="noopener" href="https://www.dnsscan.cn/">https://www.dnsscan.cn/</a><br><a target="_blank" rel="noopener" href="https://github.com/lijiejie/subDomainsBrute">subDomainsBrute</a><br>搜索引擎语法(site:xxx.com)<br>Kali Linux maltego</p>
+</blockquote>
+<h3 id="1-3-DNS信息搜集"><a href="#1-3-DNS信息搜集" class="headerlink" title="1.3 DNS信息搜集"></a>1.3 DNS信息搜集</h3><p>查询方式</p>
+<blockquote>
+<p>​        1、Kali（host、dig命令） </p>
+<p>​        2、windows（nslookup命令） </p>
+<p>​        3、在线工具 </p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://sitereport.netcraft.com/">https://sitereport.netcraft.com/</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.jsons.cn/nslookup">http://www.jsons.cn/nslookup</a></p>
+<h3 id="1-4-IP信息搜集"><a href="#1-4-IP信息搜集" class="headerlink" title="1.4 IP信息搜集"></a>1.4 IP信息搜集</h3><h4 id="1-4-1-通过域名找IP"><a href="#1-4-1-通过域名找IP" class="headerlink" title="1.4.1 通过域名找IP"></a>1.4.1 通过域名找IP</h4><blockquote>
+<p>ping命令<br>nslookup命令</p>
+</blockquote>
+<h4 id="1-4-2-IP归属查询"><a href="#1-4-2-IP归属查询" class="headerlink" title="1.4.2 IP归属查询"></a>1.4.2 IP归属查询</h4><p><a target="_blank" rel="noopener" href="http://ipwhois.cnnic.net.cn/">http://ipwhois.cnnic.net.cn/</a></p>
+<h4 id="1-4-3-获取真实IP"><a href="#1-4-3-获取真实IP" class="headerlink" title="1.4.3 获取真实IP"></a>1.4.3 获取真实IP</h4><p>在此，必须要了解什么是CDN。已经知道的可以直接往下看。</p>
+<blockquote>
+<p>CDN的全称是Content Delivery  Network，即内容分发网络。其基本思路是尽可能避开互联网上有可能影响数据传输速度和稳定性的瓶颈和环节，使内容传输的更快、更稳定。通过在网络各处放置节点服务器所构成的在现有的互联网基础之上的一层智能虚拟网络，CDN系统能够实时地根据网络流量和各节点的连接、负载状况以及到用户的距离和响应时间等综合信息将用户的请求重新导向离用户最近的服务节点上。其目的是使用户可就近取得所需内容，解决 Internet网络拥挤的状况，提高用户访问网站的响应速度。 </p>
+</blockquote>
+<p>CDN技术，其实就是在各地分布服务器，让用户访问就近的服务器，分流主服务器的流量。但是就是因为这个CDN技术，使我们渗透工作就多了一个难点，就是要找到主服务器的IP地址。</p>
+<p>如何绕过CDN，获取真实IP作者提供一下几个思路：</p>
+<p>1、查看IP数量</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://ping.chinaz.com/">http://ping.chinaz.com</a><br>nslookup</p>
+</blockquote>
+<p>通过查看IP数量可以判断对象是否使用了CDN技术。（有多个IP的话，就很有可能使用了CDN技术）</p>
+<p>2、查看历史DNS</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://dnshistory.org/">http://dnshistory.org/</a><br><a target="_blank" rel="noopener" href="http://toolbar.netcraft.com/site_report">http://toolbar.netcraft.com/site_report</a><br><a target="_blank" rel="noopener" href="https://tools.ipip.net/cdn.php">https://tools.ipip.net/cdn.php</a><br><a target="_blank" rel="noopener" href="https://github.com/vincentcox/bypass-firewalls-by-DNS-history">https://github.com/vincentcox/bypass-firewalls-by-DNS-history</a></p>
+</blockquote>
+<p>有些站点一开始创建的时候客流量比较小，可能不会使用CDN技术。当流量慢慢多起来的时候，就会使用CDN。那么我们查询他的历史DNS，早期的IP地址就很有可能就是他的真实IP地址</p>
+<p>3、查询子域名</p>
+<p>有些子域名服务是有可能放在主服务器上的，所以子域名也有可能使用的是IP地址</p>
+<p>4、国外主机解析</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://asm.ca.com/zh_cn/ping.php">https://asm.ca.com/zh_cn/ping.php</a><br><a target="_blank" rel="noopener" href="http://host-tracker.com/">http://host-tracker.com/</a><br><a target="_blank" rel="noopener" href="http://www.webpagetest.org/">http://www.webpagetest.org</a><br><a target="_blank" rel="noopener" href="https://dnscheck.pingdom.com/">https://dnscheck.pingdom.com/</a></p>
+</blockquote>
+<p>通过国外主机访问时，如果国外没有部署CDN，那么他很有可能就会直接访问到主服务器(因为没有附近节点，只能访问主服务器)。</p>
+<p>5、绕过CloudFlare CDN查找真实ip</p>
+<p>在线网站查询<a target="_blank" rel="noopener" href="http://www.crimeflare.us/cfs.xhrml#box">cloud Flarewatch</a> (需要科学上网)</p>
+<p>6、其他</p>
+<blockquote>
+<p>网络空间搜索引擎(fofa、censys)<br>邮件<br>手机APP抓包<br>微信服务号抓包<br>邮件(可以查看邮件的原文就可以查看到IP地址)<br>等等</p>
+</blockquote>
+<h4 id="1-4-4-C段扫描"><a href="#1-4-4-C段扫描" class="headerlink" title="1.4.4 C段扫描"></a>1.4.4 C段扫描</h4><p>这里的C段指的是并非网络中的C类地址，而是C类地址中子网掩码为255.255.255.0/24中的IP地址段，共254个。对于某些中大型厂商通过有可能使用的是自建的托管机房，他们的业务通常部署在同一个C类地址子网中，这就给了我们可以利用的空间了。</p>
+<p>就好像我们家里的路由器一样，当我破解了一个邻居的wifi密码后，接收他的网络，这个时候我就能使用监听工具，对他所发出/接收的数据进行拦截监听，从中获取得相关的账号、密码及信息，当然也有其它的方法和思路可以获取目标服务器的数据或权限。例如：C段中的业务系统与目标服务器的业务系统有关联，使用的是同一个数据库，那么就有可能直接获取到目标服务器的信息了。</p>
+<p>能够查询C段的工具有很多，在此不一一介绍，我最常用的还是nmap。假如我们能够查询到目标网络的C段IP都是开放的。这时候我们就得找一此比较薄弱的IP来重新进行信息收集工作了。</p>
+<p>案例：在渗透测试测试中，未能在目标服务器寻找到高危漏洞，然后将思路转变到子网中的其它服务器中，此时我们在获得权限的子网。</p>
+<h3 id="1-5-端口信息搜集"><a href="#1-5-端口信息搜集" class="headerlink" title="1.5 端口信息搜集"></a>1.5 端口信息搜集</h3><p>使用nmap、zenmap等工具进行端口扫描，确定服务器开了什么服务。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/commonPort.png" alt="image-20211114174639578"></p>
+<p>端口对应攻击方向：</p>
+<table>
+<thead>
+<tr>
+<th>端口号</th>
+<th>端口说明</th>
+<th>攻击方向</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>21/22/69</td>
+<td>FTP/SFTP文件传输协议</td>
+<td>允许匿名上传、下载、爆破和嗅探操作</td>
+</tr>
+<tr>
+<td>2049</td>
+<td>NFS服务（Network File System）</td>
+<td>配置不当</td>
+</tr>
+<tr>
+<td>139</td>
+<td>Samba服务</td>
+<td>爆破、未授权访问、远程代码和执行</td>
+</tr>
+<tr>
+<td>389</td>
+<td>LDAP目录访问协议</td>
+<td>注入、允许匿名访问、弱口令</td>
+</tr>
+<tr>
+<td>22</td>
+<td>SSH远程连接</td>
+<td>爆破、SSH隧道及内网代理转发、文件传输</td>
+</tr>
+<tr>
+<td>23</td>
+<td>Telnet远程连接</td>
+<td>爆破、嗅探、弱口令</td>
+</tr>
+<tr>
+<td>3389</td>
+<td>RDP远程桌面连接</td>
+<td>S h i f t 后 门 （ W i n d o w sServer2003以下的系统）、爆破</td>
+</tr>
+<tr>
+<td>5900</td>
+<td>VNC</td>
+<td>弱口令爆破</td>
+</tr>
+<tr>
+<td>5632</td>
+<td>PcAnywhere远程控制服务</td>
+<td>抓密码、代码执行</td>
+</tr>
+<tr>
+<td>80/443/8080</td>
+<td>常见的web服务端口</td>
+<td>Web攻击、爆破、对应服务器版本漏洞</td>
+</tr>
+<tr>
+<td>7001/7002</td>
+<td>Weblogic控制台</td>
+<td>Java反序列化、弱口令</td>
+</tr>
+<tr>
+<td>8080/8089</td>
+<td>Jboss/resin/jetty/Jenkins</td>
+<td>反序列化、控制台弱口令</td>
+</tr>
+<tr>
+<td>9090</td>
+<td>Websphere控制台</td>
+<td>Java反序列化、弱口令</td>
+</tr>
+<tr>
+<td>4848</td>
+<td>Glassfish控制台</td>
+<td>弱口令</td>
+</tr>
+<tr>
+<td>1352</td>
+<td>Lotus domino邮件服务</td>
+<td>弱口令、信息泄露、爆破</td>
+</tr>
+<tr>
+<td>10000</td>
+<td>Webmin-web控制面板</td>
+<td>弱口令</td>
+</tr>
+<tr>
+<td>3306</td>
+<td>MySQL</td>
+<td>注入、提权、爆破</td>
+</tr>
+<tr>
+<td>1433</td>
+<td>MSSQL数据库</td>
+<td>注入、提权、SA弱口令</td>
+</tr>
+<tr>
+<td>1521</td>
+<td>Oracle数据库</td>
+<td>TNS爆破、注入、反弹shell</td>
+</tr>
+<tr>
+<td>5432</td>
+<td>PostgreSQL数据库</td>
+<td>爆破、注入、弱口令</td>
+</tr>
+<tr>
+<td>27017/27018</td>
+<td>MongoDB</td>
+<td>爆破、未授权访问</td>
+</tr>
+<tr>
+<td>6379</td>
+<td>Redis数据库</td>
+<td>可尝试未授权访问、弱口令爆破</td>
+</tr>
+<tr>
+<td>5000</td>
+<td>Sysbase/DB2数据库</td>
+<td>爆破、注入</td>
+</tr>
+<tr>
+<td>25</td>
+<td>SMTP邮件服务</td>
+<td>邮件伪造</td>
+</tr>
+<tr>
+<td>110</td>
+<td>POP3协议</td>
+<td>爆破、嗅探</td>
+</tr>
+<tr>
+<td>143</td>
+<td>IMAP协议</td>
+<td>爆破</td>
+</tr>
+<tr>
+<td>53</td>
+<td>DNS域名系统</td>
+<td>允许区域传送、DNS劫持、缓存投毒、欺骗</td>
+</tr>
+<tr>
+<td>67/68</td>
+<td>DHCP服务</td>
+<td>劫持、欺骗</td>
+</tr>
+<tr>
+<td>161</td>
+<td>SNMP协议</td>
+<td>爆破、搜集目标内网信息</td>
+</tr>
+<tr>
+<td>2181</td>
+<td>Zookeeper服务</td>
+<td>未授权访问</td>
+</tr>
+<tr>
+<td>8069</td>
+<td>Zabbix服务</td>
+<td>远程执行、SQL注入</td>
+</tr>
+<tr>
+<td>9200/9300</td>
+<td>ElasticSearch服务</td>
+<td>远程执行</td>
+</tr>
+<tr>
+<td>11211</td>
+<td>Memcached服务</td>
+<td>未授权访问</td>
+</tr>
+<tr>
+<td>512/513/514</td>
+<td>Linux Rexec服务</td>
+<td>爆破、rlogin登录</td>
+</tr>
+<tr>
+<td>873</td>
+<td>Rsync服务</td>
+<td>匿名访问、文件上传</td>
+</tr>
+<tr>
+<td>3690</td>
+<td>SVN服务</td>
+<td>SVN泄露、未授权访问</td>
+</tr>
+<tr>
+<td>50000</td>
+<td>SAP ManagementConsole</td>
+<td>远程执行</td>
+</tr>
+</tbody></table>
+<h3 id="1-6-应用信息搜集"><a href="#1-6-应用信息搜集" class="headerlink" title="1.6 应用信息搜集"></a>1.6 应用信息搜集</h3><h4 id="1-6-1-CMS指纹识别"><a href="#1-6-1-CMS指纹识别" class="headerlink" title="1.6.1 CMS指纹识别"></a>1.6.1 CMS指纹识别</h4><blockquote>
+<p>什么是指纹识别？</p>
+<p>通过关键特征，识别出目标的CMS系统、服务器、开发语言、操作系统、CDN、WAF的类别版本&gt;等等</p>
+</blockquote>
+<p>识别对象：</p>
+<ul>
+<li>CMS信息：Dedecms （织梦），Discuz，PHPWEB，PHPWind，  PHPCMS，ECShop，Dvbbs，SiteWeaver，ASPCMS，帝国，Z-Blog， WordPress等。</li>
+<li>前端技术：HTML5、jquery等</li>
+<li>开发语言：PHP、Java等</li>
+<li>WEB服务器：Apache、Nginx、IIS等</li>
+<li>应用服务器：Tomcat、Jboss、Weblogic、Websphere等</li>
+<li>操作系统：Linux、win2k8、win7、Centos等</li>
+<li>CDN信息：是否使用CDN，如cloudflare、帝联、蓝讯、网宿、七牛云、阿里云等</li>
+<li>WAF信息：是否使用WAF，如D盾、云锁、宝塔、安全狗、360等</li>
+</ul>
+<p>搜集思路：</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211116093210978.png" alt="image-20211116093210978"></p>
+<h4 id="1-6-2-CDN指纹识别"><a href="#1-6-2-CDN指纹识别" class="headerlink" title="1.6.2 CDN指纹识别"></a>1.6.2 CDN指纹识别</h4><p><img src="http://cr_7.gitee.io/git-hub-image/image-20211116155051784.png" alt="image-20211116155051784"></p>
+<h4 id="1-6-3-WAF指纹识别"><a href="#1-6-3-WAF指纹识别" class="headerlink" title="1.6.3 WAF指纹识别"></a>1.6.3 WAF指纹识别</h4><p><img src="http://cr_7.gitee.io/git-hub-image/image-20211116155257299.png" alt="image-20211116155257299"></p>
+<h4 id="1-6-4-搜索引擎搜索信息"><a href="#1-6-4-搜索引擎搜索信息" class="headerlink" title="1.6.4 搜索引擎搜索信息"></a>1.6.4 搜索引擎搜索信息</h4><p>通过搜索引擎并使用高级语法，可以得到意想不到的东西。</p>
+<p><img src="http://cr_7.gitee.io/git-hub-image/image-20211116173942146.png" alt="image-20211116173942146"></p>
+<h4 id="1-7-网络空间搜索引擎搜索信息"><a href="#1-7-网络空间搜索引擎搜索信息" class="headerlink" title="1.7 网络空间搜索引擎搜索信息"></a>1.7 网络空间搜索引擎搜索信息</h4><p>普通的搜索引擎比如百度、谷歌等搜索的都是万维网的信息，不会涉及到其他设备。但是通过网络空间搜索引擎，可以搜索到其他连接到互联网上的设备，比如打印机、摄像头、交通灯等等任何连接上互联网的设备都有可能被网络空间搜索引擎给搜到。</p>
+<p>这里推荐几个网络空间搜索引擎：</p>
+<blockquote>
+<p>国外：</p>
+<p>shodan:<a target="_blank" rel="noopener" href="https://www.shodan.io/">https://www.shodan.io/</a><br>censys:<a target="_blank" rel="noopener" href="https://censys.io/">https://censys.io/</a><br>国内：<br>zoomey:<a target="_blank" rel="noopener" href="https://www.zoomeye.org/">https://www.zoomeye.org/</a><br>fofa:<a target="_blank" rel="noopener" href="https://fofa.so/">https://fofa.so/</a></p>
+</blockquote>
+<p>搜索语法我们是要掌握的，详情参考</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/jakejarvis/awesome-shodan-queries">https://github.com/jakejarvis/awesome-shodan-queries</a> （语法）</p>
+<p>还有一些工具</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/random-robbie/My-Shodan-Scripts">https://github.com/random-robbie/My-Shodan-Scripts</a> （python脚本）</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2021/12/06/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" title="信息搜集" target="_blank" rel="external">http://example.com/2021/12/06/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/cofess" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/cofess" target="_blank"><span class="text-dark">chickenmushroom</span><small class="ml-1x">Web</small></a></h3>
+        <div>平平无奇的小红帽。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2021/12/06/%E9%80%9A%E8%BF%87%E4%B8%83%E9%81%93%E9%A2%98%E5%AD%A6%E4%B9%A0PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" title="通过七道题学习PHP反序列化"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/11/15/ciscn2021%E5%8D%8A%E5%86%B3%E8%B5%9B%E5%8D%8E%E5%8D%97%E8%B5%9B%E5%8C%BA/" title="ciscn2021半决赛-华南赛区"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">
+        <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="/null" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
